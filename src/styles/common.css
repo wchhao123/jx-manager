@@ -1,0 +1,22 @@
+
+/*********滚动条*************/
+::-webkit-scrollbar {background: transparent;width: 10px;height: 13px;}
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #e1e1e1;
+    width: 6px;
+    height: 6px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.mains .navtab{position:absolute;z-index:2;height:30px;width:100%;overflow:hidden;background-color:#d4d8e3;}
+.mains .navtab span{cursor:pointer;line-height:30px;background:none;color:#76838f;border-radius:0;border:0;border-right:2px solid #E6EBF5;margin:0}
+.mains .navtab span i{color:#666}
+.mains .navtab span:hover{background-color:rgb(49, 200, 164);color:#fff}
+.mains .navtab span:hover i{color:#fff}
+.mains .navtab .router-link-exact-active{background-color:rgb(49, 200, 164);color:#fff}
+.mains .navtab .router-link-exact-active i{color:#fff}
+
