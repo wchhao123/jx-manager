@@ -380,7 +380,7 @@ export const typeUserTrade = {
   8: '余额提现',
   10: '充值',
   11: '充值退款',
-  14: '个人综合所得'
+  14: '个人经营所得'
 }
 export function funUserTradeType () {
   return [
