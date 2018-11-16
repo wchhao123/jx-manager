@@ -163,6 +163,7 @@
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import { ERR_OK } from '../../../api/index'
+  import * as filters from 'filters'
 
   export default {
     data () {
@@ -215,6 +216,16 @@
       },
       doQuery () {
         this.isLoading = true
+        if (this.queryModel.startDate !== null && this.queryModel.startDate) {
+          this.queryModel.startDate = filters.filterDateYYYYMMDD(this.queryModel.startDate)
+        } else {
+          this.queryModel.startDate = null
+        }
+        if (this.queryModel.endDate !== null && this.queryModel.endDate) {
+          this.queryModel.endDate = filters.filterDateYYYYMMDD(this.queryModel.endDate)
+        } else {
+          this.queryModel.endDate = null
+        }
         Api.getEntAuditInfo(this.queryModel).then(response => {
           this.isLoading = false
           if (response.data.code === ERR_OK) {
