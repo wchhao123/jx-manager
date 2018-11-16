@@ -1,7 +1,7 @@
 <template>
     <div>
       <span>父组件</span>
-       <div slot="up">模板1</div>
+       <div slot="up">模板11</div>
     </div>
 </template>
 
