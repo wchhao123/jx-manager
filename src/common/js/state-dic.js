@@ -472,7 +472,9 @@ export const typeSystemErrorType = {
   '3': '更改发薪及详情状态异常',
   '4': 'JF成功开户更改本地状态异常',
   '6': '用户提现异常',
-  '7': '福利分配异常'
+  '7': '福利分配异常',
+  '10': '充值订单异常',
+  '11': '任务结算异常'
 }
 
 export function funSystemErrorType () {
@@ -482,7 +484,9 @@ export function funSystemErrorType () {
     {'key': '3', 'value': '更改发薪及详情状态异常'},
     {'key': '4', 'value': 'JF成功开户更改本地状态异常'},
     {'key': '6', 'value': '用户提现异常'},
-    {'key': '7', 'value': '福利分配异常'}
+    {'key': '7', 'value': '福利分配异常'},
+    {'key': '10', 'value': '充值订单异常'},
+    {'key': '11', 'value': '任务结算异常'}
   ]
 }
 

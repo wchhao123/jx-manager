@@ -77,7 +77,7 @@
             <span
               class="uploadTip">上传营业执照
               <br>文件所有信息清晰可见,内容真实有效,不得做人为修改
-              <br>支持文件格式: pdf,jpf,jpeg,bmp,gif,png 大小不超过8M</span>
+              <br>支持文件格式: pdf,jpf,jpeg,bmp,gif,png 大小不超过2M</span>
             <br>
             <el-upload
               v-show="this.$store.getters.getBtnIsShowByName('btn_upload')"
@@ -266,12 +266,12 @@
         const fileType = file.type
         // 支持图片和 pdf文件
         let isImg = fileType.indexOf('image') !== -1 || fileType.indexOf('application/pdf') !== -1
-        const isLt8M = file.size / 1024 / 1024 < 8
+        const isLt8M = file.size / 1024 / 1024 < 2
         if (!isImg) {
           this.$message.error('上传营业执照 格式 仅支持图片和pdf!')
         }
         if (!isLt8M) {
-          this.$message.error('上传营业执照 大小不能超过 8MB!')
+          this.$message.error('上传营业执照 大小不能超过 2MB!')
         }
         let r = isImg && isLt8M
         if (r) {
