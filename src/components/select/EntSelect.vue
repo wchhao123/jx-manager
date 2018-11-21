@@ -1,6 +1,6 @@
 <template>
     <div>
-      <span class="title">{{title}}</span>
+      <label class="title">{{title}}</label>
       <el-select size="small" :loading="loading"
                  v-model="model" filterable
                  clearable

@@ -2,12 +2,9 @@
    <div>
       <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline" label-position="right">
         <el-row type="flex">
-          <el-col :span="8">
             <ent-select title="发薪企业" place-holder="请选择发薪企业"
                         @input-select="salaryInputSelect">
             </ent-select>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="认证状态">
               <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择认证状态">
                 <el-option
@@ -18,8 +15,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="签约状态">
               <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
                 <el-option
@@ -30,7 +25,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
         </el-row>
 
         <el-row>

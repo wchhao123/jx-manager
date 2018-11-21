@@ -26,8 +26,7 @@
 
       <el-row  type="flex">
         <!--工资月份-->
-        <el-col>
-          <el-form-item label="工资月份">
+          <el-form-item label="工资月份" >
             <el-date-picker
               class="startDate"
               size="small"
@@ -37,15 +36,11 @@
               placeholder="请选择工资月份">
             </el-date-picker>
           </el-form-item>
-        </el-col>
 
-        <el-col >
           <ent-select title="发薪企业名称" place-holder="发薪企业名称"
                       @input-select="salaryInputSelect">
           </ent-select>
-        </el-col>
 
-        <el-col >
           <el-form-item label="发放状态">
             <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择发放状态">
               <el-option
@@ -56,11 +51,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>
       </el-row>
 
       <el-row  type="flex">
-        <el-col :span="10">
           <el-form-item label="创建时间">
             <el-date-picker
               v-model="selectDateRange"
@@ -73,9 +66,7 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
-        </el-col>
 
-        <el-col :span="6">
           <el-form-item label="发放类型">
             <el-select size="small" v-model="queryModel.salaryType" filterable clearable placeholder="请选择发放类型">
               <el-option
@@ -86,7 +77,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-        </el-col>
 
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
@@ -289,12 +279,20 @@
     },
     methods: {
       getParams (r) {
-        let salaryId = this.$route.params.salaryId
-        this.queryModel.salaryId = salaryId
-        if (!salaryId || salaryId.length < 1) {
-          return
+        let name = this.$route.name
+        if (name === '发放明细查询') {
+          this.queryModel = {
+            pageNum: 1,
+            pageSize: 10
+          }
+          this.selectDateRange = ''
+          let salaryId = this.$route.params.salaryId
+          this.queryModel.salaryId = salaryId
+          if (!salaryId || salaryId.length < 1) {
+            return
+          }
+          this.doQuery()
         }
-        this.doQuery()
       },
       salaryInputSelect (entId) {
         if (entId !== undefined) {

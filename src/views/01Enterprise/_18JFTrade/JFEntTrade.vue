@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="10">
+        <el-col :span="20">
           <el-form-item label="交易时间" required>
             <el-date-picker
               v-model="selectDateRange"

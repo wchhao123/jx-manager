@@ -9,7 +9,7 @@
             ></ent-select>
         </el-col>
         <el-col>
-          <el-form-item label="审核状态">
+          <el-form-item label="开户状态">
             <el-select size="small" v-model="queryModel.openingState" filterable clearable placeholder="审核状态">
               <el-option
                 v-for="item in _entTradeType"
