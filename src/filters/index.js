@@ -94,6 +94,24 @@ export function filterTaskState (key) {
   return state.typeTaskState[parseInt(key)]
 }
 
+export function filterContractType (key) {
+  if (!key)
+    return ''
+  return state.contractType[parseInt(key)]
+}
+
+export function filterContractState (key) {
+  if (!key)
+    return ''
+  return state.contractState[parseInt(key)]
+}
+
+export function filterContractSignState (key) {
+  if (!key)
+    return ''
+  return state.contractSignState[parseInt(key)]
+}
+
 //任务状态
 export function filterTaskListState (key) {
   if (!key)

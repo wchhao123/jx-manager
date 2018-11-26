@@ -15,7 +15,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row type="flex">
+      <el-row>
         <el-form-item :span="6" label="姓名">
           <el-input size="small" clearable v-model="queryModel.name" placeholder="请输入用户姓名"></el-input>
         </el-form-item>
@@ -141,7 +141,7 @@
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import * as filters from 'filters'
-  import { ERR_OK } from '../../../api/index'
+  import { ERR_OK } from '../../api/index'
   export default {
     data () {
       return {

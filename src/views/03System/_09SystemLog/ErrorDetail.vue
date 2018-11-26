@@ -34,7 +34,7 @@
         <el-row>
           <textarea v-show="detail.businessContent.toString().length>1"
                     style="width: 100%" v-model="detail.businessContent"
-                    rows="5"
+                    rows="24"
                     readonly></textarea>
         </el-row>
         <span class="item-title">执行job</span>
@@ -50,7 +50,7 @@
             </el-select>
           </el-form-item>
         </el-row>
-        <el-row v-show="detail.jobState.toString() === '3'">
+        <el-row v-show="detail.jobState.toString() === '3' || detail.jobState.toString() === '2'">
           <el-col :span="12" :offset="2">
             <el-button class="role_off" size="small" @click="cancelEdit">取消</el-button>
           </el-col>

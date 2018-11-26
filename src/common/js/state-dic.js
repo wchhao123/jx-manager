@@ -281,7 +281,50 @@ export function funTaskState () {
     {'key': 5, 'value': '发放中'}
   ]
 }
-
+export function funContractType () {
+  return [//1 表示合作协议 2 表示劳动合同 3表示采购合同 4表示经销商合同
+    {'key': 1, 'value': '合作协议'},
+    {'key': 2, 'value': '劳动合同'},
+    {'key': 3, 'value': '采购合同'},
+    {'key': 4, 'value': '经销商合同'}
+  ]
+}
+export const contractType = {
+  1: '合作协议',
+  2: '劳动合同',
+  3: '采购合同',
+  4: '经销商合同'
+}
+export function funContractState () {
+  return [
+    {'key': 0, 'value': '未发送'},
+    {'key': 1, 'value': '发送成功'},
+    {'key': 2, 'value': '发送失败'}
+  ]
+}
+export const contractState = {
+  0: '未发送',
+  1: '发送成功',
+  2: '发送失败'
+}
+export function funContractSignState () {
+  return [
+    {'key': 0, 'value': '未发送'},
+    {'key': 1, 'value': '已签约'},
+    {'key': 2, 'value': '签署中'},
+    {'key': 3, 'value': '发送失败'},
+    {'key': 4, 'value': '已撤销'},
+    {'key': 5, 'value': '已过期'}
+  ]
+}
+export const contractSignState = {
+  0: '未发送',
+  1: '已签约',
+  2: '签署中',
+  3: '发送失败',
+  4: '已撤销',
+  5: '已过期'
+}
 export const signInState = {
   1: '待处理',
   2: '报名取消',

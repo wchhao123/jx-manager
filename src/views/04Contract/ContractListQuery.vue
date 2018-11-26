@@ -1,119 +1,127 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
-        <ent-select title="结算企业" place-holder="请选择结算企业"
-                    @input-select="salaryInputSelect">
-        </ent-select>
-        <el-form-item :span="1">
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
+      <el-row>
+        <!-- 批次号-->
+        <el-form-item label="批次号">
+          <el-input size="small" clearable v-model="queryModel.batchId" placeholder="请输入批次号"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="任务名称">
-          <el-input size="small" clearable v-model="queryModel.taskName" placeholder="请输入任务名称"></el-input>
+        <el-form-item label="合同名称">
+          <el-input size="small" clearable v-model="queryModel.contractName" placeholder="请输入合同名称"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="任务编号">
-          <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
+        <el-form-item label="合同类型">
+          <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
+            <el-option
+              v-for="item in contractTypeSource"
+              :key="item.key"
+              :label="item.value"
+              :value="item.key">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="合同状态">
+          <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择合同状态">
+            <el-option
+              v-for="item in contractStateSource"
+              :key="item.key"
+              :label="item.value"
+              :value="item.key">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-row>
-      <el-row type="flex">
-          <el-form-item label="任务状态">
-            <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择任务状态">
-              <el-option
-                v-for="item in taskStateSource"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item label="创建时间">
+        <el-row>
+          <el-col :span="6">
+          <ent-select title="签约企业" place-holder="请输入签约企业"
+                    @input-select="salaryInputSelect">
+        </ent-select>
+          </el-col>
+          <el-col :span="15">
+          <el-form-item label="签约发起时间">
             <el-date-picker
               v-model="selectDate"
               type="daterange"
               align="right"
               unlink-panels
               range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="请输入开始时间"
+              end-placeholder="请输入结束时间"
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
-      </el-row>
-      <el-row type="flex" justify="left">
-        <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
-          </el-button>
-        </el-col>
-      </el-row>
+          </el-col>
+          <el-col :span="3">
+            <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+            </el-button>
+          </el-col>
+        </el-row>
     </el-form>
 
-    <el-table ref="entSignAuditTable" :data="entTaskList" style="width: 100%" border v-loading="isLoading">
-
-      <el-table-column align="center" label="企业编号">
+    <el-table ref="ContractListTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
+      <!--批次号-->
+      <el-table-column align="center" label="批次号" fixed>
         <template slot-scope="scope">
-          <span size="small">{{scope.row.entId}}</span>
+          <span class="globalPointer" size="small" @click="getContractSignDetail(scope.row)">{{scope.row.batchId}}</span>
         </template>
       </el-table-column>
-      <!--发薪企业-->
-      <el-table-column align="center" label="企业名称">
+      <el-table-column align="center" label="合同名称">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.entName}}</span>
+          <span size="small">{{scope.row.contractName}}</span>
         </template>
       </el-table-column>
-
-      <!--运营主企业-->
-      <el-table-column align="center" label="运营主企业">
+      <el-table-column align="center" label="合同类型">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.operationEntName}}</span>
+          <span size="small">{{scope.row.contractType | filterContractType()}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="企业管理员">
+      <el-table-column align="center" label="合同份数">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.adminName}}</span>
+          <span size="small">{{scope.row.sendCount}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="任务编号">
+      <el-table-column align="center" label="已签约人数">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.taskId}}</span>
+          <span size="small">{{scope.row.signCount}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="任务名称">
+      <el-table-column align="center" label="撤销合同份数">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.taskName}}</span>
+          <span size="small">{{scope.row.cancelCount}}</span>
         </template>
       </el-table-column>
       <!--发放总人数-->
-      <el-table-column align="center" label="需要人数">
+      <el-table-column align="center" label="合同状态">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.peopleCount}}</span>
+          <span size="small">{{scope.row.state| filterContractState()}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="报名人数">
+      <el-table-column align="center" label="签约企业">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.signUpTotal}}</span>
+          <span size="small">{{scope.row.entName }}</span>
         </template>
       </el-table-column>
-      <!--批次状态-->
-      <el-table-column align="center" label="任务状态">
+<!--      <el-table-column align="center" label="合同到期日">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.state | filterTaskListState()}}</span>
+          <span size="small">{{scope.row.abortDate | filterdateYMDHMS()}}</span>
+        </template>
+      </el-table-column>-->
+      <el-table-column align="center" label="签约截止日期">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.abortDate | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
-      <!--提交时间-->
-      <el-table-column width="170" align="center" label="创建时间">
+      <el-table-column align="center" label="签约发起时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.createDate | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column fixed="right" label="操作" width="120" align="center">
+<!--      <el-table-column fixed="right" label="操作" align="center">
         <template slot-scope="scope">
-          <el-button  @click="toSignInList(scope.row)"
-                     type="primary" plain size="small">查看报名详情
+          <el-button  @click="toSalaryDetail(scope.row)"
+                     type="primary" plain size="small">查看详情
           </el-button>
         </template>
-      </el-table-column>
-
+      </el-table-column>-->
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="block">
@@ -135,7 +143,7 @@
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import * as filters from 'filters'
-  import { ERR_OK } from '../../../api/index'
+  import { ERR_OK } from '../../api/index'
   export default {
     data () {
       return {
@@ -148,9 +156,10 @@
         },
         queryModel: {
           pageNum: 1,
-          pageSize: 10
+          pageSize: 10,
+          salaryType: 7
         },
-        entTaskList: [],
+        dataList: [],
         editIndex: null,
         pickerOptions2: {
           shortcuts: [{
@@ -182,14 +191,21 @@
       }
     },
     computed: {
-      taskStateSource () {
-        return state.funTaskListState()
+      contractTypeSource () {
+        return state.funContractType()
       },
-      typeTaskListSource () {
-        return state.typeTaskListState()
+      contractStateSource () {
+        return state.funContractState()
       }
     },
     methods: {
+      getContractSignDetail (row) {
+        this.$router.push({
+          path: '/contract_sign',
+          name: '合同签约管理',
+          params: {batchId: row.batchId}
+        })
+      },
       salaryInputSelect (entId) {
         if (entId !== undefined) {
           this.queryModel.entId = entId
@@ -213,33 +229,13 @@
           this.queryModel.startDate = null
           this.queryModel.endDate = null
         }
-        Api.getTaskList(this.queryModel).then(response => {
+        Api.getContractBatchList(this.queryModel).then(response => {
           this.isLoading = false
           if (response.data.code === ERR_OK) {
-            this.entTaskList = response.data.data.list
+            this.dataList = response.data.data.list
             this.totalCount = response.data.data.totalCount
           }
           this.queryModel.salaryMonth = _salaryMonth
-        })
-      },
-      toSignInList(row) {
-        console.log(row)
-        debugger
-        if (row.signUpTotal === '0') {
-          this.open4()
-          return
-        }
-        this.$router.push({
-          path: '/task_sign_in',
-          name: '报名管理',
-          params: {taskId: row.taskId}
-        })
-      },
-      open4() {
-        this.$notify({
-          title: '警告',
-          message: '该任务暂无用户报名！',
-          type: 'warning'
         })
       },
       pageHandelCurrentChange (val) {

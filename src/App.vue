@@ -32,6 +32,7 @@ export default {
       background-color: $color-background-aside-focus
   .el-row {
     margin-bottom: 15px;
+    display: flex;
     &:last-child {
       margin-bottom: 0;
     }
@@ -143,6 +144,7 @@ export default {
     .el-form-item {
       font-size: 14px;
       margin-bottom: 0px;
+      display: flex;
       span{
         font-size: 12px;
       }

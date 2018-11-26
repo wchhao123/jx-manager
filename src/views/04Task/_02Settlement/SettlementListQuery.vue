@@ -16,7 +16,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
           <el-form-item label="批次状态">
             <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择批次状态">
               <el-option

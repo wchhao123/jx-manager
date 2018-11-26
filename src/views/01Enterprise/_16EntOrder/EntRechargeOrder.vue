@@ -28,7 +28,7 @@
           <!--</el-select>-->
         <!--</el-form-item>-->
       </el-row>
-      <el-row>
+      <el-row type="flex">
 
           <el-form-item label="订单状态">
             <el-select size="small" v-model="queryModel.orderState" filterable clearable placeholder="请选择订单状态">

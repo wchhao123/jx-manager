@@ -104,7 +104,7 @@
        <el-table-column :span="6"  align="center" label="认证状态" >
          <template slot-scope="scope">
            <span size="small">{{scope.row.verifyState | filterEntVerifyState}}</span>
-           <span style="color: #FF2F0F; cursor: pointer;"
+           <span style="color: #F56C6C; cursor: pointer;"
                  v-show="scope.row.verifyState==='0' || scope.row.verifyState==='2'"
                  size="small"
                  @click.stop="_helpVerify(scope.row)"

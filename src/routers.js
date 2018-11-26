@@ -11,6 +11,8 @@ import EntRechargeOrder from 'views/01Enterprise/_16EntOrder/EntRechargeOrder.vu
 import EntSalaryList from 'views/01Enterprise/_17EntSalary/EntSalaryListQuery.vue'
 import EntSalaryDetail from 'views/01Enterprise/_17EntSalary/EntSalaryDetailQuery.vue'
 import JFTrade from 'views/01Enterprise/_18JFTrade/JFEntTrade'
+import ContractQuery from 'views/04Contract/ContractListQuery.vue'
+import ContractSign from 'views/04Contract/ContractSignQuery.vue'
 
 import TaskSettlementList from 'views/04Task/_02Settlement/SettlementListQuery.vue'
 import TaskSettlementDetailList from 'views/04Task/_02Settlement/EntTaskDetailQuery.vue'
@@ -58,11 +60,13 @@ export default new Router({
         {path: '/enterprise_balance', component: EntBalanceQuery, name: '余额查询'},
         {path: '/money_manage', component: MoneyManage, name: '资金托管申请查询'},
         {path: '/enterprise_accreditation', component: EntRealNameAudit, name: '实名认证审核'},
-        {path: '/enterprise_sign', component: EntSignAudit, name: '签名审核'},
+        {path: '/enterprise_sign', component: EntSignAudit, name: '签约审核'},
         {path: '/enterprise_recharge', component: EntRechargeOrder, name: '充值订单'},
         {path: '/enterprise_salary', component: EntSalaryList, name: '发放批次查询'},
         {path: '/enterprise_salary_detail', component: EntSalaryDetail, name: '发放明细查询'},
-        {path: '/enterprise_jf_trade', component: JFTrade, name: 'JF交易明细查询'}
+        {path: '/enterprise_jf_trade', component: JFTrade, name: 'JF交易明细查询'},
+        {path: '/contract_query', component: ContractQuery, name: '合同批次管理'},
+        {path: '/contract_sign', component: ContractSign, name: '合同签约管理'}
       ]
     },
     {

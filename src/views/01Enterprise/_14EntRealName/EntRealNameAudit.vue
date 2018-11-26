@@ -28,7 +28,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
         <el-form-item label="提交时间">
           <el-date-picker
             class="startDate"

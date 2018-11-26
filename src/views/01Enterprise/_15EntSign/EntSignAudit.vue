@@ -1,15 +1,16 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
+    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
       <el-row type="flex" >
-        <ent-select :span="6" title="企业名称" place-holder="企业名称"
+        <ent-select  title="企业名称" place-holder="企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
-        <el-form-item :span="6" label="申请人账号">
+        <el-form-item>
+        </el-form-item>
+        <el-form-item  label="申请人账号">
           <el-input size="small" v-model="queryModel.mobile" placeholder="请输入申请人账号"></el-input>
         </el-form-item>
-
-          <el-form-item :span="6" label="审批状态">
+          <el-form-item  label="审批状态">
             <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择审批状态">
               <el-option
                 v-for="item in entSignStateSource"
@@ -19,14 +20,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-
-        <!--// 审批人-->
-          <el-form-item :span="6" label="审批人">
-            <el-input size="small" placeholder="请输入审批人" v-model="queryModel.verifyPerson"></el-input>
-          </el-form-item>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
+        <!--// 审批人-->
+        <el-form-item  label="审批人">
+          <el-input size="small" placeholder="请输入审批人" v-model="queryModel.verifyPerson"></el-input>
+        </el-form-item>
           <el-form-item label="提交时间">
             <el-date-picker
               class="startDate"
@@ -246,6 +246,9 @@
   }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+/*  .el-row{
+    height: 40px;
+  }*/
   #recharge_manage_new .el-form-item {
     width: 100%;
   }
