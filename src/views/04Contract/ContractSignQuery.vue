@@ -57,7 +57,7 @@
         </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_task_export')">导出
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_contract_sign_export')">导出
           </el-button>
         </el-col>
         <el-col :span="3">
@@ -91,7 +91,7 @@
       </el-table-column>
       <el-table-column align="center" label="合同名称">
         <template slot-scope="scope">
-          <span class="globalPointer" size="small"  @click.stop="clickEntId(scope.row)">{{scope.row.contractName}}</span>
+          <span class="globalPointer" size="small"  @click="getContractPage(scope.row)">{{scope.row.contractName}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同类型">
@@ -157,7 +157,9 @@
   export default {
     data () {
       return {
+        contractTitle: '合同协议',
         isLoading: false,
+        visible: false,
         selectDate: '',
         tableSpan: 2,
         totalCount: 0,
@@ -218,6 +220,17 @@
       }
     },
     methods: {
+      getContractPage (row) {
+        if (row.contractUrl !== undefined && row.contractUrl != null) {
+          window.open(row.contractUrl)
+        } else {
+          this.$notify({
+            title: '警告',
+            message: '该用户暂无合同信息！',
+            type: 'warning'
+          })
+        }
+      },
       getParams (r) {
         debugger
         let name = this.$route.name
@@ -268,7 +281,7 @@
         })
       },
       doExportSalaryList () {
-        this.$confirm('确认需要导出任务批次数据?', '提示', {
+        this.$confirm('确认需要导出合同签约批次数据?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -283,7 +296,7 @@
             this.queryModel.startDate = null
             this.queryModel.endDate = null
           }
-          Api.getTaskExport(this.queryModel).then(resp => {
+          Api.getContractSignExport(this.queryModel).then(resp => {
             this.queryModel.salaryMonth = _salaryMonth
             this.isLoading = false
             let data = resp.data
@@ -295,7 +308,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '任务批次.xls')
+            link.setAttribute('download', '合同签约批次.xls')
             document.body.appendChild(link)
             link.click()
           })
@@ -304,15 +317,6 @@
             type: 'info',
             message: '已取消'
           })
-        })
-      },
-      toSalaryDetail(row) {
-        console.log('toSalaryDetail')
-        console.log(row)
-        this.$router.push({
-          path: '/task_settlement_detail',
-          name: '结算批次详情查询',
-          params: {salaryId: row.salaryId}
         })
       },
       pageHandelCurrentChange (val) {
