@@ -2,15 +2,37 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store'
 import router from '../routers'
-
+export const http = {
+  prefix: '/jx-manage',
+  post: 'post',
+  get: 'get',
+  responseType: {
+    arraybuffer: 'arraybuffer'
+  }
+}
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://192.168.68.84:7088/',
 })
 // const router = new VueRouter({})
-
+export function post (url, data) {
+  return new Promise((resolve, reject) => {
+    service.post(http.prefix + url, data)
+      .then(response => {
+        resolve(response.data)
+      }, err => {
+        reject(err)
+      })
+  })
+  /*return service({
+    url: http.prefix + url,
+    method: http.post,
+    params: data
+  })*/
+}
 // request拦截器
 service.interceptors.request.use(config => {
+  debugger
   if (config.url.indexOf('/login') !== -1) {
     return config
   }
@@ -41,6 +63,7 @@ service.interceptors.request.use(config => {
 // // respone拦截器
 service.interceptors.response.use(
   response => {
+    debugger
     return response
   },
   error => {
@@ -67,7 +90,14 @@ service.interceptors.response.use(
             type: 'error',
             duration: 5 * 1000
           })
-          break
+          return Promise.reject(error)
+        case 404:
+          Message({
+            message: '该页面不存在！',
+            type: 'error',
+            duration: 5 * 1000
+          })
+          return Promise.reject(error)
         // router.replace({path: '/login',})
       }
     }

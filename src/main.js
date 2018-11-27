@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
+import {post} from './utils/fetch'
 import router from './routers'
 import jsencrypt from 'jsencrypt'
 import store from './store'
@@ -16,6 +17,7 @@ import 'common/stylus/index.styl'
 import * as filters from './filters'
 
 Vue.prototype.$axios = axios
+Vue.prototype.$post = post
 Vue.prototype.$encrypt = jsencrypt
 
 // 全局过滤器

@@ -141,12 +141,14 @@
 <script type="text/ecmascript-6">
   import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
+  import {url} from 'common/js/url'
   import * as Api from 'api'
   import * as filters from 'filters'
   import { ERR_OK } from '../../api/index'
   export default {
     data () {
       return {
+        queryUrl: '/contract_query1',
         isLoading: false,
         selectDate: '',
         tableSpan: 2,
@@ -240,13 +242,25 @@
           this.queryModel.startDate = null
           this.queryModel.endDate = null
         }
-        Api.getContractBatchList(this.queryModel).then(response => {
+        /*Api.getContractBatchList(this.queryModel).then(response => {
           this.isLoading = false
           if (response.data.code === ERR_OK) {
             this.dataList = response.data.data.list
             this.totalCount = response.data.data.totalCount
           }
           this.queryModel.salaryMonth = _salaryMonth
+        })*/
+        this.$post(url(this.queryUrl), this.queryModel).then(response => {
+          debugger
+          this.isLoading = false
+          if (response.code === ERR_OK) {
+            this.dataList = response.data.list
+            this.totalCount = response.data.totalCount
+          }
+          this.queryModel.salaryMonth = _salaryMonth
+        }, err => {
+          this.isLoading = false
+          console.log(err)
         })
       },
       pageHandelCurrentChange (val) {
