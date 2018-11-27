@@ -221,7 +221,7 @@
     },
     methods: {
       getContractPage (row) {
-        if (row.contractUrl !== undefined && row.contractUrl != null) {
+        if (row.contractUrl) {
           window.open(row.contractUrl)
         } else {
           this.$notify({

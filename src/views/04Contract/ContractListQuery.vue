@@ -65,8 +65,8 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同名称">
-        <template slot-scope="scope">
-          <span size="small">{{scope.row.contractName}}</span>
+        <template slot-scope="scope"><!--contractUrl-->
+          <span class="globalPointer" @click="getContractPage(scope.row)" size="small">{{scope.row.contractName}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同类型">
@@ -199,6 +199,17 @@
       }
     },
     methods: {
+      getContractPage (row) {
+        if (row.contractUrl) {
+          window.open(row.contractUrl)
+        } else {
+          this.$notify({
+            title: '警告',
+            message: '暂无合同信息！',
+            type: 'warning'
+          })
+        }
+      },
       getContractSignDetail (row) {
         this.$router.push({
           path: '/contract_sign',

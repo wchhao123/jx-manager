@@ -145,10 +145,10 @@
             {required: true, message: '请输入法人代表姓名', trigger: 'blur'},
             {validator: Validator.validateName, trigger: 'blur'}
           ],
-          legalPersonCard: [
+          /*legalPersonCard: [
             {required: true, message: '法人代表身份证号', trigger: 'blur'},
             {validator: Validator.validateIdCard, trigger: 'blur'}
-          ],
+          ],*/
           address: [
             {required: true, message: '请输入企业地址', trigger: 'blur'}
           ],
