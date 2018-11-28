@@ -67,7 +67,12 @@
       </el-row>
     </el-form>
 
-    <el-table ref="ContractSignTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
+    <el-table ref="ContractSignTable" :data="dataList" style="width: 100%" border v-loading="isLoading"
+              @selection-change="handleSelectionChange">
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
       <!--批次号-->
       <el-table-column align="center" label="批次号" fixed>
         <template slot-scope="scope">
@@ -158,6 +163,7 @@
     data () {
       return {
         contractTitle: '合同协议',
+        multipleSelection: [],
         isLoading: false,
         visible: false,
         selectDate: '',
@@ -220,6 +226,29 @@
       }
     },
     methods: {
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.ContractSignTable.toggleRowSelection(row)
+          })
+        } else {
+          this.$refs.ContractSignTable.clearSelection()
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = []
+       val.forEach((item, index, arr) => {
+         if (!item.contractUrl) {
+        /*   this.$notify({
+             title: '警告',
+             message: '该用户暂无合同信息！',
+             type: 'warning'
+           })*/
+         } else {
+           this.multipleSelection.push(item.signId)
+         }
+       })
+      },
       getContractPage (row) {
         if (row.contractUrl) {
           window.open(row.contractUrl)
@@ -262,6 +291,7 @@
       },
       doQuery () {
         this.isLoading = true
+        this.queryModel.signIds = ''
         let _salaryMonth = this.queryModel.salaryMonth
         this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
         if (this.selectDate !== null && this.selectDate) {
@@ -281,12 +311,15 @@
         })
       },
       doExportSalaryList () {
-        this.$confirm('确认需要导出合同签约批次数据?', '提示', {
+        debugger
+        console.log(this.multipleSelection)
+        this.$confirm('确认需要导出合同签约信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.isLoading = true
+          this.queryModel.signIds = this.multipleSelection.toString()
           let _salaryMonth = this.queryModel.salaryMonth
           this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
           if (this.selectDate !== null && this.selectDate) {
@@ -303,12 +336,12 @@
             if (!data) {
               return
             }
-            let blob = new Blob([data], {type: 'application/vnd.ms-excel'})
+            let blob = new Blob([data])
             let objectUrl = URL.createObjectURL(blob)
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '合同签约批次.xls')
+            link.setAttribute('download', '合同文件.zip')
             document.body.appendChild(link)
             link.click()
           })

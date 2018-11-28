@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store'
 import router from '../routers'
-export const http = {
+const http = {
   prefix: '/jx-manage',
   post: 'post',
   get: 'get',
@@ -24,11 +24,31 @@ export function post (url, data) {
         reject(err)
       })
   })
-  /*return service({
-    url: http.prefix + url,
-    method: http.post,
-    params: data
-  })*/
+}
+export function excel (url, data) {
+  return new Promise((resolve, reject) => {
+    service.post({
+      url: http.prefix + url,
+      method: http.post,
+      params: data,
+      responseType: http.responseType.arraybuffer
+    }).then(response => {
+        resolve(response.data)
+      }, err => {
+        reject(err)
+      })
+  })
+}
+export function get(url, data) {
+  return new Promise((resolve, reject) => {
+    axios.get(http.prefix + url, {
+      params: data
+    }).then(response => {
+        resolve(response.data)
+      }).catch(err => {
+        reject(err)
+      })
+  })
 }
 // request拦截器
 service.interceptors.request.use(config => {

@@ -282,18 +282,14 @@ export function funTaskState () {
   ]
 }
 export function funContractType () {
-  return [//1 表示合作协议 2 表示劳动合同 3表示采购合同 4表示经销商合同
-    {'key': 1, 'value': '合作协议'},
-    {'key': 2, 'value': '劳动合同'},
-    {'key': 3, 'value': '采购合同'},
-    {'key': 4, 'value': '经销商合同'}
+  return [
+    {'key': 1, 'value': '灵活用工协议'},
+    {'key': 2, 'value': '众包协议'}
   ]
 }
 export const contractType = {
-  1: '合作协议',
-  2: '劳动合同',
-  3: '采购合同',
-  4: '经销商合同'
+  1: '灵活用工协议',
+  2: '众包协议'
 }
 export function funContractState () {
   return [
