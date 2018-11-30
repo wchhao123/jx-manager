@@ -107,7 +107,7 @@
       </el-table-column>-->
       <el-table-column align="center" label="签约截止日期">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.abortDate | filterdateYMDHMS()}}</span>
+          <span size="small">{{scope.row.abortDate | filterDateYYYYMMDD()}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="签约发起时间">
@@ -158,8 +158,7 @@
         },
         queryModel: {
           pageNum: 1,
-          pageSize: 10,
-          salaryType: 7
+          pageSize: 10
         },
         dataList: [],
         editIndex: null,

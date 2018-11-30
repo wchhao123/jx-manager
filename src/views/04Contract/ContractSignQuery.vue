@@ -57,7 +57,7 @@
         </el-form-item>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_contract_sign_export')">导出
+          <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_contract_sign_export')">下載合同
           </el-button>
         </el-col>
         <el-col :span="3">
@@ -124,7 +124,7 @@
       <!--提交时间-->
       <el-table-column align="center" label="签约截止日期">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.abortDate | filterdateYMDHMS()}}</span>
+          <span size="small">{{scope.row.abortDate | filterDateYYYYMMDD()}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="签约发起时间">
@@ -150,6 +150,7 @@
         </el-pagination>
       </div>
     </el-col>
+    <el-dialog ></el-dialog>
   </div>
 </template>
 
@@ -311,8 +312,14 @@
         })
       },
       doExportSalaryList () {
-        debugger
-        console.log(this.multipleSelection)
+        if (this.dataList.length < 1) {
+          this.$notify({
+            title: '警告',
+            message: '暂无可导出合同签约信息！',
+            type: 'warning'
+          })
+          return
+        }
         this.$confirm('确认需要导出合同签约信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',

@@ -1,5 +1,4 @@
 export function url(query) {
-  debugger
   if (!query) {
     return ''
   }

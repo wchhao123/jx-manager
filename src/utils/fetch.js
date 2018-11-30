@@ -15,10 +15,13 @@ const service = axios.create({
   // baseURL: 'http://192.168.68.84:7088/',
 })
 // const router = new VueRouter({})
-export function post (url, data) {
+export function post (url, params = {}) {
   return new Promise((resolve, reject) => {
-    service.post(http.prefix + url, data)
-      .then(response => {
+    service({
+      url: http.prefix + url,
+      method: http.post,
+      params: params
+    }).then(response => {
         resolve(response.data)
       }, err => {
         reject(err)
@@ -27,11 +30,11 @@ export function post (url, data) {
 }
 export function excel (url, data) {
   return new Promise((resolve, reject) => {
-    service.post({
+    service({
       url: http.prefix + url,
       method: http.post,
       params: data,
-      responseType: http.responseType.arraybuffer
+      responseType: 'arraybuffer'
     }).then(response => {
         resolve(response.data)
       }, err => {
@@ -52,7 +55,6 @@ export function get(url, data) {
 }
 // request拦截器
 service.interceptors.request.use(config => {
-  debugger
   if (config.url.indexOf('/login') !== -1) {
     return config
   }
@@ -73,6 +75,15 @@ service.interceptors.request.use(config => {
     }
   }
   config.params = _newPar
+  let _newData = {}
+  for (let key in config.data) {
+    //如果对象属性的值不为空，就保存该属性（这里我做了限制，如果属性的值为0，保存该属性。如果属性的值全部是空格，属于为空。）
+    if ((config.data[key] === 0 || config.data[key]) && config.data[key].toString().replace(/(^\s*)|(\s*$)/g, '') !== '') {
+      //记录属性
+      _newData[key] = config.data[key]
+    }
+  }
+  config.data = _newData
   return config
 }, error => {
   // Do something with request error
@@ -83,11 +94,9 @@ service.interceptors.request.use(config => {
 // // respone拦截器
 service.interceptors.response.use(
   response => {
-    debugger
     return response
   },
   error => {
-    debugger
     if (error.response) {
       // alert(JSON.stringify(error.response))
       // Message({
