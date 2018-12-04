@@ -95,7 +95,6 @@
 </template>
 
 <script>
-  import EntSelect from 'components/select/EntSelect'
   import * as filters from 'filters'
   import * as Api from 'api'
 
@@ -194,9 +193,6 @@
         console.log('pageChange')
         console.log(val)
       }
-    },
-    components: {
-      EntSelect
     }
   }
 </script>

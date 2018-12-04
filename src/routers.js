@@ -49,7 +49,8 @@ export default new Router({
     {
       path: '/',
       component: Home
-    }, {
+    },
+    {
       path: '/',
       component: Home,
       name: '企业管理',

@@ -122,7 +122,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as Api from 'api'
   import * as State from 'common/js/state-dic'
   import * as filters from 'filters'
@@ -225,7 +224,6 @@
       }
     },
     components: {
-      EntSelect,
       MoneyManageDetail
     }
   }

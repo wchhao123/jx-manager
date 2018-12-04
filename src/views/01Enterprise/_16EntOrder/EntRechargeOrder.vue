@@ -204,7 +204,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import { ERR_OK } from '../../../api/index'
@@ -380,8 +379,7 @@
       }
     },
     components: {
-      EntRechargeDetail,
-      EntSelect
+      EntRechargeDetail
     }
   }
 </script>

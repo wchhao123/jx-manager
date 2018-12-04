@@ -188,7 +188,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import EntAuditDetail from '../_14EntRealName/EntAuditDetail.vue'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
@@ -341,8 +340,7 @@
       }
     },
     components: {
-      EntAuditDetail,
-      EntSelect
+      EntAuditDetail
     }
   }
 </script>

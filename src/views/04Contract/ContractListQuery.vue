@@ -12,20 +12,20 @@
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
             <el-option
-              v-for="item in this.$state.funContractType()"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key">
+              v-for="(item, index) of this.$state.contractType"
+              :key="index"
+              :label="item"
+              :value="index">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="合同状态">
           <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择合同状态">
             <el-option
-              v-for="item in this.$state.funContractState()"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key">
+              v-for="(item, index) of this.$state.contractState"
+              :key="index"
+              :label="item"
+              :value="index">
             </el-option>
           </el-select>
         </el-form-item>

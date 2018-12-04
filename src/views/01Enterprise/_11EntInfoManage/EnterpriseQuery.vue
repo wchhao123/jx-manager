@@ -170,7 +170,6 @@ import * as Api from 'api'
 import * as state from 'common/js/state-dic'
 import * as filters from 'filters'
 import EntDetail from './EntDetail'
-import EntSelect from 'components/select/EntSelect'
 import EntAdmin from './EntAdministrator'
 import EntBankCard from './EntBankCard'
 import EntVerify from './EntVerify'
@@ -353,7 +352,6 @@ export default {
     }
   },
   components: {
-    EntSelect,
     EntDetail,
     EntAdmin,
     EntBankCard,

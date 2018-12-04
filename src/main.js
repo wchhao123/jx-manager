@@ -16,7 +16,7 @@ import jsencrypt from 'jsencrypt'
 import store from './store'
 import 'babel-polyfill'
 import 'common/stylus/index.styl'
-import * as filters from './filters'
+import * as filter from './filters'
 
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post
@@ -25,14 +25,14 @@ Vue.prototype.$export = excel
 Vue.prototype.$encrypt = jsencrypt
 Vue.prototype.$url = url
 Vue.prototype.$state = state
-Vue.prototype.$filter = filters
+Vue.prototype.$filter = filter
 
 //全局select
 Vue.component('ent-select', EntSelect)
 
 // 全局过滤器
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+Object.keys(filter).forEach(key => {
+  Vue.filter(key, filter[key])
 })
 
 Vue.config.productionTip = false

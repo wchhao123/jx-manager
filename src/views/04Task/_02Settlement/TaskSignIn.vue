@@ -136,7 +136,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import UserResume from './UserResume.vue'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
@@ -336,7 +335,6 @@
       }
     },
     components: {
-      EntSelect,
       UserResume
     }
   }
