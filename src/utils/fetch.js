@@ -2,14 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '../store'
 import router from '../routers'
-const http = {
-  prefix: '/jx-manage',
-  post: 'post',
-  get: 'get',
-  responseType: {
-    arraybuffer: 'arraybuffer'
-  }
-}
+import { ERR_OK, http } from '../api/index'
 // 创建axios实例
 const service = axios.create({
   // baseURL: 'http://192.168.68.84:7088/',
@@ -22,6 +15,14 @@ export function post (url, params = {}) {
       method: http.post,
       params: params
     }).then(response => {
+        if (ERR_OK !== response.data.code) {
+          Message({
+            message: response.data.msg,
+            type: 'error',
+            duration: 5 * 1000
+          })
+          reject(response.data.msg)
+        }
         resolve(response.data)
       }, err => {
         reject(err)
@@ -47,7 +48,14 @@ export function get(url, data) {
     axios.get(http.prefix + url, {
       params: data
     }).then(response => {
-        resolve(response.data)
+      if (ERR_OK !== response.data.code) {
+        Message({
+          message: response.data.msg,
+          type: 'error',
+          duration: 5 * 1000
+        })
+        reject(response.data.msg)
+      }
       }).catch(err => {
         reject(err)
       })

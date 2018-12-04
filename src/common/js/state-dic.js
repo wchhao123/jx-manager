@@ -1,3 +1,31 @@
+const pickerOptions2 = {
+  shortcuts: [{
+    text: '最近一周',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      picker.$emit('pick', [start, end])
+    }
+  }, {
+    text: '最近一个月',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+      picker.$emit('pick', [start, end])
+    }
+  }, {
+    text: '最近三个月',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+      picker.$emit('pick', [start, end])
+    }
+  }]
+}
+export {pickerOptions2}
 
 const entVerifyStateMap = {
   0: '未认证',
@@ -283,13 +311,13 @@ export function funTaskState () {
 }
 export function funContractType () {
   return [
-    {'key': 1, 'value': '灵活用工协议'},
-    {'key': 2, 'value': '众包协议'}
+    {'key': 1, 'value': '双方协议'},
+    {'key': 2, 'value': '三方协议'}
   ]
 }
 export const contractType = {
-  1: '灵活用工协议',
-  2: '众包协议'
+  1: '双方协议',
+  2: '三方协议'
 }
 export function funContractState () {
   return [

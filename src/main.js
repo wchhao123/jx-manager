@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import EntSelect from 'components/select/EntSelect'
+import {url} from 'api/url'
+import * as state from 'common/js/state-dic'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -13,14 +16,19 @@ import jsencrypt from 'jsencrypt'
 import store from './store'
 import 'babel-polyfill'
 import 'common/stylus/index.styl'
-
 import * as filters from './filters'
 
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post
 Vue.prototype.$get = get
-Vue.prototype.$excel = excel
+Vue.prototype.$export = excel
 Vue.prototype.$encrypt = jsencrypt
+Vue.prototype.$url = url
+Vue.prototype.$state = state
+Vue.prototype.$filter = filters
+
+//全局select
+Vue.component('ent-select', EntSelect)
 
 // 全局过滤器
 Object.keys(filters).forEach(key => {
