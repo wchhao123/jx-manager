@@ -254,7 +254,7 @@
       resetDoQuery() {
         this.queryModel.pageNum = 1
         this.doQuery()
-        this.$route.name = 'pushed'},
+      },
     doQuery () {
       this.isLoading = true
       this.queryModel.signIds = ''
