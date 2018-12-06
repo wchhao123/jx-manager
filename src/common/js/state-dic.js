@@ -324,7 +324,8 @@ export const contractSignState = {
   2: '签署中',
   3: '发送失败',
   4: '已撤销',
-  5: '已过期'
+  5: '已过期',
+  6: '发送中'
 }
 export const signInState = {
   1: '待处理',
@@ -438,7 +439,7 @@ export function funUserTradeType () {
     {'key': 8, 'value': '余额提现'},
     {'key': 10, 'value': '充值'},
     {'key': 11, 'value': '充值退款'},
-    {'key': 14, 'value': '个人综合所得'}
+    {'key': 14, 'value': '个人经营所得'}
   ]
 }
 

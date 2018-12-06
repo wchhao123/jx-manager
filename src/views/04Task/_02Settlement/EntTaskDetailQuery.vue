@@ -229,7 +229,7 @@
       getParams (r) {
         debugger
         let name = this.$route.name
-        if (name === '结算批次详情查询') {
+        if (name === '结算批次详情查询' && this.$route.params.salaryId !== undefined) {
           this.queryModel = {
             pageNum: 1,
               pageSize: 10,

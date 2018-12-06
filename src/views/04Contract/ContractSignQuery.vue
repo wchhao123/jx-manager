@@ -229,7 +229,7 @@
       getParams (r) {
         debugger
         let name = this.$route.name
-        if (name === '合同签约管理') {
+        if (name === '合同签约管理' && this.$route.params.batchId !== undefined) {
           this.queryModel = {
             pageNum: 1,
             pageSize: 10
@@ -254,7 +254,7 @@
       resetDoQuery() {
         this.queryModel.pageNum = 1
         this.doQuery()
-      },
+        this.$route.name = 'pushed'},
     doQuery () {
       this.isLoading = true
       this.queryModel.signIds = ''

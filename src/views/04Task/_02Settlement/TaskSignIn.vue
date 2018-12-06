@@ -213,7 +213,7 @@
     methods: {
       getParams (r) {
         let name = this.$route.name
-        if (name === '报名管理') {
+        if (name === '报名管理' && this.$route.params.taskId !== undefined) {
           let taskId = this.$route.params.taskId
           this.queryModel = {
             pageNum: 1,

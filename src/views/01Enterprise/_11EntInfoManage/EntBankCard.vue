@@ -53,7 +53,7 @@
                        :span="8" width="480"
                         label="开户地区">
         <template slot-scope="scope">
-          <el-select v-model="scope.row.province" @change="selectProvince"
+          <el-select v-model="scope.row.province" @change="selectProvince(scope.$index,scope.row.province)"
                      :disabled="scope.row.keyId!==''"
                      size="mini">
             <el-option v-for="item in _provinces"
@@ -63,14 +63,15 @@
             >
             </el-option>
           </el-select>
-          <el-select v-model="scope.row.city" @change="selectCity"
+          <el-select v-model="scope.row.city" @change="selectCity(scope.$index,scope.row.city)"
                      :disabled="scope.row.keyId!==''"
                      size="mini">
             <el-option v-for="item in cities"
                        :key="item.uniqueId"
                        :label="item.addrName"
                        :value="item"
-            ></el-option>
+            >
+            </el-option>
           </el-select>
         </template>
       </el-table-column>
@@ -195,18 +196,24 @@
           }
         })
       },
-      selectProvince(val) {
-        console.log(`选中省份${val}`)
+      selectProvince(index, val) {
+        debugger
+        this.entBankcardInfs[index].province = val.addrName
         this.currentRow.province = val.addrName
         Api.getCities({provinceId: val.uniqueId}).then(response => {
           if (response.data.code === Api.ERR_OK) {
             this.cities = response.data.data
+            this.entBankcardInfs[index].city = this.cities[0].addrName
             this.currentRow.city = this.cities[0].addrName
           }
         })
       },
-      selectCity(val) {
-        console.log(`选中了城市${val}`)
+      selectCity(index, val) {
+        debugger
+        this.entBankcardInfs[index].city = val.addrName
+        this.entBankcardInfs.splice(index, 1, this.entBankcardInfs[index])
+        this.set(this, 'entBankcardInfs', this.entBankcardInfs)
+        this.currentRow.city = val.addrName
         this.entInfo.city = val.addrName
         this.entInfo.addrId = val.uniqueId
       },
