@@ -157,7 +157,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import * as filters from 'filters'
@@ -230,7 +229,7 @@
       getParams (r) {
         debugger
         let name = this.$route.name
-        if (name === '结算批次详情查询') {
+        if (name === '结算批次详情查询' && this.$route.params.salaryId !== undefined) {
           this.queryModel = {
             pageNum: 1,
               pageSize: 10,
@@ -331,9 +330,6 @@
         console.log('pageChange')
         console.log(val)
       }
-    },
-    components: {
-      EntSelect
     }
   }
 </script>

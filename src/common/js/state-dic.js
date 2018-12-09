@@ -1,3 +1,31 @@
+const pickerOptions2 = {
+  shortcuts: [{
+    text: '最近一周',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+      picker.$emit('pick', [start, end])
+    }
+  }, {
+    text: '最近一个月',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+      picker.$emit('pick', [start, end])
+    }
+  }, {
+    text: '最近三个月',
+    onClick (picker) {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+      picker.$emit('pick', [start, end])
+    }
+  }]
+}
+export {pickerOptions2}
 
 const entVerifyStateMap = {
   0: '未认证',
@@ -281,7 +309,24 @@ export function funTaskState () {
     {'key': 5, 'value': '发放中'}
   ]
 }
-
+export const contractType = {
+  1: '双方协议',
+  2: '三方协议'
+}
+export const contractState = {
+  0: '未发送',
+  1: '发送成功',
+  2: '发送失败'
+}
+export const contractSignState = {
+  0: '未发送',
+  1: '已签约',
+  2: '签署中',
+  3: '发送失败',
+  4: '已撤销',
+  5: '已过期',
+  6: '发送中'
+}
 export const signInState = {
   1: '待处理',
   2: '报名取消',
@@ -380,7 +425,7 @@ export const typeUserTrade = {
   8: '余额提现',
   10: '充值',
   11: '充值退款',
-  14: '个人综合所得'
+  14: '个人经营所得'
 }
 export function funUserTradeType () {
   return [
@@ -394,7 +439,7 @@ export function funUserTradeType () {
     {'key': 8, 'value': '余额提现'},
     {'key': 10, 'value': '充值'},
     {'key': 11, 'value': '充值退款'},
-    {'key': 14, 'value': '个人综合所得'}
+    {'key': 14, 'value': '个人经营所得'}
   ]
 }
 
@@ -472,7 +517,9 @@ export const typeSystemErrorType = {
   '3': '更改发薪及详情状态异常',
   '4': 'JF成功开户更改本地状态异常',
   '6': '用户提现异常',
-  '7': '福利分配异常'
+  '7': '福利分配异常',
+  '10': '充值订单异常',
+  '11': '任务结算异常'
 }
 
 export function funSystemErrorType () {
@@ -482,7 +529,9 @@ export function funSystemErrorType () {
     {'key': '3', 'value': '更改发薪及详情状态异常'},
     {'key': '4', 'value': 'JF成功开户更改本地状态异常'},
     {'key': '6', 'value': '用户提现异常'},
-    {'key': '7', 'value': '福利分配异常'}
+    {'key': '7', 'value': '福利分配异常'},
+    {'key': '10', 'value': '充值订单异常'},
+    {'key': '11', 'value': '任务结算异常'}
   ]
 }
 

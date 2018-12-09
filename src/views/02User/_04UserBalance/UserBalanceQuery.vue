@@ -25,7 +25,6 @@
 <script type="text/ecmascript-6">
 import * as Api from 'api'
 import { ERR_OK } from '../../../api/index'
-import EntSelect from 'components/select/EntSelect'
 import * as Validator from 'common/js/validator'
 
 export default {
@@ -66,9 +65,6 @@ export default {
         }
       })
     }
-  },
-  components: {
-    EntSelect
   }
 }
 </script>

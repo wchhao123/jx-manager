@@ -172,6 +172,7 @@
           }
           if (valid) {
             this.model.roleIds = roleIds
+            this.model.rolesDTOS = []
             Api.updateAdminInfo(this.model).then((resp) => {
               this.$message({
                 type: resp.data.code === Api.ERR_OK ? 'success' : 'error',

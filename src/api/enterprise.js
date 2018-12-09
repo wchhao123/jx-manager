@@ -218,3 +218,29 @@ export function getJFTradeList (param) {
     params: param
   })
 }
+
+// 合同批次管理
+export function getContractBatchList (param) {
+  return fetch({
+    url: http.prefix + '/table/contract/batch',
+    method: http.post,
+    params: param
+  })
+}
+// 合同签约管理
+export function getContractSignList (param) {
+  return fetch({
+    url: http.prefix + '/table/contract/sign',
+    method: http.post,
+    params: param
+  })
+}
+
+export function getContractSignExport (param) {
+  return fetch({
+    url: http.prefix + '/table/contract/export',
+    method: http.post,
+    params: param,
+    responseType: http.responseType.arraybuffer
+  })
+}

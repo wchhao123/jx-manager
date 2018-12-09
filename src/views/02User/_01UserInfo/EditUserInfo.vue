@@ -31,13 +31,13 @@
           </el-select>
         </el-form-item>
       </el-row>
-      <el-row>
+      <el-row type="flex">
         <el-form-item label="证 件 号" prop="idNumber">
           <el-input v-model="model.idNumber" :disabled="_cannotEdit" size="small" maxlength="20"></el-input>
         </el-form-item>
       </el-row>
     </el-form>
-    <el-row  style="padding-top: 50px">
+    <el-row  style="padding-top: 50px" type="flex">
       <el-col :span="12" :offset="2">
         <el-button class="role_off" size="small" @click="cancelEdit">取消</el-button>
       </el-col>

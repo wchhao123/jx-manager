@@ -9,7 +9,7 @@
             ></ent-select>
         </el-col>
         <el-col>
-          <el-form-item label="审核状态">
+          <el-form-item label="开户状态">
             <el-select size="small" v-model="queryModel.openingState" filterable clearable placeholder="审核状态">
               <el-option
                 v-for="item in _entTradeType"
@@ -122,7 +122,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as Api from 'api'
   import * as State from 'common/js/state-dic'
   import * as filters from 'filters'
@@ -225,7 +224,6 @@
       }
     },
     components: {
-      EntSelect,
       MoneyManageDetail
     }
   }

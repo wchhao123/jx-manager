@@ -28,7 +28,6 @@
           </el-form-item>
         </el-row>
         <el-row>
-          <el-col :span="10">
             <el-form-item label="创建时间">
               <el-date-picker
                 v-model="selectDateRange"
@@ -41,7 +40,6 @@
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-form-item>
-          </el-col>
         </el-row>
 
         <el-row type="flex" justify="left">

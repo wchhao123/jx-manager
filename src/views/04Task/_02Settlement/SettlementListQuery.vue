@@ -16,7 +16,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
           <el-form-item label="批次状态">
             <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择批次状态">
               <el-option
@@ -159,7 +159,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import * as filters from 'filters'
@@ -310,9 +309,6 @@
         console.log('pageChange')
         console.log(val)
       }
-    },
-    components: {
-      EntSelect
     }
   }
 </script>

@@ -12,7 +12,7 @@ module.exports = {
     proxyTable: {
       '/jx-manage': {
         //target: 'https://admin.99payroll.cn/jx-manage',      // 生产
-         target: 'http://jxtest.99payroll.cn/jx-manage',      // test
+       target: 'http://jxtest.99payroll.cn/jx-manage',      // test
         // target: 'http://192.168.3.187:8092/jx-manage',      // devnpm
         // target: 'http://172.18.0.230:8092/jx-manage',   // jjn
         // target: 'http://localhost:8092/jx-manage',   //昌海同学

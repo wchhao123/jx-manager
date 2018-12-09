@@ -28,7 +28,7 @@
           <!--</el-select>-->
         <!--</el-form-item>-->
       </el-row>
-      <el-row>
+      <el-row type="flex">
 
           <el-form-item label="订单状态">
             <el-select size="small" v-model="queryModel.orderState" filterable clearable placeholder="请选择订单状态">
@@ -204,7 +204,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import { ERR_OK } from '../../../api/index'
@@ -380,8 +379,7 @@
       }
     },
     components: {
-      EntRechargeDetail,
-      EntSelect
+      EntRechargeDetail
     }
   }
 </script>

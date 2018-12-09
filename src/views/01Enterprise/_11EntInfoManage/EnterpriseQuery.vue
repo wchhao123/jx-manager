@@ -2,12 +2,9 @@
    <div>
       <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline" label-position="right">
         <el-row type="flex">
-          <el-col :span="8">
             <ent-select title="发薪企业" place-holder="请选择发薪企业"
                         @input-select="salaryInputSelect">
             </ent-select>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="认证状态">
               <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择认证状态">
                 <el-option
@@ -18,8 +15,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
             <el-form-item label="签约状态">
               <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
                 <el-option
@@ -30,7 +25,6 @@
                 </el-option>
               </el-select>
             </el-form-item>
-          </el-col>
         </el-row>
 
         <el-row>
@@ -110,7 +104,7 @@
        <el-table-column :span="6"  align="center" label="认证状态" >
          <template slot-scope="scope">
            <span size="small">{{scope.row.verifyState | filterEntVerifyState}}</span>
-           <span style="color: #FF2F0F; cursor: pointer;"
+           <span style="color: #F56C6C; cursor: pointer;"
                  v-show="scope.row.verifyState==='0' || scope.row.verifyState==='2'"
                  size="small"
                  @click.stop="_helpVerify(scope.row)"
@@ -176,7 +170,6 @@ import * as Api from 'api'
 import * as state from 'common/js/state-dic'
 import * as filters from 'filters'
 import EntDetail from './EntDetail'
-import EntSelect from 'components/select/EntSelect'
 import EntAdmin from './EntAdministrator'
 import EntBankCard from './EntBankCard'
 import EntVerify from './EntVerify'
@@ -359,7 +352,6 @@ export default {
     }
   },
   components: {
-    EntSelect,
     EntDetail,
     EntAdmin,
     EntBankCard,

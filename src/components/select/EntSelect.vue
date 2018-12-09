@@ -1,6 +1,9 @@
 <template>
-    <div>
-      <span class="title">{{title}}</span>
+    <div >
+<!--
+      <label class="title">{{}}</label>
+-->
+      <el-form-item :label="title">
       <el-select size="small" :loading="loading"
                  v-model="model" filterable
                  clearable
@@ -22,6 +25,7 @@
           <span style="float: right; font-size: 12px">{{ item.entName }}</span>
         </el-option>
       </el-select>
+      </el-form-item>
     </div>
 </template>
 
@@ -121,6 +125,6 @@
     line-height: 40px
     padding: 0 12px 0 0
     font-size: 14px!important
-  .el-select
-    width 280px
+/*  .el-select
+    width 70%*/
 </style>

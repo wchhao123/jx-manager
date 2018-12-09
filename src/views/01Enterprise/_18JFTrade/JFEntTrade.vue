@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="10">
+        <el-col :span="20">
           <el-form-item label="交易时间" required>
             <el-date-picker
               v-model="selectDateRange"
@@ -95,7 +95,6 @@
 </template>
 
 <script>
-  import EntSelect from 'components/select/EntSelect'
   import * as filters from 'filters'
   import * as Api from 'api'
 
@@ -194,9 +193,6 @@
         console.log('pageChange')
         console.log(val)
       }
-    },
-    components: {
-      EntSelect
     }
   }
 </script>

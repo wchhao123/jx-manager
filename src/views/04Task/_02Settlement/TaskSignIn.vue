@@ -15,7 +15,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
         <el-form-item :span="6" label="姓名">
           <el-input size="small" clearable v-model="queryModel.name" placeholder="请输入用户姓名"></el-input>
         </el-form-item>
@@ -136,7 +136,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import UserResume from './UserResume.vue'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
@@ -214,7 +213,7 @@
     methods: {
       getParams (r) {
         let name = this.$route.name
-        if (name === '报名管理') {
+        if (name === '报名管理' && this.$route.params.taskId !== undefined) {
           let taskId = this.$route.params.taskId
           this.queryModel = {
             pageNum: 1,
@@ -336,7 +335,6 @@
       }
     },
     components: {
-      EntSelect,
       UserResume
     }
   }

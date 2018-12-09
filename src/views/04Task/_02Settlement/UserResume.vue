@@ -50,6 +50,12 @@
         </el-form-item>
       </el-row>
     </el-form>
+    <el-dialog
+      width="70%"
+      :visible.sync="innerVisible"
+      append-to-body>
+      <img :src="imageUrl" style="width: 100%" @click="innerVisible= false"/>
+    </el-dialog>
   </div>
 </template>
 
@@ -72,7 +78,9 @@
           inputspan: 14
         },
         model: {},
-        isbigimg: false
+        isbigimg: false,
+        innerVisible: false,
+        imageUrl: ''
       }
     },
     computed: {
@@ -92,11 +100,15 @@
     methods: {
       showEntImg1() {
         console.log('你点击了图片')
-        window.open(this.detail.pictureFrontUrl)
+        //window.open(this.detail.pictureFrontUrl)
+        this.innerVisible = true
+        this.imageUrl = this.detail.pictureFrontUrl
       },
       showEntImg2() {
         console.log('你点击了图片')
-        window.open(this.detail.pictureBinhendUrl)
+        //window.open(this.detail.pictureBinhendUrl)
+        this.innerVisible = true
+        this.imageUrl = this.detail.pictureBinhendUrl
       }
     }
   }

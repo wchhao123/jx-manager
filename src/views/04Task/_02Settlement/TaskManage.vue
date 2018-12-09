@@ -14,7 +14,7 @@
           <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
       </el-row>
-      <el-row>
+      <el-row type="flex">
           <el-form-item label="任务状态">
             <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择任务状态">
               <el-option
@@ -131,7 +131,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import * as filters from 'filters'
@@ -253,9 +252,6 @@
         console.log('pageChange')
         console.log(val)
       }
-    },
-    components: {
-      EntSelect
     }
   }
 </script>

@@ -24,7 +24,7 @@
         </ent-select>
       </el-row>
 
-      <el-row>
+      <el-row type="flex">
           <el-form-item label="批次状态">
             <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择审批状态">
               <el-option
@@ -188,7 +188,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import EntSelect from 'components/select/EntSelect'
   import EntAuditDetail from '../_14EntRealName/EntAuditDetail.vue'
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
@@ -341,8 +340,7 @@
       }
     },
     components: {
-      EntAuditDetail,
-      EntSelect
+      EntAuditDetail
     }
   }
 </script>
