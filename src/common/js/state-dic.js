@@ -313,6 +313,10 @@ export const contractType = {
   1: '双方协议',
   2: '三方协议'
 }
+export const contractUpdate = {
+  1: '更新',
+  0: '删除'
+}
 export const contractState = {
   0: '未发送',
   1: '发送成功',
