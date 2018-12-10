@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline" :rules="rules" ref="update">
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline" :rules="rules" ref="update" v-loading="isLoading">
         <el-row>
           <el-form-item prop="tid" label="上上签合同模板id">
               <el-input size="small" clearable v-model="queryModel.tid" placeholder="上上签合同模板id"></el-input>
@@ -33,7 +33,7 @@
   export default {
     data () {
       return {
-        queryUrl: '/contract_update',
+        queryUrl: '/contract_add',
         isLoading: false,
         selectDate: '',
         totalCount: 0,
@@ -59,9 +59,12 @@
         debugger
         this.$refs['update'].validate((valid) => {
         if (valid) {
+          this.isLoading = true
           this.$post(this.$url(this.queryUrl), this.queryModel).then(response => {
+            this.isLoading = false
           }, err => {
             console.log(err)
+            this.isLoading = false
           })
         }})
       }
