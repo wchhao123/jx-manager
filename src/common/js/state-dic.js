@@ -320,7 +320,10 @@ export const contractUpdate = {
 export const contractState = {
   0: '未发送',
   1: '发送成功',
-  2: '发送失败'
+  2: '发送失败',
+  3: '部分失败',
+  4: '发送中'
+
 }
 export const contractSignState = {
   0: '未发送',
@@ -429,7 +432,7 @@ export const typeUserTrade = {
   8: '余额提现',
   10: '充值',
   11: '充值退款',
-  14: '个人经营所得'
+  14: '个体经营所得'
 }
 export function funUserTradeType () {
   return [
@@ -443,7 +446,7 @@ export function funUserTradeType () {
     {'key': 8, 'value': '余额提现'},
     {'key': 10, 'value': '充值'},
     {'key': 11, 'value': '充值退款'},
-    {'key': 14, 'value': '个人经营所得'}
+    {'key': 14, 'value': '个体经营所得'}
   ]
 }
 

@@ -41,7 +41,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item prop="address">
-              <el-input v-model="entInfo.address" :disabled="disable4Verifying" size="small"></el-input>
+              <el-input v-model="entInfo.address"  maxlength="32" :disabled="disable4Verifying" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>

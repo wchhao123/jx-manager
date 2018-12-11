@@ -54,7 +54,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item prop="address">
-              <el-input v-model="entInfo.address" size="small"></el-input>
+              <el-input v-model="entInfo.address" maxlength="32" size="small"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>
