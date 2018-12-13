@@ -123,7 +123,7 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title" center width="60%" :visible.sync="detail.visiable" :close-on-click-modal="1===0">
+    <el-dialog :title="detail.title" center width="60%" :visible.sync="detail.visiable" :close-on-click-modal="false">
     <business-auth style="height: 500px;border-top:1px solid #99a9bf;"></business-auth>
     </el-dialog>
   </div>

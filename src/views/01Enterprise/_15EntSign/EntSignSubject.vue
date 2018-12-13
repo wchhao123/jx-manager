@@ -99,7 +99,7 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title"  width="55%" :visible.sync="detail.visiable" :close-on-click-modal="1===0">
+    <el-dialog :title="detail.title"  width="55%" :visible.sync="detail.visiable" :close-on-click-modal="false">
       <sign-ent @Close="closeDiaLog"></sign-ent>
     </el-dialog>
   </div>

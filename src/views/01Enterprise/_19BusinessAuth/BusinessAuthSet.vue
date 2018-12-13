@@ -204,4 +204,7 @@
   /deep/ .el-row{
     margin-bottom 0px
   }
+  /deep/ .el-checkbox__inner{
+    border-color #99a9bf
+  }
 </style>
