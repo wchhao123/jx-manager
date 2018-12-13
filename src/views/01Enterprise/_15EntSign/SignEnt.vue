@@ -2,9 +2,9 @@
   <div>
     <el-form :model="entInfo" ref="verifyForm" v-show="entInfo" :rules="rules"
              :v-loading="loading"
-             :inline="true" label-width="150px">
+             :inline="true" label-width="200px">
       <el-row style="border-top: 1px solid grey; padding-top:10px;">
-        <el-form-item label="签约主体企业名称" prop="entName">
+        <el-form-item label="签约主体企业名称" prop="cooperateEntName">
           <el-input size="small" v-model="entInfo.cooperateEntName" clearable placeholder="请输入签约主体企业名称"></el-input>
         </el-form-item>
       </el-row>
@@ -43,38 +43,36 @@
         </el-form-item>
       </el-row>
       <el-row>
-        <el-col :span="5">
-          <el-form-item label="企业办公地址:" required>
+          <el-form-item label="企业办公地址" required>
+            <el-col :span="4">
+              <el-form-item prop="province">
+                <el-select v-model="entInfo.province" @change="selectProvince" size="small" >
+                  <el-option v-for="item in _provinces"
+                             :key="item.uniqueId"
+                             :label="item.addrName"
+                             :value="item"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item prop="city">
+                <el-select v-model="city[0]" @change="selectCity" size="small" ref="city">
+                  <el-option v-for="item in cities"
+                             :key="item.uniqueId"
+                             :label="item.addrName"
+                             :value="item"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item prop="address">
+                <el-input v-model="entInfo.address" maxlength="32" size="small"></el-input>
+              </el-form-item>
+            </el-col>
           </el-form-item>
-        </el-col>
-          <el-col :span="4">
-            <el-form-item prop="province">
-              <el-select v-model="entInfo.province" @change="selectProvince" size="small" >
-                <el-option v-for="item in _provinces"
-                           :key="item.uniqueId"
-                           :label="item.addrName"
-                           :value="item"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item prop="city">
-              <el-select v-model="city[0]" @change="selectCity" size="small" ref="city">
-                <el-option v-for="item in cities"
-                           :key="item.uniqueId"
-                           :label="item.addrName"
-                           :value="item"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item prop="address">
-              <el-input v-model="entInfo.address" maxlength="32" size="small"></el-input>
-            </el-form-item>
-          </el-col>
       </el-row>
       <el-row>
         <el-form-item label="营业执照" prop="uploadFileUrl" v-model="entInfo.businessLicencePath">
@@ -138,7 +136,7 @@
         limit: 1,
         cities: [],
         rules: {
-          entName: [
+          cooperateEntName: [
             {required: true, message: '请输入企业名称', trigger: 'blur'},
             {validator: Validator.validateEntName, trigger: 'blur'}
           ],
@@ -224,9 +222,7 @@
         })
       },
       _showBigImg() {
-        let url = this.entInfo.uploadFileUrl && this.entInfo.uploadFileUrl.length > 0
-          ? this.entInfo.uploadFileUrl
-          : this.entInfo.businessLicencePath && this.entInfo.businessLicencePath.length > 10
+        let url = this.entInfo.businessLicencePath && this.entInfo.businessLicencePath.length > 10
             ? this.entInfo.businessLicencePath
             : ''
         if (url.length > 0) {
@@ -259,14 +255,14 @@
         console.log(res)
         this.loading = false
         if (res.code === '0000') {
-          this.entInfo.uploadFileUrl = res.data.url
+          this.entInfo.businessLicencePath = res.data.url
         } else {
           this.$message.error('文件上传失败')
         }
         console.log(res.msg)
       },
       _fileRemoved(file) {
-        this.entInfo.uploadFileUrl = ''
+        this.entInfo.businessLicencePath = ''
       },
       selectProvince(val) {
         console.log(`选中省份${val}`)
