@@ -19,7 +19,8 @@ export function post (url, params = {}) {
           Message({
             message: response.data.msg,
             type: 'error',
-            duration: 5 * 1000
+            duration: 5 * 1000,
+            center: true
           })
           reject(response.data.msg)
         }
@@ -52,7 +53,8 @@ export function get(url, data) {
         Message({
           message: response.data.msg,
           type: 'error',
-          duration: 5 * 1000
+          duration: 5 * 1000,
+          center: true
         })
         reject(response.data.msg)
       }
@@ -116,6 +118,12 @@ service.interceptors.response.use(
         case 401:
           store.commit('logout')
           // 返回 401 清除token信息并跳转到登录页面
+          Message({
+            message: error.response.data.msg,
+            type: 'error',
+            duration: 5 * 1000,
+            center: true
+          })
           router.replace({
             path: '/login',
             query: {redirect: router.currentRoute.fullPath}
@@ -125,14 +133,16 @@ service.interceptors.response.use(
           Message({
             message: error.response.data.msg,
             type: 'error',
-            duration: 5 * 1000
+            duration: 5 * 1000,
+            center: true
           })
           return Promise.reject(error)
         case 404:
           Message({
             message: '该页面不存在！',
             type: 'error',
-            duration: 5 * 1000
+            duration: 5 * 1000,
+            center: true
           })
           return Promise.reject(error)
         // router.replace({path: '/login',})
