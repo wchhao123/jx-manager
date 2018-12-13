@@ -109,6 +109,7 @@
         Api.getAdminRoleInfo({
           roleId: this.model.roleId
         }).then(resp => {
+          debugger
           if (resp.data.code === Api.ERR_OK) {
             if (resp.data.data.list.length > 0) {
               let checkNodes = resp.data.data.list[0].authNames

@@ -313,9 +313,26 @@ export const contractType = {
   1: '双方协议',
   2: '三方协议'
 }
+export const businessType = {
+  '01': '工资发放至员工银行卡'
+}
+export const signBusinessType = {
+  '1': '薪资代发',
+  '2': '灵活用工'
+}
+export const sealState = {//1表示已生成 2 表示生成中3 表示生成失败
+  '1': '已生成',
+  '2': '生成中',
+  '3': '生成失败'
+}
 export const contractUpdate = {
   1: '更新',
   0: '删除'
+}
+export const businessState = {
+  1: '已开通',
+  2: '已关闭'
+
 }
 export const contractState = {
   0: '未发送',

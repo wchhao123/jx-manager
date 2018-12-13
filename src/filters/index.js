@@ -99,6 +99,11 @@ export function filterContractType (key) {
     return ''
   return state.contractType[parseInt(key)]
 }
+export function filterBusinessType (key) {
+  if (!key)
+    return ''
+  return state.businessType[parseInt(key)]
+}
 
 export function filterContractState (key) {
   if (!key)
@@ -106,10 +111,27 @@ export function filterContractState (key) {
   return state.contractState[parseInt(key)]
 }
 
+export function filterSignBusinessType (key) {
+  if (!key)
+    return ''
+  return state.signBusinessType[parseInt(key)]
+}
+
+export function filterSealState (key) {
+  if (!key)
+    return ''
+  return state.sealState[parseInt(key)]
+}
+
 export function filterContractSignState (key) {
   if (!key)
     return ''
   return state.contractSignState[parseInt(key)]
+}
+export function filterBusinessState (key) {
+  if (!key)
+    return ''
+  return state.businessState[parseInt(key)]
 }
 
 //任务状态
