@@ -5,7 +5,7 @@
           <el-row>
             <el-col >
               <ent-select title="企业名称" place-holder="请输入企业名称"
-                          @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
+                          @input-select="(index) => {index !== undefined ?  this.queryModel.key = index: this.queryModel.key = null}">
               </ent-select>
             </el-col>
             <el-col :span="5">
@@ -48,20 +48,17 @@
       </el-col>
     </el-col>
 
-
-
-
     <el-col style="width: 50%;padding:0px 10px;height: 500px" >
       <el-row>
         <el-col >
           <el-form :inline=true :model="queryModelExt" label-position="right" class="toolbar form-inline">
             <el-form-item label="业务类型">
-              <el-select size="small" v-model="queryModelExt.businessType" filterable clearable placeholder="请选择业务类型">
+              <el-select size="small" v-model="queryModelExt.type" filterable clearable placeholder="请选择业务状态">
                 <el-option
-                  v-for="(item, index) of this.$state.businessType"
+                  v-for="(item, index) of this.$store.getters.businessType"
                   :key="index"
-                  :label="item"
-                  :value="index">
+                  :label="item.businessName"
+                  :value="item">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -74,14 +71,14 @@
             </el-table-column>
             <el-table-column align="center" label="业务类型">
               <template slot-scope="scope">
-                <span size="small">{{scope.row.businessType | filterBusinessType()}}</span>
+                <span size="small">{{scope.row.businessName}}</span>
               </template>
             </el-table-column>
           </el-table>
         </el-col>
         <el-col :span="5">
           <el-row>
-            <el-button size="small" type="primary"  style="margin-bottom: 10px;margin-top: 10px" :disabled="isLoadingExt" @click="resetDoQuery">查询业务
+            <el-button size="small" type="primary"  style="margin-bottom: 10px;margin-top: 10px" :disabled="isLoadingExt" @click="getBusinessType">查询业务
             </el-button>
           </el-row>
           <el-row>
@@ -97,7 +94,7 @@
               @size-change="(val) =>{console.log('pageChange')
           console.log(val)}"
               @current-change="(val) =>{this.queryModelExt.pageNum = val
-          this.doQuery()}"
+          this.getBusinessType()}"
               :current-page="queryModelExt.pageNum"
               :page-size="queryModelExt.pageSize"
               layout="total, prev, pager, next"
@@ -120,11 +117,14 @@
         isLoadingExt: false,
         totalCount: 0,
         totalCountExt: 0,
+        multipleSelectionExt: [],
+        multipleSelection: [],
         queryModel: {
           pageNum: 1,
           pageSize: 8
         },
         queryModelExt: {
+          type: {},
           pageNum: 1,
           pageSize: 6
         },
@@ -146,28 +146,18 @@
         debugger
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
-          if (!item.contractUrl) {
-            /*   this.$notify({
-                 title: '警告',
-                 message: '该用户暂无合同信息！',
-                 type: 'warning'
-               })*/
+          if (!item.entId) {
           } else {
-            this.multipleSelection.push(item.signId)
+            this.multipleSelection.push(item.entId)
           }
         })
       },
       handleSelectionChangeExt(val) {
         this.multipleSelectionExt = []
         val.forEach((item, index, arr) => {
-          if (!item.contractUrl) {
-            /*   this.$notify({
-                 title: '警告',
-                 message: '该用户暂无合同信息！',
-                 type: 'warning'
-               })*/
+          if (!item.businessType) {
           } else {
-            this.multipleSelectionExt.push(item.signId)
+            this.multipleSelectionExt.push(item.businessType)
           }
         })
       },
@@ -186,8 +176,43 @@
           console.log(err)
         })
       },
+      getBusinessType() {
+        let businessName = ''
+        if (this.queryModelExt.type !== undefined) {
+          businessName = this.queryModelExt.type.businessName
+        }
+        this.$post(this.$url('/business_type'), {businessName: businessName}).then(res => {
+          this.dataListExt = res.data
+          this.totalCountExt = res.data.totalCount
+        }, err => {
+          this.isLoadingExt = false
+          console.log(err)
+        })
+      },
       resetDoQueryExt() {
-
+        if (!this.multipleSelection.length > 0) {
+          this.$message.warning('您未选择企业！')
+          return
+        }
+        if (!this.multipleSelectionExt.length > 0) {
+          this.$message.warning('您未选择业务类型！')
+          return
+        }
+        this.isLoadingExt = true
+        this.isLoading = true
+        this.$post(this.$url('/auth_add'), {
+          entIds: this.multipleSelection.toString(),
+          businessTypes: this.multipleSelectionExt.toString()
+        }).then(response => {
+          this.$emit('Close')
+          this.isLoadingExt = false
+          this.isLoading = false
+          this.$message.success(response.msg)
+        }, err => {
+          this.isLoadingExt = false
+          this.isLoading = false
+          console.log(err)
+        })
       }
     }
   }

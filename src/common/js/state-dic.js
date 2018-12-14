@@ -605,7 +605,8 @@ export function funResourceLevel () {
     {'key': '1', 'value': '超级管理员'},
     {'key': '2', 'value': '管理员'},
     {'key': '3', 'value': '子操作'},
-    {'key': '4', 'value': '公共操作'}
+    {'key': '4', 'value': '公共操作'},
+    {'key': '5', 'value': '业务权限'}
   ]
 }
 

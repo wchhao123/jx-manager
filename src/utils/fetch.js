@@ -115,6 +115,13 @@ service.interceptors.response.use(
       //   duration: 5 * 1000
       // })
       switch (parseInt(error.response.status)) {
+        case 400:
+          Message({
+            message: '请求参数有误！',
+            type: 'error',
+            duration: 5 * 1000
+          })
+          return Promise.reject(error)
         case 401:
           store.commit('logout')
           // 返回 401 清除token信息并跳转到登录页面
@@ -143,6 +150,20 @@ service.interceptors.response.use(
             type: 'error',
             duration: 5 * 1000,
             center: true
+          })
+          return Promise.reject(error)
+        case 500:
+          Message({
+            message: '该页面不存在！',
+            type: 'error',
+            duration: 5 * 1000
+          })
+          return Promise.reject(error)
+        case 502:
+          Message({
+            message: 'Bad GateWay！',
+            type: 'error',
+            duration: 5 * 1000
           })
           return Promise.reject(error)
         // router.replace({path: '/login',})

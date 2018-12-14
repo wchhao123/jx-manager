@@ -1,16 +1,16 @@
 <template>
   <div>
     <el-form :model="entInfo" ref="verifyForm" v-show="entInfo" :rules="rules"
-             :v-loading="loading"
+             :v-loading="isLoading"
              :inline="true" label-width="200px">
       <el-row style="border-top: 1px solid grey; padding-top:10px;">
         <el-form-item label="签约主体企业名称" prop="cooperateEntName">
-          <el-input size="small" v-model="entInfo.cooperateEntName" clearable placeholder="请输入签约主体企业名称"></el-input>
+          <el-input :disabled="!isSubmit" maxlength="32" size="small" v-model="entInfo.cooperateEntName" clearable placeholder="请输入签约主体企业名称"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="业务类型" prop="businessType">
-          <el-select size="small" v-model="entInfo.businessType" clearable placeholder="请选择业务类型">
+          <el-select :disabled="!isEdit" size="small" v-model="entInfo.businessType" clearable placeholder="请选择业务类型">
             <el-option
               v-for="(item, index) of this.$state.signBusinessType"
               :key="index"
@@ -23,59 +23,59 @@
 
       <el-row>
         <el-form-item label="法人代表姓名" prop="legalPerson">
-          <el-input size="small" v-model="entInfo.legalPerson" clearable placeholder="请输入法人代表姓名"></el-input>
+          <el-input :disabled="!isSubmit" size="small" v-model="entInfo.legalPerson" clearable placeholder="请输入法人代表姓名"></el-input>
         </el-form-item>
       </el-row>
 
       <el-row>
         <el-form-item label="法人代表身份证号" prop="legalPersonCard">
-          <el-input size="small" v-model="entInfo.legalPersonCard" clearable placeholder="请输入法人代表身份证号"></el-input>
+          <el-input :disabled="!isEdit" size="small" v-model="entInfo.legalPersonCard" clearable placeholder="请输入法人代表身份证号"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="统一社会信用代码" prop="comid">
-          <el-input v-model="entInfo.comid" size="small"  maxlength="18" placeholder="请输入统一社会信用代码"></el-input>
+          <el-input :disabled="!isSubmit" v-model="entInfo.comid" size="small"  maxlength="18" placeholder="请输入统一社会信用代码"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="办公电话" prop="contactPhone">
-          <el-input v-model="entInfo.contactPhone" size="small"  maxlength="18" placeholder="请输入办公电话"></el-input>
+          <el-input :disabled="!isEdit" v-model="entInfo.contactPhone" size="small"  maxlength="20" placeholder="请输入办公电话"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
-          <el-form-item label="企业办公地址" required>
-            <el-col :span="4">
-              <el-form-item prop="province">
-                <el-select v-model="entInfo.province" @change="selectProvince" size="small" >
-                  <el-option v-for="item in _provinces"
-                             :key="item.uniqueId"
-                             :label="item.addrName"
-                             :value="item"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item prop="city">
-                <el-select v-model="city[0]" @change="selectCity" size="small" ref="city">
-                  <el-option v-for="item in cities"
-                             :key="item.uniqueId"
-                             :label="item.addrName"
-                             :value="item"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item prop="address">
-                <el-input v-model="entInfo.address" maxlength="32" size="small"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-form-item>
+        <el-form-item label="企业办公地址" required>
+          <el-col :span="7">
+            <el-form-item prop="province">
+              <el-select :disabled="!isEdit" v-model="entInfo.province" @change="selectProvince" size="small" >
+                <el-option v-for="item in _provinces"
+                           :key="item.uniqueId"
+                           :label="item.addrName"
+                           :value="item"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="7">
+            <el-form-item prop="city">
+              <el-select :disabled="!isEdit" v-model="city[0]" @change="selectCity" size="small" ref="city">
+                <el-option v-for="item in cities"
+                           :key="item.uniqueId"
+                           :label="item.addrName"
+                           :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
       </el-row>
       <el-row>
-        <el-form-item label="营业执照" prop="uploadFileUrl" v-model="entInfo.businessLicencePath">
+            <el-form-item prop="address" label=" ">
+              <el-input :disabled="!isEdit" v-model="entInfo.address" maxlength="32" size="small"></el-input>
+            </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item label="营业执照" prop="businessLicencePath" v-model="entInfo.businessLicencePath">
           <el-input v-show="false" v-model="entInfo.businessLicencePath"></el-input>
           <img src="../../../assets/images/entImg.png" style="width: 90px; height: 120px; cursor: pointer" @click="_showBigImg()"/>
           <section style="display: inline-block">
@@ -84,7 +84,7 @@
               <br>文件所有信息清晰可见,内容真实有效,不得做人为修改
               <br>支持文件格式: pdf,jpf,jpeg,bmp,gif,png 大小不超过2M</span>
             <br>
-            <el-upload
+            <el-upload :disabled="!isEdit"
               v-show="this.$store.getters.getBtnIsShowByName('btn_upload')"
               ref="upload"
               :limit="limit"
@@ -100,10 +100,18 @@
       </el-row>
     </el-form>
 
-    <el-row type="flex" justify="center" style="margin-top: 30px"
-            v-show="this.$store.getters.getBtnIsShowByName('btn_verify_submit')">
-      <el-button size="small" @click="()=> {this.$emit('Close');}">取 消</el-button>
-      <el-button style="margin-left: 30px" size="small" type="primary" plain="" @click="_submitVerify()">添 加
+    <el-row v-show="isSubmit" type="flex" justify="center" style="margin-top: 30px">
+      <el-button size="small" @click="()=> {this.$emit('Close');this.$refs.verifyForm.resetFields()}">取 消</el-button>
+      <el-button style="margin-left: 30px" size="small" type="primary" :disabled="isLoading" @click="_submitVerify">添 加
+      </el-button>
+    </el-row>
+    <el-row v-show="!isEdit" type="flex" justify="center" style="margin-top: 30px">
+      <el-button size="small" type="primary" :disabled="isLoading" @click="isEdit = true">编 辑
+      </el-button>
+    </el-row>
+    <el-row v-show="!isSubmit && isEdit" type="flex" justify="center" style="margin-top: 30px">
+      <el-button size="small" @click="()=> {this.$emit('Close');this.$refs.verifyForm.resetFields()}">取 消</el-button>
+      <el-button style="margin-left: 30px" size="small" type="primary" :disabled="isLoading" @click="_saveVerify">保 存
       </el-button>
     </el-row>
     <el-dialog @click="innerVisible= false"
@@ -119,10 +127,15 @@
   import * as Api from 'api'
   import * as Validator from 'common/js/validator'
   import {http} from 'api/enterprise'
+  import ElRow from "element-ui/packages/row/src/row";
 
   export default {
+    components: {ElRow},
     props: {
-      entId: ''
+      detail: {
+      },
+      isEdit: [Boolean],
+      isSubmit: [Boolean]
     },
     data() {
       return {
@@ -131,8 +144,7 @@
         city: [],
         innerVisible: false,
         imageUrl: '',
-        loading: false,
-        isbigimg: false,
+        isLoading: false,
         limit: 1,
         cities: [],
         rules: {
@@ -161,24 +173,19 @@
           address: [
             {required: true, message: '请输入企业地址', trigger: 'blur'}
           ],
-          documentType: {required: true, message: '请选择证件类型', trigger: 'blur'},
-          uploadFileUrl: {required: true, message: '请上传营业执照', trigger: 'blur'},
+          businessLicencePath: {required: true, message: '请上传营业执照', trigger: 'blur'},
           comid: {required: true, message: '输入不能为空', trigger: 'blur'}
         }
       }
     },
     watch: {
-   /*   'entId': {
+      detail: {
         immediate: true,
-        handler: function (val) {
-          this.entId = val
-          this._getEntDetail()
-          setTimeout(() => {
-            this.$refs.verifyForm.resetFields()
-            this.$refs.upload.clearFiles()
-          }, 50)
+        handler: function () {
+          this.entInfo = this.detail
+          this.city[0] = this.entInfo.city
         }
-      }*/
+      }
     },
     computed: {
       _provinces() {
@@ -191,33 +198,41 @@
       }
     },
     methods: {
-      _getEntDetail() {
-        if (this.entId === '') {
-          return
-        }
-        this.isLoading = true
-        Api.getEntDetail({entId: this.entId}).then(response => {
-          console.log('查询企业详情!')
-          this.isLoading = false
-          let e = response.data.data
-          let eVerifyInfo = response.data.data.verifyInfo
-          this.entInfo = Object.assign(e, eVerifyInfo)
-          this.entInfo.uploadFileUrl = this.entInfo.businessLicencePath
-          console.log(this.entInfo)
-        })
-      },
       _submitVerify() {
         this.$refs.verifyForm.validate(v => {
           if (v) {
-            if (!this.entInfo.businessLicencePath || this.entInfo.uploadFileUrl.length < 1) {
-              this.$message.error('请上传营业执照')
-              return
-            }
-            this.$post(this.$url(''))
-            this.loading = true
-              if (r) {
-                this.$emit('Close')
-              }
+            this.isLoading = true
+            this.$post(this.$url('/sign_add'), this.entInfo).then(response => {
+              this.$refs.verifyForm.resetFields()
+              this.$refs.upload.clearFiles()
+              this.$emit('Close')
+              this.$message.success(response.msg)
+              this.isLoading = false
+              this.$emit('doQuery')
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+            })
+          }
+        })
+      },
+      _saveVerify() {
+        this.$refs.verifyForm.validate(v => {
+          if (v) {
+            this.isLoading = true
+            this.entInfo.createDate = ''
+            this.entInfo.updateDate = ''
+            this.$post(this.$url('/sign_update'), this.entInfo).then(response => {
+              this.$refs.verifyForm.resetFields()
+              this.$refs.upload.clearFiles()
+              this.$emit('Close')
+              this.$message.success(response.msg)
+              this.isLoading = false
+              this.$emit('doQuery')
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+            })
           }
         })
       },
@@ -294,7 +309,7 @@
 
   .el-form-item
     .el-input
-      width 220px
+      width 320px
 
   .uploadTip
     display inline-block

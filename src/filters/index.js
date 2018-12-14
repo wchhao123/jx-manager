@@ -1,4 +1,5 @@
 import * as state from '../common/js/state-dic'
+import {getters} from '../store/getters'
 
 export function filterLength (list) {
   if (list.length > 4) {

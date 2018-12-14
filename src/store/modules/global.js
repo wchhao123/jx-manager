@@ -1,9 +1,11 @@
 import * as Api from 'api'
 import * as vuexTypes from '../types'
-
+import {post} from '../../utils/fetch'
+import {url} from '../../api/url'
 const state = {
   provinces: [],
-  salaryEnts: []
+  salaryEnts: [],
+  businessType: []
 }
 const mutations = {
   [vuexTypes.SAVE_PROVINCE]: (state, obj) => {
@@ -11,6 +13,9 @@ const mutations = {
   },
   [vuexTypes.SAVE_SALARY_ENTS]: (state, obj) => {
     state.salaryEnts = obj.salaryEnts
+  },
+  [vuexTypes.BUSINESS_TYPE]: (state, obj) => {
+    state.businessType = obj.businessType
   }
 }
 const actions = {
@@ -24,6 +29,15 @@ const actions = {
   getSalaryEnts({commit}) {
     Api.getSalaryEnt().then(res => {
       commit(vuexTypes.SAVE_SALARY_ENTS, {salaryEnts: res.data.data})
+    })
+  },
+  getBusinessType({commit}, businessName) {
+    post(url('/business_type'), {businessName: businessName}).then(res => {
+  /*    let array = []
+      res.data.forEach((item, index, arr) => {
+        array.push(item.businessType, item.businessName)
+      })*/
+      commit(vuexTypes.BUSINESS_TYPE, {businessType: res.data})
     })
   }
 }
