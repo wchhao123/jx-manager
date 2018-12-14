@@ -154,7 +154,7 @@ service.interceptors.response.use(
           return Promise.reject(error)
         case 500:
           Message({
-            message: '该页面不存在！',
+            message: '500！',
             type: 'error',
             duration: 5 * 1000
           })

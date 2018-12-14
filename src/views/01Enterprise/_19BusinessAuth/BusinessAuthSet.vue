@@ -14,7 +14,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <el-table ref="ContractSignTable" :data="dataList" style="width: 100%" v-loading="isLoading"
+        <el-table :data="dataList" style="width: 100%" v-loading="isLoading"
                   @selection-change="handleSelectionChange">
           <el-table-column
             type="selection"
@@ -53,17 +53,17 @@
         <el-col >
           <el-form :inline=true :model="queryModelExt" label-position="right" class="toolbar form-inline">
             <el-form-item label="业务类型">
-              <el-select size="small" v-model="queryModelExt.type" filterable clearable placeholder="请选择业务状态">
+              <el-select size="small" v-model="queryModelExt.businessName" filterable clearable placeholder="请选择业务状态">
                 <el-option
                   v-for="(item, index) of this.$store.getters.businessType"
                   :key="index"
-                  :label="item.businessName"
+                  :label="item"
                   :value="item">
                 </el-option>
               </el-select>
             </el-form-item>
           </el-form>
-          <el-table ref="ContractSignTable" :data="dataListExt" style="width: 95%" v-loading="isLoadingExt"
+          <el-table :data="dataListExt" style="width: 95%" v-loading="isLoadingExt"
                     @selection-change="handleSelectionChangeExt">
             <el-table-column
               type="selection"
@@ -124,9 +124,8 @@
           pageSize: 8
         },
         queryModelExt: {
-          type: {},
           pageNum: 1,
-          pageSize: 6
+          pageSize: 8
         },
         dataListExt: [],
         dataList: []
@@ -177,11 +176,7 @@
         })
       },
       getBusinessType() {
-        let businessName = ''
-        if (this.queryModelExt.type !== undefined) {
-          businessName = this.queryModelExt.type.businessName
-        }
-        this.$post(this.$url('/business_type'), {businessName: businessName}).then(res => {
+        this.$post(this.$url('/business_type'), this.queryModelExt).then(res => {
           this.dataListExt = res.data
           this.totalCountExt = res.data.totalCount
         }, err => {

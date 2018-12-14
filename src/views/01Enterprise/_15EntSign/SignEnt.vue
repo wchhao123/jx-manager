@@ -10,7 +10,7 @@
       </el-row>
       <el-row>
         <el-form-item label="业务类型" prop="businessType">
-          <el-select :disabled="!isEdit" size="small" v-model="entInfo.businessType" clearable placeholder="请选择业务类型">
+          <el-select style="width: 320px" :disabled="!edit" size="small" v-model="entInfo.businessType" clearable placeholder="请选择业务类型">
             <el-option
               v-for="(item, index) of this.$state.signBusinessType"
               :key="index"
@@ -29,7 +29,7 @@
 
       <el-row>
         <el-form-item label="法人代表身份证号" prop="legalPersonCard">
-          <el-input :disabled="!isEdit" size="small" v-model="entInfo.legalPersonCard" clearable placeholder="请输入法人代表身份证号"></el-input>
+          <el-input :disabled="!edit" size="small" v-model="entInfo.legalPersonCard" clearable placeholder="请输入法人代表身份证号"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
@@ -39,39 +39,41 @@
       </el-row>
       <el-row>
         <el-form-item label="办公电话" prop="contactPhone">
-          <el-input :disabled="!isEdit" v-model="entInfo.contactPhone" size="small"  maxlength="20" placeholder="请输入办公电话"></el-input>
+          <el-input :disabled="!edit" v-model="entInfo.contactPhone" size="small"  maxlength="20" placeholder="请输入办公电话"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="企业办公地址" required>
-          <el-col :span="7">
-            <el-form-item prop="province">
-              <el-select :disabled="!isEdit" v-model="entInfo.province" @change="selectProvince" size="small" >
-                <el-option v-for="item in _provinces"
-                           :key="item.uniqueId"
-                           :label="item.addrName"
-                           :value="item"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="7">
-            <el-form-item prop="city">
-              <el-select :disabled="!isEdit" v-model="city[0]" @change="selectCity" size="small" ref="city">
-                <el-option v-for="item in cities"
-                           :key="item.uniqueId"
-                           :label="item.addrName"
-                           :value="item"
-                ></el-option>
-              </el-select>
-            </el-form-item>
+          <el-col style="width: 320px">
+            <el-col style="width: 160px">
+              <el-form-item prop="province">
+                <el-select :disabled="!edit" v-model="entInfo.province" @change="selectProvince" size="small" >
+                  <el-option v-for="item in _provinces"
+                             :key="item.uniqueId"
+                             :label="item.addrName"
+                             :value="item"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col style="width: 160px">
+              <el-form-item prop="city">
+                <el-select :disabled="!edit" v-model="city[0]" @change="selectCity" size="small" ref="city">
+                  <el-option v-for="item in cities"
+                             :key="item.uniqueId"
+                             :label="item.addrName"
+                             :value="item"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
           </el-col>
         </el-form-item>
       </el-row>
       <el-row>
             <el-form-item prop="address" label=" ">
-              <el-input :disabled="!isEdit" v-model="entInfo.address" maxlength="32" size="small"></el-input>
+              <el-input :disabled="!edit" v-model="entInfo.address" maxlength="32" size="small"></el-input>
             </el-form-item>
       </el-row>
       <el-row>
@@ -83,8 +85,8 @@
               class="uploadTip">上传营业执照
               <br>文件所有信息清晰可见,内容真实有效,不得做人为修改
               <br>支持文件格式: pdf,jpf,jpeg,bmp,gif,png 大小不超过2M</span>
-            <br>
-            <el-upload :disabled="!isEdit"
+            <br/>
+            <el-upload :disabled="!edit"
               v-show="this.$store.getters.getBtnIsShowByName('btn_upload')"
               ref="upload"
               :limit="limit"
@@ -92,8 +94,8 @@
               :action="_uploadAddress"
               :on-success="_uploadSuccess"
               :on-remove="_fileRemoved"
-              :before-upload="_beforeUpload" style="display: inline">
-              <el-button type="primary" plain="" size="mini">选择文件</el-button>
+              :before-upload="_beforeUpload" style="display: inline-block">
+              <el-button type="success" plain="" size="small">选择文件</el-button>
             </el-upload>
           </section>
         </el-form-item>
@@ -101,17 +103,17 @@
     </el-form>
 
     <el-row v-show="isSubmit" type="flex" justify="center" style="margin-top: 30px">
-      <el-button size="small" @click="()=> {this.$emit('Close');this.$refs.verifyForm.resetFields()}">取 消</el-button>
-      <el-button style="margin-left: 30px" size="small" type="primary" :disabled="isLoading" @click="_submitVerify">添 加
+      <el-button style="width: 120px" size="small" @click="()=> {this.$emit('Close');this.$refs.verifyForm.resetFields()}">取 消</el-button>
+      <el-button style="margin-left: 100px;width: 120px" size="small" type="primary" :disabled="isLoading" @click="_submitVerify">添 加
       </el-button>
     </el-row>
-    <el-row v-show="!isEdit" type="flex" justify="center" style="margin-top: 30px">
-      <el-button size="small" type="primary" :disabled="isLoading" @click="isEdit = true">编 辑
+    <el-row v-show="!edit" type="flex" justify="center" style="margin-top: 30px">
+      <el-button style="width: 120px" size="small" type="primary" :disabled="isLoading" @click="edit = true">编 辑
       </el-button>
     </el-row>
-    <el-row v-show="!isSubmit && isEdit" type="flex" justify="center" style="margin-top: 30px">
-      <el-button size="small" @click="()=> {this.$emit('Close');this.$refs.verifyForm.resetFields()}">取 消</el-button>
-      <el-button style="margin-left: 30px" size="small" type="primary" :disabled="isLoading" @click="_saveVerify">保 存
+    <el-row v-show="!isSubmit && edit" type="flex" justify="center" style="margin-top: 30px">
+      <el-button style="width: 120px" size="small" @click="()=> {this.$emit('Close')}">取 消</el-button>
+      <el-button style="margin-left: 100px;width: 120px" size="small" type="primary" :disabled="isLoading" @click="_saveVerify">保 存
       </el-button>
     </el-row>
     <el-dialog @click="innerVisible= false"
@@ -142,6 +144,7 @@
         entInfo: {
         },
         city: [],
+        edit: [Boolean],
         innerVisible: false,
         imageUrl: '',
         isLoading: false,
@@ -184,6 +187,12 @@
         handler: function () {
           this.entInfo = this.detail
           this.city[0] = this.entInfo.city
+        }
+      },
+      isEdit: {
+        immediate: true,
+        handler: function () {
+          this.edit = this.isEdit
         }
       }
     },
@@ -307,11 +316,11 @@
     padding-top 0px
     margin-bottom 0px
 
-  .el-form-item
     .el-input
       width 320px
 
   .uploadTip
     display inline-block
-    line-height 14px
+    line-height 20px
+    margin-bottom 20px
 </style>

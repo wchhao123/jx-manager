@@ -13,8 +13,8 @@
             <el-option
               v-for="(item, index) of this.$store.getters.businessType"
               :key="index"
-              :label="item.businessName"
-              :value="item.businessType">
+              :label="item"
+              :value="index">
             </el-option>
           </el-select>
         </el-form-item>
@@ -90,7 +90,7 @@
       </el-table-column>
       <el-table-column align="center" label="业务类型">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.businessType | filterBusinessType()}}</span>
+          <span size="small">{{scope.row.businessType | filterBusinessType($store.getters.businessType)}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="业务状态">
@@ -124,7 +124,7 @@
       </div>
     </el-col>
     <el-dialog :title="detail.title" center width="60%" :visible.sync="detail.visiable" :close-on-click-modal="false">
-    <business-auth @Close="detail.visiable=false" style="height: 500px;border-top:1px solid #99a9bf;"></business-auth>
+    <business-auth @Close="closeDiaLog" style="height: 500px;border-top:1px solid #99a9bf;"></business-auth>
     </el-dialog>
   </div>
 </template>
@@ -165,7 +165,18 @@
     }
   }
   },
+    filters: {
+      filterBusinessType: function(key, val) {
+        if (!key)
+          return ''
+        return val[key]
+      }
+    },
     methods: {
+      closeDiaLog() {
+        this.detail.visiable=false
+        this.resetDoQuery()
+      },
       openDiaLog() {
         this.detail.visiable = true
       },
@@ -173,6 +184,7 @@
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
           if (item.keyId && item.status) {
+            debugger
             this.multipleSelection.push(item)
           }
         })
@@ -193,35 +205,38 @@
         })
       },
       doSubmit(val) {
-        if (!this.multipleSelection > 0) {
+        if (!this.multipleSelection.length > 0) {
           this.$message.warning('请勾选需要重新启用/关闭业务的企业')
           return
         }
         let object = this.multipleSelection
         let keyIds = []
         let status = val
+        let flag = true
         object.forEach((item, index, arr) => {
-          debugger
-          if (status !== item.status && status === '1') {
+          if (status === item.status && status === '0') {
             this.$message.warning('请勾选业务状态为已开通的企业')
+            flag = false
             return
           }
-          if (status !== item.status && status === '0') {
+          if (status === item.status && status === '1') {
             this.$message.warning('请勾选业务状态为已关闭的企业')
+            flag = false
             return
           }
           keyIds.push(item.keyId)
-          debugger
         })
+        if (!flag){
+          return
+        }
         this.isLoading = true
-        debugger
         this.$post(this.$url('/auth_update'), {
-          keyIds: keyIds,
-          status: status
+          keyIds: keyIds.toString(),
+          state: status.toString()
         }).then(response => {
-          this.dataList = response.data.list
-          this.totalCount = response.data.totalCount
+          this.$message.success(response.msg)
           this.isLoading = false
+          this.resetDoQuery()
         }, err => {
           this.isLoading = false
           console.log(err)

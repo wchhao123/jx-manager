@@ -98,7 +98,7 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title"  width="55%" :visible.sync="detail.visiable" :close-on-click-modal="false">
+    <el-dialog :title="detail.title"  width="45%" :visible.sync="detail.visiable" :close-on-click-modal="false">
       <sign-ent @Close="closeDiaLog" @doQuery="resetDoQuery" :is-edit="detail.isEdit" :detail="detail.entInfo" :is-submit="detail.isSubmit"></sign-ent>
     </el-dialog>
   </div>
@@ -157,6 +157,7 @@
       },
       closeDiaLog() {
         this.detail.visiable = false
+        this.detail.isEdit = true
       },
       addSignEnt() {
         this.detail.entInfo = {}

@@ -42,7 +42,7 @@ const getters = {
   },
   businessType: (state) => {
     let businessType = state.global.businessType
-    if (businessType.length < 1) {
+    if (businessType.length === 0) {
       store.dispatch('getBusinessType')
     }
     return state.global.businessType

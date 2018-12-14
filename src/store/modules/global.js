@@ -33,11 +33,12 @@ const actions = {
   },
   getBusinessType({commit}, businessName) {
     post(url('/business_type'), {businessName: businessName}).then(res => {
-  /*    let array = []
+      let array = {}
       res.data.forEach((item, index, arr) => {
-        array.push(item.businessType, item.businessName)
-      })*/
-      commit(vuexTypes.BUSINESS_TYPE, {businessType: res.data})
+        debugger
+        array[item.businessType] = item.businessName
+      })
+      commit(vuexTypes.BUSINESS_TYPE, {businessType: array})
     })
   }
 }

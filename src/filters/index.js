@@ -1,5 +1,4 @@
 import * as state from '../common/js/state-dic'
-import {getters} from '../store/getters'
 
 export function filterLength (list) {
   if (list.length > 4) {
@@ -100,11 +99,7 @@ export function filterContractType (key) {
     return ''
   return state.contractType[parseInt(key)]
 }
-export function filterBusinessType (key) {
-  if (!key)
-    return ''
-  return state.businessType[parseInt(key)]
-}
+
 
 export function filterContractState (key) {
   if (!key)
@@ -129,6 +124,7 @@ export function filterContractSignState (key) {
     return ''
   return state.contractSignState[parseInt(key)]
 }
+
 export function filterBusinessState (key) {
   if (!key)
     return ''

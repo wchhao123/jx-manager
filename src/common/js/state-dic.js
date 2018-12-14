@@ -331,7 +331,7 @@ export const contractUpdate = {
 }
 export const businessState = {
   1: '已开通',
-  2: '已关闭'
+  0: '已关闭'
 
 }
 export const contractState = {
