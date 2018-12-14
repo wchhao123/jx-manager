@@ -39,6 +39,13 @@ const getters = {
       store.dispatch('getSalaryEnts')
     }
     return state.global.salaryEnts
+  },
+  businessType: (state) => {
+    let businessType = state.global.businessType
+    if (businessType.length < 1) {
+      store.dispatch('getBusinessType')
+    }
+    return state.global.businessType
   }
 }
 

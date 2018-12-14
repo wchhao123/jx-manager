@@ -11,10 +11,10 @@
         <el-form-item label="业务类型">
           <el-select size="small" v-model="queryModel.businessType" filterable clearable placeholder="请选择业务类型">
             <el-option
-              v-for="(item, index) of this.$state.businessType"
+              v-for="(item, index) of this.$store.getters.businessType"
               :key="index"
-              :label="item"
-              :value="index">
+              :label="item.businessName"
+              :value="item.businessType">
             </el-option>
           </el-select>
         </el-form-item>
@@ -57,11 +57,11 @@
           </el-button>
         </el-col>
         <el-col :span="2">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">重新启用
+          <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('1')">重新启用
           </el-button>
         </el-col>
         <el-col :span="2">
-          <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">关闭
+          <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('0')">关闭
           </el-button>
         </el-col>
       </el-row>
@@ -85,7 +85,7 @@
       </el-table-column>
       <el-table-column align="center" label="运营主企业">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.operationEntName }}</span>
+          <span size="small">{{scope.row.salaryEntName }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="业务类型">
@@ -124,7 +124,7 @@
       </div>
     </el-col>
     <el-dialog :title="detail.title" center width="60%" :visible.sync="detail.visiable" :close-on-click-modal="false">
-    <business-auth style="height: 500px;border-top:1px solid #99a9bf;"></business-auth>
+    <business-auth @Close="detail.visiable=false" style="height: 500px;border-top:1px solid #99a9bf;"></business-auth>
     </el-dialog>
   </div>
 </template>
@@ -134,10 +134,12 @@
   export default {
     data () {
       return {
-        queryUrl: '/contract_query',
+        queryUrl: '/auth_get',
         isLoading: false,
         selectDate: '',
         totalCount: 0,
+        multipleSelection: [],
+        status: '',
         queryModel: {
           pageNum: 1,
           pageSize: 10
@@ -167,26 +169,11 @@
       openDiaLog() {
         this.detail.visiable = true
       },
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.ContractSignTable.toggleRowSelection(row)
-          })
-        } else {
-          this.$refs.ContractSignTable.clearSelection()
-        }
-      },
       handleSelectionChange(val) {
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
-          if (!item.contractUrl) {
-            /*   this.$notify({
-                 title: '警告',
-                 message: '该用户暂无合同信息！',
-                 type: 'warning'
-               })*/
-          } else {
-            this.multipleSelection.push(item.signId)
+          if (item.keyId && item.status) {
+            this.multipleSelection.push(item)
           }
         })
       },
@@ -197,6 +184,41 @@
       doQuery () {
         this.isLoading = true
         this.$post(this.$url(this.queryUrl), this.queryModel).then(response => {
+          this.dataList = response.data.list
+          this.totalCount = response.data.totalCount
+          this.isLoading = false
+        }, err => {
+          this.isLoading = false
+          console.log(err)
+        })
+      },
+      doSubmit(val) {
+        if (!this.multipleSelection > 0) {
+          this.$message.warning('请勾选需要重新启用/关闭业务的企业')
+          return
+        }
+        let object = this.multipleSelection
+        let keyIds = []
+        let status = val
+        object.forEach((item, index, arr) => {
+          debugger
+          if (status !== item.status && status === '1') {
+            this.$message.warning('请勾选业务状态为已开通的企业')
+            return
+          }
+          if (status !== item.status && status === '0') {
+            this.$message.warning('请勾选业务状态为已关闭的企业')
+            return
+          }
+          keyIds.push(item.keyId)
+          debugger
+        })
+        this.isLoading = true
+        debugger
+        this.$post(this.$url('/auth_update'), {
+          keyIds: keyIds,
+          status: status
+        }).then(response => {
           this.dataList = response.data.list
           this.totalCount = response.data.totalCount
           this.isLoading = false

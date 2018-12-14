@@ -12,5 +12,11 @@ export const contractState = {
   '/contract_add': '/table/contract/add', //添加模板
   '/contract_update': '/table/contract/update', //添加模板
   '/salary_ent': '/ent/info/getlist',
-  '/sign_subject': '/table/cooperate/get' //获取运营主体
+  '/sign_subject': '/table/cooperate/get', //获取运营主体
+  '/sign_add': '/table/cooperate/add',
+  '/sign_update': '/table/cooperate/update',
+  '/business_type': '/ent/business/get',
+  '/auth_add': '/ent/business/add',
+  '/auth_get': '/ent/get/all/ent/business',
+  '/auth_update': '/ent/business/open/again'
 }
