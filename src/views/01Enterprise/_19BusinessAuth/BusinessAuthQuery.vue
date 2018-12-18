@@ -203,8 +203,12 @@
         })
       },
       doSubmit(val) {
-        if (!this.multipleSelection.length > 0) {
-          this.$message.warning('请勾选需要重新启用/关闭业务的企业')
+        if (!this.multipleSelection.length > 0 && val === '1') {
+          this.$message.warning('请勾选需要重新启用业务的企业')
+          return
+        }
+        if (!this.multipleSelection.length > 0 && val === '0') {
+          this.$message.warning('请勾选需要关闭业务的企业')
           return
         }
         let object = this.multipleSelection

@@ -193,14 +193,20 @@
       detail: {
         immediate: true,
         handler: function () {
-          this.entInfo = this.detail
-          this.city[0] = this.entInfo.city
           if (this.isSubmit) {
             setTimeout(() => {
               this.$refs.verifyForm.resetFields()
               this.$refs.upload.clearFiles()
               this.entInfo = {}
               this.city[0] = ''
+            }, 50)
+          }
+          if (!this.isEdit) {
+            setTimeout(() => {
+              this.$refs.verifyForm.resetFields()
+              this.$refs.upload.clearFiles()
+              this.entInfo = this.detail
+              this.city[0] = this.entInfo.city
             }, 50)
           }
         }

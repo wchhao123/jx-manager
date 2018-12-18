@@ -201,7 +201,6 @@
           this.$emit('Close')
           this.dataList = {}
           this.dataListExt = {}
-          this.queryModel = {}
           this.queryModelExt = {}
           this.isLoadingExt = false
           this.isLoading = false

@@ -30,7 +30,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import * as Api from 'api'
   import * as Route from 'common/menu'
 
   var globalRoutePath = ''
