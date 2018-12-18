@@ -15,11 +15,19 @@ export function post (url, params = {}) {
       method: http.post,
       params: params
     }).then(response => {
-        if (ERR_OK !== response.data.code) {
+      if (response.data.code === 'warn') {
+          Message({
+            message: response.data.msg,
+            type: 'warning',
+            duration: 3 * 1000,
+            center: true
+          })
+          reject(response.data.msg)
+        } else if (ERR_OK !== response.data.code) {
           Message({
             message: response.data.msg,
             type: 'error',
-            duration: 5 * 1000,
+            duration: 3 * 1000,
             center: true
           })
           reject(response.data.msg)

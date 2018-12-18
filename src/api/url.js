@@ -9,6 +9,7 @@ export const contractState = {
   '/contract_query': '/table/contract/batch', //合同管理
   '/contract_sign': '/table/contract/sign',
   '/contract_export': '/table/contract/export', //合同导出
+  '/contract_check': '/table/contract/exportcheck',
   '/contract_add': '/table/contract/add', //添加模板
   '/contract_update': '/table/contract/update', //添加模板
   '/salary_ent': '/ent/info/getlist',

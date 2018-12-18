@@ -2,9 +2,6 @@
   <div>
     <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
       <el-row>
-        <el-form-item label="企业编号">
-          <el-input size="small" clearable v-model="queryModel.entId" placeholder="请输入企业编号"></el-input>
-        </el-form-item>
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
         </ent-select>
@@ -18,20 +15,20 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-col :span="6">
+          <el-form-item label="业务状态">
+            <el-select size="small" v-model="queryModel.status" filterable clearable placeholder="请选择业务状态">
+              <el-option
+                v-for="(item, index) of this.$state.businessState"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
         <el-row>
-          <el-col :span="6">
-            <el-form-item label="业务状态">
-              <el-select size="small" v-model="queryModel.status" filterable clearable placeholder="请选择业务状态">
-                <el-option
-                  v-for="(item, index) of this.$state.businessState"
-                  :key="index"
-                  :label="item"
-                  :value="index">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
           <el-col :span="15">
           <el-form-item label="开通时间">
             <el-date-picker
@@ -80,12 +77,12 @@
       </el-table-column>
       <el-table-column align="center" label="企业名称">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.entName }}</span>
+          <span size="small">{{scope.row.salaryEntName }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="运营主企业">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.salaryEntName }}</span>
+          <span size="small">{{scope.row.entName }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="业务类型">
@@ -167,14 +164,15 @@
   },
     filters: {
       filterBusinessType: function(key, val) {
-        if (!key)
+        if (!key) {
           return ''
+        }
         return val[key]
       }
     },
     methods: {
       closeDiaLog() {
-        this.detail.visiable=false
+        this.detail.visiable = false
         this.resetDoQuery()
       },
       openDiaLog() {
@@ -213,6 +211,8 @@
         let keyIds = []
         let status = val
         let flag = true
+        let msg = '确认关闭所选企业的相关业务？'
+        let errorMsg = '成功关闭！'
         object.forEach((item, index, arr) => {
           if (status === item.status && status === '0') {
             this.$message.warning('请勾选业务状态为已开通的企业')
@@ -226,20 +226,30 @@
           }
           keyIds.push(item.keyId)
         })
-        if (!flag){
+        if (!flag) {
           return
         }
+        if (status === '1') {
+          msg = '确认重新启用所选企业的相关业务'
+          errorMsg = '成功启用！'
+        }
+        this.$confirm(msg, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
         this.isLoading = true
         this.$post(this.$url('/auth_update'), {
           keyIds: keyIds.toString(),
           state: status.toString()
         }).then(response => {
-          this.$message.success(response.msg)
+          this.$message.success(errorMsg)
           this.isLoading = false
           this.resetDoQuery()
         }, err => {
           this.isLoading = false
           console.log(err)
+        })
         })
       }
     }

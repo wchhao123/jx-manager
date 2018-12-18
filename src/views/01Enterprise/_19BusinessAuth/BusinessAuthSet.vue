@@ -53,7 +53,7 @@
         <el-col >
           <el-form :inline=true :model="queryModelExt" label-position="right" class="toolbar form-inline">
             <el-form-item label="业务类型">
-              <el-select size="small" v-model="queryModelExt.businessName" filterable clearable placeholder="请选择业务状态">
+              <el-select size="small" v-model="queryModelExt.businessName" filterable clearable placeholder="请选择业务类型">
                 <el-option
                   v-for="(item, index) of this.$store.getters.businessType"
                   :key="index"
@@ -121,11 +121,11 @@
         multipleSelection: [],
         queryModel: {
           pageNum: 1,
-          pageSize: 8
+          pageSize: 10
         },
         queryModelExt: {
           pageNum: 1,
-          pageSize: 8
+          pageSize: 10
         },
         dataListExt: [],
         dataList: []
@@ -142,7 +142,6 @@
         }
       },
       handleSelectionChange(val) {
-        debugger
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
           if (!item.entId) {
@@ -200,12 +199,17 @@
           businessTypes: this.multipleSelectionExt.toString()
         }).then(response => {
           this.$emit('Close')
+          this.dataList = {}
+          this.dataListExt = {}
+          this.queryModel = {}
+          this.queryModelExt = {}
           this.isLoadingExt = false
           this.isLoading = false
           this.$message.success(response.msg)
         }, err => {
           this.isLoadingExt = false
           this.isLoading = false
+          this.$message.error(err)
           console.log(err)
         })
       }
@@ -219,7 +223,7 @@
   }
   /deep/ .el-table td {
     border-bottom: hidden;
-    padding: 10px 0px;
+    padding: 7px 0px;
   }
   /deep/ .el-row{
     margin-bottom 0px

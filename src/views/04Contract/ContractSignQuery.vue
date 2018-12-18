@@ -122,11 +122,11 @@
       </el-table-column>-->
 
       <!--提交时间-->
-      <el-table-column align="center" label="签约截止日期">
+     <!-- <el-table-column align="center" label="签约截止日期">
         <template slot-scope="scope">
           <span size="small">{{scope.row.abortDate | filterDateYYYYMMDD()}}</span>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column align="center" label="签约发起时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.createDate | filterdateYMDHMS()}}</span>
@@ -283,19 +283,24 @@
         }).then(() => { //contract_export
           this.isLoading = true
           this.queryModel.signIds = this.multipleSelection.toString()
-          this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
-            this.isLoading = false
-            if (!response) {
-              return
-            }
-            let blob = new Blob([response])
-            let objectUrl = URL.createObjectURL(blob)
-            let link = document.createElement('a')
-            link.style.display = 'none'
-            link.href = objectUrl
-            link.setAttribute('download', '合同文件.zip')
-            document.body.appendChild(link)
-            link.click()
+          this.$post(this.$url('/contract_check'), this.queryModel).then(response => {
+            this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
+              this.isLoading = false
+              if (!response) {
+                return
+              }
+              let blob = new Blob([response])
+              let objectUrl = URL.createObjectURL(blob)
+              let link = document.createElement('a')
+              link.style.display = 'none'
+              link.href = objectUrl
+              link.setAttribute('download', '合同文件.zip')
+              document.body.appendChild(link)
+              link.click()
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+            })
           }, err => {
             this.isLoading = false
             console.log(err)

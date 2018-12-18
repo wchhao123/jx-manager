@@ -2,8 +2,8 @@
   <div>
     <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
       <el-row>
-        <el-form-item label="签约企业">
-          <el-input size="small" clearable v-model="queryModel.cooperateEntName" placeholder="请输入签约企业"></el-input>
+        <el-form-item label="企业名称">
+          <el-input size="small" clearable v-model="queryModel.cooperateEntName" placeholder="请输入企业名称"></el-input>
         </el-form-item>
         <el-form-item label="法人代表姓名">
           <el-input size="small" clearable v-model="queryModel.legalPerson" placeholder="请输入法人代表姓名"></el-input>
@@ -46,7 +46,6 @@
     </el-form>
 
     <el-table ref="ContractListTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
-      <!--批次号-->
       <el-table-column align="center" label="编号" fixed>
         <template slot-scope="scope">
           <span class="globalPointer" size="small" @click="getEntInfo(scope.row)">{{scope.row.cooperateEntId}}</span>
@@ -98,8 +97,8 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title"  width="45%" :visible.sync="detail.visiable" :close-on-click-modal="false">
-      <sign-ent @Close="closeDiaLog" @doQuery="resetDoQuery" :is-edit="detail.isEdit" :detail="detail.entInfo" :is-submit="detail.isSubmit"></sign-ent>
+    <el-dialog @close="closeDiaLog" :title="detail.title"  width="50%" :visible.sync="detail.visiable" :close-on-click-modal="false">
+      <sign-ent @close="closeDiaLog" @doQuery="resetDoQuery" :is-edit="detail.isEdit" :detail="detail.entInfo" :is-submit="detail.isSubmit"></sign-ent>
     </el-dialog>
   </div>
 </template>
@@ -118,7 +117,6 @@
           pageSize: 10
         },
         dataList: [],
-        push: [],
         detail: {
           title: '',
           visiable: false,
@@ -149,13 +147,15 @@
   },
     methods: {
       getEntInfo(val) {
-        this.detail.entInfo = val
+        let string = JSON.stringify(val)
+        this.detail.entInfo = JSON.parse(string)
         this.detail.visiable = true
         this.detail.isEdit = false
         this.detail.isSubmit = false
         this.detail.title = '签约主体企业详情'
       },
       closeDiaLog() {
+        this.detail.entInfo = {}
         this.detail.visiable = false
         this.detail.isEdit = true
       },

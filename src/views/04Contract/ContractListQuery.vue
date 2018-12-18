@@ -105,11 +105,11 @@
           <span size="small">{{scope.row.abortDate | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>-->
-      <el-table-column align="center" label="签约截止日期">
+<!--      <el-table-column align="center" label="签约截止日期">
         <template slot-scope="scope">
           <span size="small">{{scope.row.abortDate | filterDateYYYYMMDD()}}</span>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column align="center" label="签约发起时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.createDate | filterdateYMDHMS()}}</span>
