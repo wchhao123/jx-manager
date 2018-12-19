@@ -84,7 +84,7 @@ export function validatorMobile (rule, value, callback) {
 // 校验身份证
 export function validateIdCard(rule, value, callback) {
   if (Regex.regIDCard.test(value) === false) {
-    return callback(new Error('身份证输入不合法'))
+    return callback(new Error('请输入正确的身份证号'))
   }
   setTimeout(() => {
     callback()
@@ -108,7 +108,7 @@ export function validateName(rule, value, callback) {
 export function validateEntName(rule, value, callback) {
   var r1 = Regex.regEntName.test(value)
   if (r1 === false) {
-    return callback(new Error('输入不合法'))
+    return callback(new Error('企业名称为2~32位汉字、 大小写字母、中文括号'))
   }
   setTimeout(() => {
     callback()
