@@ -52,6 +52,17 @@ export function excel (url, data) {
       })
   })
 }
+export function web(url, data) {
+  return new Promise((resolve, reject) => {
+    axios.get(url, {
+      params: data
+    }).then(response => {
+      resolve(response)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
 export function get(url, data) {
   return new Promise((resolve, reject) => {
     axios.get(http.prefix + url, {
@@ -158,6 +169,10 @@ service.interceptors.response.use(
             type: 'error',
             duration: 5 * 1000,
             center: true
+          })
+          router.replace({
+            path: '/404'
+            //query: {redirect: router.currentRoute.fullPath}
           })
           return Promise.reject(error)
         case 500:

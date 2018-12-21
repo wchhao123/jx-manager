@@ -27,7 +27,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <ent-select title="签约企业" place-holder="请输入签约企业"
+        <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
         </ent-select>
           <el-form-item label="签约发起时间">
@@ -44,7 +44,7 @@
           </el-form-item>
       </el-row>
       <el-row justify="left">
-        <el-col>
+        <el-col :span="6">
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
             <el-option
@@ -56,7 +56,19 @@
           </el-select>
         </el-form-item>
         </el-col>
-        <el-col :span="3">
+        <el-col>
+          <el-form-item label="签约主体">
+            <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
+              <el-option
+                v-for="(item, index) of this.$store.getters.cooperateEntName"
+                :key="index"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
           <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_contract_sign_export')">下載合同
           </el-button>
         </el-col>
@@ -104,9 +116,14 @@
           <span size="small">{{scope.row.contractType | filterContractType()}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="签约企业">
+      <el-table-column align="center" label="企业名称">
         <template slot-scope="scope">
           <span size="small">{{scope.row.entName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="签约主体">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.contractType === '2'? scope.row.cooperateEntName:'==' }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="签约状态">

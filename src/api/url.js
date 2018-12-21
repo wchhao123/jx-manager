@@ -16,6 +16,7 @@ export const contractState = {
   '/sign_subject': '/table/cooperate/get', //获取运营主体
   '/sign_add': '/table/cooperate/add',
   '/sign_update': '/table/cooperate/update',
+  '/sign_simple': '/table/cooperate/getsimple',
   '/business_type': '/ent/business/get',
   '/auth_add': '/ent/business/add', //业务权限
   '/auth_get': '/ent/get/all/ent/business',

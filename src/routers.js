@@ -22,7 +22,7 @@ import TaskManageList from 'views/04Task/_02Settlement/TaskManage.vue'
 import TaskSignInList from 'views/04Task/_02Settlement/TaskSignIn.vue'
 //import UserResume from 'views/04Task/_02Settlement/UserResume.vue'
 
-import Father from 'views/09Test/Father.vue'
+import NOFOUND from 'views/404'
 
 import UserInfo from 'views/02User/_01UserInfo/UserInfo'
 import BusinessRule from 'views/02User/_02BusinessRules/BusinessRules'
@@ -43,6 +43,10 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/404',
+      component: NOFOUND
     },
     {
       path: '/html_panel',

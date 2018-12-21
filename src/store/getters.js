@@ -46,6 +46,13 @@ const getters = {
       store.dispatch('getBusinessType')
     }
     return state.global.businessType
+  },
+  cooperateEntName: (state) => {
+    let cooperateEntName = state.global.cooperateEntName
+    if (cooperateEntName.length === 0) {
+      store.dispatch('getCooperateEntName')
+    }
+    return state.global.cooperateEntName
   }
 }
 

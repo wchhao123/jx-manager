@@ -32,28 +32,40 @@
       </el-row>
         <el-row>
           <el-col :span="6">
-          <ent-select title="签约企业" place-holder="请输入签约企业"
-                    @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
-        </ent-select>
+            <ent-select title="企业名称" place-holder="请输入企业名称"
+                        @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
+            </ent-select>
           </el-col>
-          <el-col :span="15">
-          <el-form-item label="签约发起时间">
-            <el-date-picker
-              v-model="selectDate"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="请输入开始时间"
-              end-placeholder="请输入结束时间"
-              :picker-options="this.$state.pickerOptions2">
-            </el-date-picker>
-          </el-form-item>
+          <el-col :span="10">
+            <el-form-item label="签约发起时间">
+              <el-date-picker
+                v-model="selectDate"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="请输入开始时间"
+                end-placeholder="请输入结束时间"
+                :picker-options="this.$state.pickerOptions2">
+              </el-date-picker>
+            </el-form-item>
           </el-col>
-          <el-col :span="3">
-            <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
-            </el-button>
-          </el-col>
+            <el-col :span="8">
+              <el-form-item label="签约主体">
+                <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
+                  <el-option
+                    v-for="(item, index) of this.$store.getters.cooperateEntName"
+                    :key="index"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="3">
+              <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+              </el-button>
+            </el-col>
         </el-row>
     </el-form>
 
@@ -95,9 +107,14 @@
           <span size="small">{{scope.row.state| filterContractState()}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="签约企业">
+      <el-table-column align="center" label="企业名称">
         <template slot-scope="scope">
           <span size="small">{{scope.row.entName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="签约主体">
+        <template slot-scope="scope">
+          <span size="small">{{ scope.row.contractType === '2'? scope.row.cooperateEntName:'==' }}</span>
         </template>
       </el-table-column>
 <!--      <el-table-column align="center" label="合同到期日">

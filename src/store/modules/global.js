@@ -5,7 +5,8 @@ import {url} from '../../api/url'
 const state = {
   provinces: [],
   salaryEnts: [],
-  businessType: []
+  businessType: [],
+  cooperateEntName: []
 }
 const mutations = {
   [vuexTypes.SAVE_PROVINCE]: (state, obj) => {
@@ -16,6 +17,9 @@ const mutations = {
   },
   [vuexTypes.BUSINESS_TYPE]: (state, obj) => {
     state.businessType = obj.businessType
+  },
+  [vuexTypes.COOPERATE_ENT_NAME]: (state, obj) => {
+    state.cooperateEntName = obj.cooperateEntName
   }
 }
 const actions = {
@@ -35,10 +39,19 @@ const actions = {
     post(url('/business_type'), {businessName: businessName}).then(res => {
       let array = {}
       res.data.forEach((item, index, arr) => {
-        debugger
         array[item.businessType] = item.businessName
       })
       commit(vuexTypes.BUSINESS_TYPE, {businessType: array})
+    })
+  },
+  getCooperateEntName({commit}, cooperateEntName) {
+    post(url('/sign_simple'), {cooperateEntName: cooperateEntName}).then(res => {
+      let array = {}
+      res.data.forEach((item, index, arr) => {
+        debugger
+        array[item.cooperateEntId] = item.cooperateEntName
+      })
+      commit(vuexTypes.COOPERATE_ENT_NAME, {cooperateEntName: array})
     })
   }
 }

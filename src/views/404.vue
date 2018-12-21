@@ -9,7 +9,7 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">OOPS!</div>
-        <div class="bullshit__info">版权所有——嘉福</div>
+        <div class="bullshit__info">版权所有——嘉薪</div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
         <a href="/" class="bullshit__return-home" style="text-decoration: none">返回首页</a>
@@ -22,16 +22,18 @@
     </div>
   </div>
 </template>
-
 <script>
-import { MP } from '../api/users.js'
+import BMap from 'BMap'
 
 export default {
+  data() {
+    return {
+      ak: 'TE4iuLIdXsQ9mLZaFZGdsqBKBQ1eWDrQ'
+    }
+  },
   mounted: function () {
     this.$nextTick(function () {
-      var _this = this
-      MP(_this.ak).then(BMap => {
-        var sContent = '嘉福总部'
+        var sContent = '嘉薪事业部'
         var map1 = new BMap.Map('allmap1')
         // 创建Map实例
         var point1 = new BMap.Point(121.430404, 31.199854)
@@ -46,7 +48,6 @@ export default {
         map1.panBy(200, 0)
         // 地图提示语的位置  括号里为像素
       })
-    })
   },
   computed: {
     message () {

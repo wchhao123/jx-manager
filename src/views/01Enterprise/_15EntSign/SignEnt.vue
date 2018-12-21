@@ -275,16 +275,14 @@
           : ''
         if (url.length > 0) {
           if (url.indexOf('pdf') !== -1) {
-            debugger
             window.open(url)
           } else {
-            this.innerVisible = true
             this.imageUrl = url
+            this.innerVisible = true
           }
         } else {
-          this.innerVisible = true
-          debugger
           this.imageUrl = 'http://oss.99payroll.cn/test-images/20181213/99d4b6ad7296022ce3f551aa8e369cf0.png'
+          this.innerVisible = true
         }
       },
       _beforeUpload(file) {
