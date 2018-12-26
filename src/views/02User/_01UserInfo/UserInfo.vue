@@ -122,16 +122,16 @@
         </template>
       </el-table-column>
 
-      <el-table-column fixed="right" label="操作" width="200"  align="center">
+      <el-table-column fixed="right" label="操作" width="100"  align="center">
         <template slot-scope="scope" >
           <el-button type="danger" size="small" plain
                      v-show="isOwnEdit"
                      @click="editUser(scope.row,scope.$index)">编辑</el-button>
 
-          <el-button  @click.native.prevent="sendAgain(scope.row)"
+         <!-- <el-button  @click.native.prevent="sendAgain(scope.row)"
                       v-show="isOwnSms"
                       :disabled="scope.row.isActive === '1'"
-                      type="primary" plain size="small">补发短信</el-button>
+                      type="primary" plain size="small">补发短信</el-button>-->
         </template>
       </el-table-column>
     </el-table>

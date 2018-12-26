@@ -67,11 +67,11 @@
           </el-form-item>
         </el-row>
 
-        <el-row>
+<!--        <el-row>
           <el-form-item label="法人代表身份证号码:">
             <el-input v-model="entInfo.verifyInfo.legalPersonCard" disabled size="small"></el-input>
           </el-form-item>
-        </el-row>
+        </el-row>-->
 
         <el-row>
           <el-form-item label="统一社会信用代码:">
@@ -285,9 +285,9 @@
           city: [
             {required: true, message: '请选择城市', trigger: 'change'}
           ],
-          legalPersonCard: [
+          /*legalPersonCard: [
             {required: true, validator: validatePersonCard, trigger: 'blur'}
-          ],
+          ],*/
           address: [
             {required: true, message: '请输入企业地址', trigger: 'blur'}
           ],

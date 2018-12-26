@@ -5,27 +5,27 @@
              :inline="true" label-width="200px">
       <el-row style="border-top: 1px dashed grey; padding-top:10px;">
         <el-form-item label="企业名称" prop="entName">
-          <el-input size="small" v-model="entInfo.entName"></el-input>
+          <el-input size="small" v-model="entInfo.entName" placeholder="请输入企业名称"></el-input>
         </el-form-item>
       </el-row>
 
       <el-row>
         <el-form-item label="办公电话" prop="contactPhone">
-          <el-input size="small" v-model="entInfo.contactPhone" maxlength="20"></el-input>
+          <el-input size="small" v-model="entInfo.contactPhone" maxlength="20" placeholder="请输入办公电话"></el-input>
         </el-form-item>
       </el-row>
 
       <el-row>
         <el-form-item label="法人代表姓名" prop="legalPerson">
-          <el-input size="small" v-model="entInfo.legalPerson"></el-input>
+          <el-input size="small" v-model="entInfo.legalPerson" placeholder="请输入法人代表姓名"></el-input>
         </el-form-item>
       </el-row>
 
-      <el-row>
+   <!--   <el-row>
         <el-form-item label="法人代表身份证号" prop="legalPersonCard">
           <el-input size="small" v-model="entInfo.legalPersonCard"></el-input>
         </el-form-item>
-      </el-row>
+      </el-row>-->
 
       <el-row>
         <el-form-item label="企业办公地址:" required>
@@ -54,7 +54,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item prop="address">
-              <el-input v-model="entInfo.address" maxlength="32" size="small"></el-input>
+              <el-input v-model="entInfo.address" maxlength="32" size="small" placeholder="请输入企业办公详细地址"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>

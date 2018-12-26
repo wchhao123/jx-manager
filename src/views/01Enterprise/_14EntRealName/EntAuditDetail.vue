@@ -18,11 +18,11 @@
         </el-form-item>
       </el-row>
 
-      <el-row>
+<!--      <el-row>
         <el-form-item label="法人代表身份证号 :">
           <span v-text="detail.legalPersonCard"></span>
         </el-form-item>
-      </el-row>
+      </el-row>-->
 
       <el-row>
         <el-form-item label="统一社会信用代码 :">

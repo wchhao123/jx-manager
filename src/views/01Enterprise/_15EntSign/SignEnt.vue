@@ -79,7 +79,7 @@
       </el-row>
       <el-row>
         <el-form-item prop="address" label=" ">
-          <el-input :disabled="!edit" v-model="entInfo.address" maxlength="32" size="small"></el-input>
+          <el-input :disabled="!edit" v-model="entInfo.address" maxlength="32" size="small" placeholder="请输入企业办公详细地址"></el-input>
         </el-form-item>
       </el-row>
       <el-row>

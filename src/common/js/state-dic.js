@@ -348,8 +348,9 @@ export const contractSignState = {
   2: '签署中',
   3: '发送失败',
   4: '已撤销',
-  5: '已过期',
-  6: '发送中'
+  5: '已失效',
+  6: '发送中',
+  7: '签署异常'
 }
 export const signInState = {
   1: '待处理',
@@ -543,7 +544,9 @@ export const typeSystemErrorType = {
   '6': '用户提现异常',
   '7': '福利分配异常',
   '10': '充值订单异常',
-  '11': '任务结算异常'
+  '11': '任务结算异常',
+  '12': '发薪更新状态异常',
+  '13': '合同异常'
 }
 
 export function funSystemErrorType () {
@@ -555,7 +558,9 @@ export function funSystemErrorType () {
     {'key': '6', 'value': '用户提现异常'},
     {'key': '7', 'value': '福利分配异常'},
     {'key': '10', 'value': '充值订单异常'},
-    {'key': '11', 'value': '任务结算异常'}
+    {'key': '11', 'value': '任务结算异常'},
+    {'key': '12', 'value': '发薪更新状态异常'},
+    {'key': '13', 'value': '合同异常'}
   ]
 }
 
