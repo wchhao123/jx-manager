@@ -47,6 +47,7 @@ module.exports = {
       'filters': resolve('src/filters')
     }
   },
+
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),

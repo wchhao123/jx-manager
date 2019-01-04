@@ -4,7 +4,7 @@
              style="-webkit-animation-name: shineBlue;-webkit-animation-duration: 3s;-webkit-animation-iteration-count: infinite; border-radius:5px;border: 1px solid #b1b1b1;background: rgba(255,255,255,.5);width:260px;padding: 5px 15px;position: absolute;right: 80px;top:120px"
              autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
       <el-row style="text-align: center;padding: 12px 0">
-        <span style=" font-size: 26px;font-weight: 600;">欢迎登录</span>
+        <span style=" font-size: 26px;font-weight: 600;color: white">欢迎登录</span>
       </el-row>
       <el-row>
         <el-col :span="24">

@@ -150,7 +150,7 @@
             {validator: Validator.validateIdCard, trigger: 'blur'}
           ],*/
           address: [
-            {required: true, message: '请输入企业地址', trigger: 'blur'}
+            {required: true, message: '请输入企业详细地址', trigger: 'blur'}
           ],
           documentType: {required: true, message: '请选择证件类型', trigger: 'blur'},
           uploadFileUrl: {required: true, message: '请上传营业执照', trigger: 'blur'},

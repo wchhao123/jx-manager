@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 import EntSelect from 'components/select/EntSelect'
 import * as state from 'common/js/state-dic'
 import VueRouter from 'vue-router'
@@ -37,6 +39,7 @@ Object.keys(filter).forEach(key => {
 })
 
 Vue.config.productionTip = false
+Vue.use(iView)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)

@@ -2,13 +2,13 @@
   <section id="recharge_manage_new">
     <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
       <el-row type="flex">
-        <el-col>
+        <el-col :span="6">
             <ent-select title="企业名称"
                         place-holder="请输入企业编号或名称"
                         @input-select="salaryInputSelect"
             ></ent-select>
         </el-col>
-        <el-col>
+        <el-col :span="6">
           <el-form-item label="开户状态">
             <el-select size="small" v-model="queryModel.openingState" filterable clearable placeholder="审核状态">
               <el-option
@@ -18,6 +18,11 @@
                 :value="item.key">
               </el-option>
             </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
+          <el-form-item label="运营主企业">
+            <el-input size="small" clearable v-model="queryModel.operationEntName" placeholder="请输入运营主企业名称"></el-input>
           </el-form-item>
         </el-col>
       </el-row>

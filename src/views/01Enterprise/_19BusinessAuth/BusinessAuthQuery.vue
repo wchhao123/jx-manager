@@ -43,6 +43,11 @@
             </el-date-picker>
           </el-form-item>
           </el-col>
+          <el-col>
+            <el-form-item label="运营主企业">
+              <el-input size="small" clearable v-model="queryModel.entName" placeholder="请输入运营主企业名称"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
       <el-row>
         <el-col :span="2">
@@ -205,6 +210,7 @@
       doSubmit(val) {
         if (!this.multipleSelection.length > 0 && val === '1') {
           this.$message.warning('请勾选需要重新启用业务的企业')
+          //this.$Message.warning('请勾选需要重新启用业务的企业')
           return
         }
         if (!this.multipleSelection.length > 0 && val === '0') {

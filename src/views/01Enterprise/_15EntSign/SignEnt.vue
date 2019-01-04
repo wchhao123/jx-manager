@@ -29,9 +29,21 @@
                     placeholder="请输入法人代表姓名"></el-input>
         </el-form-item>
       </el-row>
-
       <el-row>
-        <el-form-item label="法人代表身份证号" prop="legalPersonCard">
+        <el-form-item label="法人代表证件类型" prop="idType">
+          <el-select style="width: 320px" :disabled="!edit" size="small" v-model="entInfo.idType" clearable
+                     placeholder="请选择证件类型">
+            <el-option
+              v-for="(item, index) of this.$state.IdType"
+              :key="index"
+              :label="item"
+              :value="index">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-row>
+      <el-row>
+        <el-form-item label="法人代表证件号码" prop="legalPersonCard">
           <el-input :disabled="!edit" size="small" v-model="entInfo.legalPersonCard" clearable
                     placeholder="请输入法人代表身份证号"></el-input>
         </el-form-item>
@@ -79,7 +91,8 @@
       </el-row>
       <el-row>
         <el-form-item prop="address" label=" ">
-          <el-input :disabled="!edit" v-model="entInfo.address" maxlength="32" size="small" placeholder="请输入企业办公详细地址"></el-input>
+          <el-input :disabled="!edit" v-model="entInfo.address" maxlength="32" size="small"
+                    placeholder="请输入企业办公详细地址"></el-input>
         </el-form-item>
       </el-row>
       <el-row>
@@ -163,9 +176,12 @@
             {required: true, message: '请输入企业名称', trigger: 'blur'},
             {validator: Validator.validateEntName, trigger: 'blur'}
           ],
+          idType: [
+            {required: true, message: '请选择证件类型', trigger: 'change'}
+          ],
           legalPersonCard: [
-            {required: true, message: '请输入法人代表身份证号', trigger: 'blur'},
-            {validator: Validator.validateIdCard, trigger: 'blur'}
+            {required: true, message: '请输入法人代表证件号码', trigger: 'blur'},
+            {validator: this.validateIdCard, trigger: 'blur'}
           ],
           businessType: [
             {required: true, message: '请选择业务类型', trigger: 'change'}
@@ -193,6 +209,7 @@
       detail: {
         immediate: true,
         handler: function () {
+          debugger
           if (this.isSubmit) {
             setTimeout(() => {
               this.$refs.verifyForm.resetFields()
@@ -205,7 +222,8 @@
             setTimeout(() => {
               this.$refs.verifyForm.resetFields()
               this.$refs.upload.clearFiles()
-              this.entInfo = this.detail
+              let string = JSON.stringify(this.detail)
+              this.entInfo = JSON.parse(string)
               this.city[0] = this.entInfo.city
             }, 50)
           }
@@ -229,6 +247,22 @@
       }
     },
     methods: {
+      validateIdCard(rule, value, callback) {
+        debugger////0-居民身份证 1 护照 B港澳通行证 C台湾通行证 E户口簿 F临时居民身份证
+        if (this.entInfo.idType === '0' && !/(^\d{17}(\d|X|x)$)/.test(value)) {
+            return callback(new Error('请输入正确的身份证号'))
+          }
+        if (this.entInfo.idType === '1' && !/(^\d{6,20}$)/.test(value)) {
+          return callback(new Error('请输入正确护照编号'))
+        }
+        if (this.entInfo.idType === 'B' && !/(^[1-9,a-z,A-Z]{11}$)/.test(value)) {
+          return callback(new Error('请输入正确的港澳通行证号'))
+        }
+        if (this.entInfo.idType === 'C' && !/(^[1-9,a-z,A-Z]{8}$)/.test(value)) {
+          return callback(new Error('请输入正确的台湾通行证号'))
+        }
+        callback()
+      },
       _submitVerify() {
         this.$refs.verifyForm.validate(v => {
           if (v) {

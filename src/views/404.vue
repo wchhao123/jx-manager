@@ -1,3 +1,4 @@
+<!--
 <template>
   <div style="background:#f0f2f5;height:100%;overflow: hidden">
     <div class="wscn-http404">
@@ -13,7 +14,7 @@
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
         <a href="/" class="bullshit__return-home" style="text-decoration: none">返回首页</a>
-        <!--<a href="/joc" class="bullshit__return-home" style="text-decoration: none">返回首页</a>-->
+        &lt;!&ndash;<a href="/joc" class="bullshit__return-home" style="text-decoration: none">返回首页</a>&ndash;&gt;
       </div>
       <div class="mapWrap">
         <div id="allmap1" style="width: 100%;height:200px ">
@@ -253,3 +254,4 @@ export default {
     }
   }
 </style>
+-->

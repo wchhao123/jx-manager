@@ -20,8 +20,11 @@ export default {
     top: 0px;
     bottom: 0px;
     width: 100%;
-    -webkit-user-select: text
+    -webkit-user-select: text;
   }
+    body {
+      color: #495060;
+    }
   .el-menu
     background $color-background-aside-menu-expand
   //  左侧导航

@@ -38,16 +38,18 @@ import EntMenu from 'views/03System/_04EntMenuAuthority/EntMenuAuthority'
 import AdminMenu from 'views/03System/_03AdminMenuAuthority/AdminMenuAuthority'
 import HtmlPanel from 'components/HtmlPanel'
 import ContractUpdate from 'views/03System/ContractTemplate'
+
+import DownLoad from 'views/05Download/DownLoad.vue'
 export default new Router({
   routes: [
     {
       path: '/login',
       component: Login
     },
-    {
+   /* {
       path: '/404',
       component: NOFOUND
-    },
+    },*/
     {
       path: '/html_panel',
       component: HtmlPanel,
@@ -118,6 +120,15 @@ export default new Router({
         {path: '/system_ent_menu', component: EntMenu, name: '企业端菜单管理'},
         {path: '/system_admin_menu', component: AdminMenu, name: '管理后台菜单管理'},
         {path: '/contract_update', component: ContractUpdate, name: '添加合同模板'}
+      ]
+    },
+    {
+      path: '/',
+      component: Home,
+      name: '下载管理',
+      iconCls: 'el-icon-message',
+      children: [
+        {path: '/download_list', component: DownLoad, name: '下载管理'}
       ]
     }
   ]

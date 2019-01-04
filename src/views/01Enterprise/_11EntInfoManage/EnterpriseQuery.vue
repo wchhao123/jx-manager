@@ -52,6 +52,11 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
+          <el-col>
+            <el-form-item label="运营主企业">
+              <el-input size="small" clearable v-model="queryModel.operationEntName" placeholder="请输入运营主企业名称"></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row type="flex" justify="left">
           <el-col :span="3">

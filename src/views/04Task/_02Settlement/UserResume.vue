@@ -33,6 +33,7 @@
           <span v-text="detail.introduce"></span>
         </el-form-item>
       </el-row>
+<!--
       <el-row>
         <el-form-item style="width: 200px;float: left" label="身份证照片 :" v-show="detail.pictureFrontUrl">
           <section style="display: inline-block;">
@@ -49,6 +50,7 @@
           <span style="height: 60px; line-height: 30px; color: #FF2F0F; display: inline-block" @click="showEntImg2">点击查看</span>
         </el-form-item>
       </el-row>
+-->
     </el-form>
     <el-dialog
       width="70%"

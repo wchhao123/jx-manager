@@ -82,7 +82,7 @@ export function validatorMobile (rule, value, callback) {
 }
 
 // 校验身份证
-export function validateIdCard(rule, value, callback) {
+export function validateIdCard(rule, value, type, callback) {
   if (Regex.regIDCard.test(value) === false) {
     return callback(new Error('请输入正确的身份证号'))
   }

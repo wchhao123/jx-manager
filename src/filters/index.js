@@ -130,7 +130,11 @@ export function filterBusinessState (key) {
     return ''
   return state.businessState[parseInt(key)]
 }
-
+export function filterExportState (key) {
+  if (!key)
+    return ''
+  return state.exportState[parseInt(key)]
+}
 //任务状态
 export function filterTaskListState (key) {
   if (!key)
@@ -161,6 +165,12 @@ export function filterUserActiveState (key) {
   if (!key)
     return ''
   return state.typeUserActiveState[parseInt(key)]
+}
+
+export function filterUserImageState (key) {
+  if (!key)
+    return ''
+  return state.userImageState[parseInt(key)]
 }
 
 //用户业务规则类型

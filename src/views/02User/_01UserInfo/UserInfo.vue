@@ -18,6 +18,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="证件照片">
+          <el-select size="small" v-model="queryModel.isUpload" filterable clearable placeholder="请选择上传状态">
+            <el-option
+              v-for="(item, index) of this.$state.uploadState"
+              :key="index"
+              :label="item"
+              :value="index">
+            </el-option>
+          </el-select>
+        </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="实名认证状态">
@@ -45,20 +55,30 @@
       </el-row>
 
       <el-row type="flex" justify="left">
-        <el-col :span="3">
+        <el-col :span="2">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px"
+          <el-button size="small" :disabled="isLoading" type="danger" icon="el-icon-check" style="margin-bottom: 10px"
                      @click="_exportUserInfo"
-                     v-show="this.$store.getters.getBtnIsShowByName('btn_user_export')">导出
+                     v-show="this.$store.getters.getBtnIsShowByName('btn_user_export')">导出用户信息
+          </el-button>
+        </el-col>
+        <el-col :span="3">
+          <el-button size="small" :disabled="isLoading" type="danger" icon="el-icon-check" style="margin-bottom: 10px"
+                     @click="doExportImageList"
+                     v-show="this.$store.getters.getBtnIsShowByName('btn_user_export')">导出证件照片
           </el-button>
         </el-col>
       </el-row>
     </el-form>
 
-    <el-table ref="userInfoTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
+    <el-table ref="userInfoTable" :data="dataList" style="width: 100%" border v-loading="isLoading" @selection-change="handleSelectionChange">
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
       <!--用户编号-->
       <el-table-column  align="center" label="用户编号" >
         <template slot-scope="scope">
@@ -93,6 +113,11 @@
         </template>
       </el-table-column>
 
+      <el-table-column  align="center" label="证件照片" >
+        <template slot-scope="scope">
+          <span   size="small"    >{{scope.row.isUpload | filterUserImageState}}</span>
+        </template>
+      </el-table-column>
       <!--激活状态-->
       <el-table-column width="100"  align="center" label="激活状态" >
         <template slot-scope="scope">
@@ -171,9 +196,11 @@
         isLoading: false,
         selectDate: '',
         totalCount: 10,
+        multipleSelection: [],
         queryModel: {
           pageNum: 1,
-          pageSize: 10
+          pageSize: 10,
+          key: 'userImage'
         },
         joinEntModel: {
           visible: false,
@@ -228,6 +255,14 @@
       }
     },
     methods: {
+      handleSelectionChange(val) {
+        this.multipleSelection = []
+        val.forEach((item, index, arr) => {
+          if (item.userId && item.isUpload) {
+            this.multipleSelection.push(item)
+          }
+        })
+      },
       resetDoQuery() {
         this.queryModel.pageNum = 1
         this.doQuery()
@@ -250,6 +285,56 @@
           }
         })
       },
+      doExportImageList () {
+        this.$confirm('确认需要导出用户证件照片?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => { //contract_export
+          this.isLoading = true
+          let object = this.multipleSelection
+          let userIds = []
+          if (object.length > 0) {
+            object.forEach((item, index, arr) => {
+              userIds.push(item.userId)
+            })
+          }
+          this.queryModel.userIds = userIds.toString()
+          if (this.selectDate !== null && this.selectDate) {
+            this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
+            this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])
+          } else {
+            this.queryModel.startDate = null
+            this.queryModel.endDate = null
+          }
+          this.$post(this.$url('/user_image'), this.queryModel).then(response => {
+            this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
+              this.isLoading = false
+              if (!response) {
+                return
+              }
+              let objectUrl = URL.createObjectURL(new Blob([response]))
+              let link = document.createElement('a')
+              link.style.display = 'none'
+              link.href = objectUrl
+              link.setAttribute('download', '用户证件照片.zip')
+              document.body.appendChild(link)
+              link.click()
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+            })
+          }, err => {
+            this.isLoading = false
+            console.log(err)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+      },
       _exportUserInfo() {
         this.$confirm('确认需要导出用户信息数据?', '提示', {
           confirmButtonText: '确定',
@@ -257,6 +342,14 @@
           type: 'warning'
         }).then(() => {
           this.isLoading = true
+          let object = this.multipleSelection
+          let userIds = []
+          if (object.length > 0) {
+            object.forEach((item, index, arr) => {
+              userIds.push(item.userId)
+            })
+          }
+          this.queryModel.userIds = userIds.toString()
           if (this.selectDate !== null && this.selectDate) {
             this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
             this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])

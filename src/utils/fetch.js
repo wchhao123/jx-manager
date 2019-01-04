@@ -170,10 +170,10 @@ service.interceptors.response.use(
             duration: 5 * 1000,
             center: true
           })
-          router.replace({
+         /* router.replace({
             path: '/404'
             //query: {redirect: router.currentRoute.fullPath}
-          })
+          })*/
           return Promise.reject(error)
         case 500:
           Message({

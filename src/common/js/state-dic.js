@@ -320,6 +320,13 @@ export const signBusinessType = {
   '1': '薪资代发',
   '2': '灵活用工'
 }
+export const IdType = {
+  '0': '居民身份证',
+  '1': '护照',
+  'B': '港澳居民来往内地通行证',
+  'C': '台湾居民来往大陆通行证'
+//0-居民身份证 1 护照 B港澳通行证 C台湾通行证 E户口簿 F临时居民身份证
+}
 export const sealState = {//1表示已生成 2 表示生成中3 表示生成失败
   '1': '已生成',
   '2': '生成中',
@@ -334,6 +341,16 @@ export const businessState = {
   0: '已关闭'
 
 }
+export const exportState = {
+  1: '已导出',
+  0: '正在导出'
+
+}
+export const uploadState = {
+  1: '已上传',
+  0: '未上传'
+
+}
 export const contractState = {
   0: '未发送',
   1: '发送成功',
@@ -341,6 +358,11 @@ export const contractState = {
   3: '部分失败',
   4: '发送中'
 
+}
+
+export const userImageState = {
+  1: '已上传',
+  0: '未上传'
 }
 export const contractSignState = {
   0: '未发送',
