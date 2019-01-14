@@ -257,7 +257,7 @@
       handleSelectionChange(val) {
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
-          if (item.entId && item.signState !== '1') {
+          if (item.entId) {
             this.multipleSelection.push(item)
           }
         })

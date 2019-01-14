@@ -6,8 +6,7 @@ const state = {
   provinces: [],
   salaryEnts: [],
   businessType: [],
-  cooperateEntName: [],
-  salesList: []
+  cooperateEntName: []
 }
 const mutations = {
   [vuexTypes.SAVE_PROVINCE]: (state, obj) => {
@@ -21,9 +20,6 @@ const mutations = {
   },
   [vuexTypes.COOPERATE_ENT_NAME]: (state, obj) => {
     state.cooperateEntName = obj.cooperateEntName
-  },
-  [vuexTypes.SALES_LIST]: (state, obj) => {
-    state.salesList = obj.salesList
   }
 }
 const actions = {
@@ -46,15 +42,6 @@ const actions = {
         array[item.businessType] = item.businessName
       })
       commit(vuexTypes.BUSINESS_TYPE, {businessType: array})
-    })
-  },
-  getSalesList({commit}, saleName) {
-    post(url('/sales_list'), {saleName: saleName}).then(res => {
-      let array = {}
-      res.data.forEach((item, index, arr) => {
-        array[item.sales_id] = item.sales_name
-      })
-      commit(vuexTypes.SALES_LIST, {salesList: array})
     })
   },
   getCooperateEntName({commit}, cooperateEntName) {

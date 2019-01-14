@@ -17,7 +17,7 @@
         <el-table-column align="center" label="销售代表" width="200px">
           <template slot-scope="scope">
               <el-form-item :prop="scope.row.error" :rules='rules.sale'>
-                <el-select size="small" v-model="this.dataList[scope.$index].saleId" @change="setEntSale(scope.row, scope.$index)" clearable placeholder="请选择销售代表">
+                <el-select size="small" @input="getSalesList" v-model="this.dataList[scope.$index].saleId" @change="setEntSale(scope.row, scope.$index)" clearable placeholder="请选择销售代表">
                   <el-option
                     v-for="(item, index) of $store.getters.salesList"
                     :key="index"
@@ -39,7 +39,7 @@
     <el-row type="flex" justify="center" style="margin-top: 30px">
       <el-button style="width: 120px" size="small" @click="()=> {this.$emit('close')}">取 消</el-button>
       <el-button style="margin-left: 100px;width: 120px" size="small" type="primary" :disabled="isLoading"
-                 @click="resetDoQueryExt">确 认
+                 @click="submitSalesAndVerify">确 认
       </el-button>
     </el-row>
   </div>
@@ -54,8 +54,6 @@
       return {
         queryUrl: '/',
         isLoading: false,
-        totalCount: 0,
-        multipleSelection: [],
         queryModel: {
           pageNum: 1,
           pageSize: 10
@@ -71,7 +69,6 @@
       detail: {
         immediate: true,
         handler: function () {
-          debugger
           this.dataList = this.detail
         }
       }
@@ -80,27 +77,8 @@
       setEntSale(val, index) {
 
       },
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.ContractSignTable.toggleRowSelection(row)
-          })
-        } else {
-          this.$refs.ContractSignTable.clearSelection()
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = []
-        val.forEach((item, index, arr) => {
-          if (!item.entId) {
-          } else {
-            this.multipleSelection.push(item.entId)
-          }
-        })
-      },
-      resetDoQuery() {
-        this.queryModel.pageNum = 1
-        this.doQuery()
+      submitSalesAndVerify() {
+
       },
       doQuery() {
         this.isLoading = true
@@ -113,44 +91,15 @@
           console.log(err)
         })
       },
-      getBusinessType() {
-        this.$post(this.$url('/business_type'), this.queryModelExt).then(res => {
-          this.dataListExt = res.data
-          this.totalCountExt = res.data.totalCount
-        }, err => {
-          this.isLoadingExt = false
-          console.log(err)
+      getSalesList({commit}, saleName) {
+        post(url('/sales_list'), {saleName: saleName}).then(res => {
+          let array = {}
+          res.data.forEach((item, index, arr) => {
+            array[item.sales_id] = item.sales_name
+          })
+          commit(vuexTypes.SALES_LIST, {salesList: array})
         })
       },
-      resetDoQueryExt() {
-        if (!this.multipleSelection.length > 0) {
-          this.$message.warning('您未选择企业！')
-          return
-        }
-        if (!this.multipleSelectionExt.length > 0) {
-          this.$message.warning('您未选择业务类型！')
-          return
-        }
-        this.isLoadingExt = true
-        this.isLoading = true
-        this.$post(this.$url('/auth_add'), {
-          entIds: this.multipleSelection.toString(),
-          businessTypes: this.multipleSelectionExt.toString()
-        }).then(response => {
-          this.$emit('Close')
-          this.dataList = {}
-          this.dataListExt = {}
-          this.queryModelExt = {}
-          this.isLoadingExt = false
-          this.isLoading = false
-          this.$message.success(response.msg)
-        }, err => {
-          this.isLoadingExt = false
-          this.isLoading = false
-          this.$message.error(err)
-          console.log(err)
-        })
-      }
     }
   }
 </script>

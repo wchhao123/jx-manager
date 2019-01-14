@@ -47,13 +47,6 @@ const getters = {
     }
     return state.global.businessType
   },
-  salesList: (state) => {
-    let salesList = state.global.salesList
-    if (salesList.length === 0) {
-      store.dispatch('getSalesList')
-    }
-    return state.global.salesList
-  },
   cooperateEntName: (state) => {
     let cooperateEntName = state.global.cooperateEntName
     if (cooperateEntName.length === 0) {
