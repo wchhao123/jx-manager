@@ -79,7 +79,7 @@
       </el-table-column>
       <el-table-column align="center" label="任务名称">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.taskName}}</span>
+          <span class="globalPointer" @click="getDetail(scope.row.taskId)" size="small">{{scope.row.taskName}}</span>
         </template>
       </el-table-column>
       <!--发放总人数-->
@@ -127,6 +127,11 @@
         </el-pagination>
       </div>
     </el-col>
+    <el-dialog title="任务详情" center :close-on-click-modal=false
+               :visible.sync="detail.visiable"
+               width="67%">
+      <task-detail :detail="detail.taskDetail"></task-detail>
+    </el-dialog>
   </div>
 </template>
 
@@ -135,9 +140,13 @@
   import * as Api from 'api'
   import * as filters from 'filters'
   import { ERR_OK } from '../../../api/index'
+  import TaskDetail from './TaskDetail'
   export default {
     data () {
       return {
+        detail: {
+          visiable: false
+        },
         isLoading: false,
         selectDate: '',
         tableSpan: 2,
@@ -180,6 +189,9 @@
         }
       }
     },
+    components: {
+      TaskDetail
+    },
     computed: {
       taskStateSource () {
         return state.funTaskListState()
@@ -189,6 +201,19 @@
       }
     },
     methods: {
+      getDetail(taskId) {
+        this.$post(this.$url('/task_detail'), {
+          taskId: taskId
+        }).then(response => {
+          debugger
+          this.detail.taskDetail = response.data
+          this.isLoading = false
+          this.detail.visiable = true
+        }, err => {
+          this.isLoading = false
+          console.log(err)
+        })
+      },
       salaryInputSelect (entId) {
         if (entId !== undefined) {
           this.queryModel.entId = entId

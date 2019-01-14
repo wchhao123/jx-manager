@@ -23,5 +23,7 @@ export const contractState = {
   '/auth_update': '/ent/business/open/again',
   '/user_image': '/user/info/exportimage', // 下载用户身份证图片
   '/download_list': '/jx/common/downloadlist', //下载中心
-  '/download': '/jx/common/download'
+  '/download': '/jx/common/download',
+  '/sales_list': '/ent/get/sale/reparent',
+  '/task_detail': '/table/task/get/taskinfo'
 }

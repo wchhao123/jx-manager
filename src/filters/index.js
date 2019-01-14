@@ -292,9 +292,10 @@ export function filterDateYYYYMMDD (timestamp) {
 }
 
 function _formatData (timestamp, format) {
-  if (timestamp === undefined || timestamp === null || timestamp.length === 0) {
+  if (timestamp === undefined || timestamp === null) {
     return ''
   }
+  if (timestamp === 0) return '不限'
   var date = new Date(timestamp)
   var y = date.getFullYear()
   var m = date.getMonth() + 1

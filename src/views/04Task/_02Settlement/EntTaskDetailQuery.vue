@@ -289,7 +289,7 @@
             this.queryModel.startDate = null
             this.queryModel.endDate = null
           }
-          Api.exportSalaryDetailList(this.queryModel).then(resp => {
+          Api.getTaskExport(this.queryModel).then(resp => {
             this.isLoading = false
             let data = resp.data
             if (!data) {

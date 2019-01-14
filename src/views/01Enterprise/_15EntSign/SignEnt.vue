@@ -252,10 +252,10 @@
         if (this.entInfo.idType === '0' && !/(^\d{17}(\d|X|x)$)/.test(value)) {
             return callback(new Error('请输入正确的身份证号'))
           }
-        if (this.entInfo.idType === '1' && !/(^\d{6,20}$)/.test(value)) {
+        if (this.entInfo.idType === '1' && !/(^[1-9,a-z,A-Z]{6,20}$)/.test(value)) {
           return callback(new Error('请输入正确护照编号'))
         }
-        if (this.entInfo.idType === 'B' && !/(^[1-9,a-z,A-Z]{11}$)/.test(value)) {
+        if (this.entInfo.idType === 'B' && !/(^[1-9,a-z,A-Z]{9}$)/.test(value)) {
           return callback(new Error('请输入正确的港澳通行证号'))
         }
         if (this.entInfo.idType === 'C' && !/(^[1-9,a-z,A-Z]{8}$)/.test(value)) {

@@ -54,14 +54,14 @@
           </el-button>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="danger" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_sign_auth')" icon="el-icon-check" style="margin-bottom: 10px" @click="doVerify">审核
+          <el-button size="small" type="danger" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_sign_auth')" icon="el-icon-check" style="margin-bottom: 10px" @click="doAddSale">审核
           </el-button>
         </el-col>
       </el-row>
     </el-form>
 
     <el-table ref="entSignAuditTable" :data="entSignDataList" style="width: 100%" border v-loading="isLoading"
-              @selection-change="tableSelectionChange">
+              @selection-change="handleSelectionChange">
 
       <el-table-column
         type="selection" width="55">
@@ -135,6 +135,9 @@
         </el-pagination>
       </div>
     </el-col>
+    <el-dialog :title="detail.title" height="100px" center width="50%" :visible.sync="detail.visiable" :close-on-click-modal="false">
+      <sale-set @Close="closeDiaLog"  style="height:500px;border-top:1px solid #99a9bf;" :detail="detail.entInfo"></sale-set>
+    </el-dialog>
   </div>
 </template>
 
@@ -143,12 +146,18 @@
   import * as state from 'common/js/state-dic'
   import * as Api from 'api'
   import { ERR_OK } from '../../../api/index'
+  import SaleSet from './SaleSet'
   export default {
     data () {
       return {
+        detail: {
+          title: '填写审批信息',
+          visiable: false
+        },
         isLoading: false,
         tableSpan: 2,
         totalCount: 0,
+        multipleSelection: [],
         inputDataList: {
           salaryDataList: []
         },
@@ -173,6 +182,13 @@
       }
     },
     methods: {
+      closeDiaLog() {
+        this.detail.visiable = false
+        this.resetDoQuery()
+      },
+      openDiaLog() {
+        this.detail.visiable = true
+      },
       salaryInputSelect (entId) {
         if (entId !== undefined) {
           this.queryModel.entId = entId
@@ -194,6 +210,18 @@
             this.totalCount = response.data.data.totalCount
           }
         })
+      },
+      doAddSale() {
+        if (this.multipleSelection.length <= 0) {
+          this.$message({
+            type: 'warning',
+            message: '请勾选需要审核的企业'
+          })
+          return
+        }
+        debugger
+        this.detail.entInfo = this.multipleSelection
+        this.detail.visiable = true
       },
       doVerify () {
         if (this.waitSignEnt === null || this.waitSignEnt.length === 0) {
@@ -226,6 +254,14 @@
       tableSelectionChange(val) {
         this.waitSignEnt = val
       },
+      handleSelectionChange(val) {
+        this.multipleSelection = []
+        val.forEach((item, index, arr) => {
+          if (item.entId && item.signState !== '1') {
+            this.multipleSelection.push(item)
+          }
+        })
+      },
       pageHandelCurrentChange (val) {
         this.queryModel.pageNum = val
         this.doQuery()
@@ -239,7 +275,8 @@
       }
     },
     components: {
-      EntAuditDetail
+      EntAuditDetail,
+      SaleSet
     }
   }
 </script>

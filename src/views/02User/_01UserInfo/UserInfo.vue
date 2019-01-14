@@ -268,7 +268,7 @@
         this.doQuery()
       },
       doQuery() {
-        console.log('查询用户信息')
+        this.queryModel.userIds = ''
         if (this.selectDate !== null && this.selectDate) {
           this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
           this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])
@@ -286,19 +286,19 @@
         })
       },
       doExportImageList () {
+        let object = this.multipleSelection
+        let userIds = []
+        if (object.length > 0) {
+          object.forEach((item, index, arr) => {
+            userIds.push(item.userId)
+          })
+        }
         this.$confirm('确认需要导出用户证件照片?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => { //contract_export
           this.isLoading = true
-          let object = this.multipleSelection
-          let userIds = []
-          if (object.length > 0) {
-            object.forEach((item, index, arr) => {
-              userIds.push(item.userId)
-            })
-          }
           this.queryModel.userIds = userIds.toString()
           if (this.selectDate !== null && this.selectDate) {
             this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
