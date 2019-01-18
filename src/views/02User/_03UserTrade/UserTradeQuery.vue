@@ -39,6 +39,10 @@
                      @click="resetDoQuery">查询
           </el-button>
         </el-col>
+        <el-col :span="3">
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出
+          </el-button>
+        </el-col>
       </el-row>
     </el-form>
 
@@ -147,6 +151,46 @@
         this.queryModel.pageNum = 1
         this.doQuery()
       },
+      doExportList () {
+        this.$confirm('确认需要导出用户流水数据?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.isLoading = true
+          let _salaryMonth = this.queryModel.salaryMonth
+          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
+          if (this.selectDate !== null && this.selectDate) {
+            this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
+            this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])
+          } else {
+            this.queryModel.startDate = null
+            this.queryModel.endDate = null
+          }
+          this.$export(this.$url('/user_clear_export'), this.queryModel).then(resp => {
+            this.queryModel.salaryMonth = _salaryMonth
+            this.isLoading = false
+            let data = resp
+            if (!data) {
+              return
+            }
+            let blob = new Blob([data], {type: 'application/vnd.ms-excel'})
+            let objectUrl = URL.createObjectURL(blob)
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = objectUrl
+            link.setAttribute('download', '用户流水.xls')
+            document.body.appendChild(link)
+            link.click()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
+      },
+
       doQuery () {
         this.isLoading = true
         if (this.selectDate !== null && this.selectDate) {

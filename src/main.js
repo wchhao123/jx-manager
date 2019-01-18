@@ -11,7 +11,7 @@ import * as state from 'common/js/state-dic'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
-import {post, excel, get, web} from './utils/fetch'
+import {post, excel, get, web, json} from './utils/fetch'
 import {url} from 'api/url'
 import router from './routers'
 import jsencrypt from 'jsencrypt'
@@ -22,6 +22,7 @@ import * as filter from './filters'
 
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post
+Vue.prototype.$json = json
 Vue.prototype.$get = get
 Vue.prototype.$web = web
 Vue.prototype.$export = excel

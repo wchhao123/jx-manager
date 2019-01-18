@@ -22,7 +22,7 @@
           :label="item.entId +'-' + item.entName"
           :value="item.entId">
           <span style="float: left; font-size: 12px">{{ item.entId }}</span>
-          <span style="float: right; font-size: 12px">{{ item.entName }}</span>
+            <span style="float: right; font-size: 12px;width: 150px">{{ item.entName }}</span>
         </el-option>
       </el-select>
       </el-form-item>

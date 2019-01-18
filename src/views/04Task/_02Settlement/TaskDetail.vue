@@ -23,10 +23,10 @@
       <hr width="500px"/>
       <el-row>
         <el-col>
-          <div style="width: 800px">任务描述：{{model.taskDetails}}</div>
+          <div>任务描述：<pre>{{model.taskDetails}}</pre></div>
           <div v-show="model.taskFile">附件：</div>
           <a v-show="model.taskFile" v-for="(item, index) of model.taskFile" :key="index" download="download"
-             :href="item">
+             :href="item" target="_blank">
             <div class="download">
               <img src="../../../assets/file_img.png" style="width: 25px; height: 25px;float: left"/>
               <span style="color: #99a9bf ;float: left">{{item | subStringUrl(index, model.originalFileNames)}}</span>
@@ -35,14 +35,14 @@
           </a>
           <br/>
           <el-col v-show="model.entTaskAdds" v-for="(item, index) of model.entTaskAdds" :key="index">
-            <div>补充内容：{{item.taskAddtionDetail}}</div>
+            <div>补充内容：<pre>{{item.taskAddtionDetail}}</pre></div>
             <div>任务附件：</div>
-              <a download="download"
-                         :href="item.taskAddtionFile">
-              <div class="download"><img src="../../../assets/file_img.png"
-                                         style="width: 25px; height: 25px;float: left"/>
-                <span style="color: #99a9bf ;float: left">{{item.originalFileNamesAdd}}</span><span
-                  style="float: right;color: #99a9bf">下载</span>
+            <a v-show="item.taskDownload" v-for="(item1, index) of item.taskDownload.taskAddtionFile" :key="index" download="download"
+               :href="item1" target="_blank">
+              <div class="download">
+                <img src="../../../assets/file_img.png" style="width: 25px; height: 25px;float: left"/>
+                <span style="color: #99a9bf ;float: left">{{item1 | subStringUrl(index, item.taskDownload.originalFileNamesAdd)}}</span>
+                <span style="float: right;color: #99a9bf">下载</span>
               </div>
             </a>
           </el-col>
@@ -52,7 +52,7 @@
       <hr width="500px"/>
       <el-row>
         <el-col>
-          <div>报名截止时间：{{model.abortTime | filterdateYMDHMS()}}</div>
+          <div>报名截止时间：{{model.abortTime | filterDateYYYYMMDD()}}</div>
           <div>任务单价：{{model.taskMinUnit}}-{{model.taskMaxUnit}}</div>
         </el-col>
         <el-col>
@@ -65,15 +65,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import ElRow from "element-ui/packages/row/src/row";
 
   export default {
-    components: {ElRow},
     props: {
       detail: {}
     },
     data() {
       return {
+        taskDownload: [],
         model: {},
         isbigimg: false,
         innerVisible: false,
@@ -86,10 +85,22 @@
         handler: function () {
           debugger
           this.model = this.detail
+          this.taskDownload = []
           if (this.detail && this.detail.taskFile) {
             debugger
             this.model.taskFile = this.detail.taskFile.split(',')
             this.model.originalFileNames = this.detail.originalFileNames.split(',')
+          }
+          if (this.detail.entTaskAdds) {
+            this.detail.entTaskAdds.forEach((item, index, arr) => {
+              if (item.taskAddtionFile && item.originalFileNamesAdd) {
+                debugger
+                let object = {}
+                object.taskAddtionFile = item.taskAddtionFile.split(',')
+                object.originalFileNamesAdd = item.originalFileNamesAdd.split(',')
+                item.taskDownload = object
+              }
+            })
           }
         }
       }
@@ -120,6 +131,7 @@
 
   div {
     font-size 15px
+    margin-bottom 5px
   }
 
   span {
@@ -130,8 +142,15 @@
     background-color: #d3dce6
     width 390px
     height 25px
-    margin-bottom 4px
+    margin-bottom 5px
+    margin-left 60px
     line-height 25px
     cursor: pointer
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-left 60px
+    margin-right 60px
   }
 </style>

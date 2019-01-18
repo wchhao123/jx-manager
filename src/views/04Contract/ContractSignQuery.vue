@@ -7,7 +7,7 @@
           <el-input size="small" clearable v-model="queryModel.batchId" placeholder="请输入批次号"></el-input>
         </el-form-item>
         <el-form-item :span="6" label="合同编号">
-          <el-input size="small" clearable v-model="queryModel.extContractId" placeholder="请输入合同编号"></el-input>
+          <el-input size="small" clearable v-model="queryModel.signId" placeholder="请输入合同编号"></el-input>
         </el-form-item>
         <el-form-item :span="6" label="用户姓名">
           <el-input size="small" clearable v-model="queryModel.userName" placeholder="请输入用户姓名"></el-input>
@@ -44,7 +44,7 @@
           </el-form-item>
       </el-row>
       <el-row justify="left">
-        <el-col :span="6">
+        <el-col :span="10">
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
             <el-option
@@ -69,7 +69,11 @@
           </el-form-item>
         </el-col>
         <el-col :span="4">
-          <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_contract_sign_export')">下載合同
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出明细
+          </el-button>
+        </el-col>
+        <el-col :span="4">
+          <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" >下載合同
           </el-button>
         </el-col>
         <el-col :span="3">
@@ -91,9 +95,14 @@
           <span size="small">{{scope.row.batchId}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="合同编号">
+      <el-table-column align="center" label="第三方合同编号">
         <template slot-scope="scope">
           <span size="small">{{scope.row.extContractId}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="合同编号">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.signId}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="用户名">
@@ -259,6 +268,38 @@
           }
           this.doQuery()
         }
+      },
+      doExportList () {
+        this.$confirm('确认需要导出合同明细?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.isLoading = true
+          let _salaryMonth = this.queryModel.salaryMonth
+          this.queryModel.signIds = this.multipleSelection.toString()
+          this.$export(this.$url('/contract_export'), this.queryModel).then(resp => {
+            this.queryModel.salaryMonth = _salaryMonth
+            this.isLoading = false
+            let data = resp
+            if (!data) {
+              return
+            }
+            let blob = new Blob([data], {type: 'application/vnd.ms-excel'})
+            let objectUrl = URL.createObjectURL(blob)
+            let link = document.createElement('a')
+            link.style.display = 'none'
+            link.href = objectUrl
+            link.setAttribute('download', '合同明细.xls')
+            document.body.appendChild(link)
+            link.click()
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
       },
       salaryInputSelect (entId) {
         if (entId !== undefined) {

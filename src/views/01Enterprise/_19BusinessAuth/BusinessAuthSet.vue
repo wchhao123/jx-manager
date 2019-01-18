@@ -222,7 +222,7 @@
   }
   /deep/ .el-table td {
     border-bottom: hidden;
-    padding: 7px 0px;
+    padding: 6px 0px;
   }
   /deep/ .el-row{
     margin-bottom 0px

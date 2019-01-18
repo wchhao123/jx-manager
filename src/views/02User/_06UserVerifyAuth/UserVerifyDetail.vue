@@ -31,7 +31,7 @@
              @click="showBigImg(model.pictureBinhendURL)">
       </el-form-item>
       </el-row>
-      <el-row type="flex" v-show="!isShowBigImg && detail.verifyState === '0'">
+      <el-row v-show="!isShowBigImg && detail.verifyState === '0'" style="margin-top: 40px">
         <el-col :span="12" align="center">
           <el-button size="mini" @click="_doVerifyAuth(3)">拒绝</el-button>
         </el-col>

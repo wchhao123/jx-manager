@@ -82,10 +82,10 @@
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <el-col :span="3">
+ <!--       <el-col :span="3">
           <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryDetailList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_detail_export')">导出
           </el-button>
-        </el-col>
+        </el-col>-->
       </el-row>
     </el-form>
 
@@ -101,7 +101,7 @@
       <!--明细编号-->
       <el-table-column  align="center" label="明细编号">
         <template slot-scope="scope">
-          <span size="small" class="globalPointer" @click="lookSalarySheet(scope.$index, scope.row)">{{scope.row.salaryDetailId}}</span>
+          <span size="small" @click="lookSalarySheet(scope.$index, scope.row)">{{scope.row.salaryDetailId}}</span>
         </template>
       </el-table-column>
       <!--用户姓名-->
@@ -308,10 +308,12 @@
       },
       doQuery () {
         this.isLoading = true
-        this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
+        if (this.queryModel.salaryMonth) {
+          this.queryModel.salaryMonth = this.$filter.filterDateYYYYMM(this.queryModel.salaryMonth)
+        }
         if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
-          this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDateRange[0])
-          this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDateRange[1])
+          this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[0])
+          this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[1])
         } else {
           this.queryModel.startDate = null
           this.queryModel.endDate = null

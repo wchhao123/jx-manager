@@ -94,7 +94,11 @@
           <span size="small">{{scope.row.mobile}}</span>
         </template>
       </el-table-column>
-
+      <el-table-column :span="6"  align="center" label="销售代表" >
+        <template slot-scope="scope">
+          <span  size="small">{{scope.row.saleName}}</span>
+        </template>
+      </el-table-column>
       <!--提交时间-->
       <el-table-column width="170" prop="enterpriseId" align="center" label="提交时间">
         <template slot-scope="scope">
@@ -136,7 +140,7 @@
       </div>
     </el-col>
     <el-dialog :title="detail.title" height="100px" center width="50%" :visible.sync="detail.visiable" :close-on-click-modal="false">
-      <sale-set @Close="closeDiaLog"  style="height:500px;border-top:1px solid #99a9bf;" :detail="detail.entInfo"></sale-set>
+      <sale-set @close="closeDiaLog"  style="border-top:1px solid #99a9bf;" :detail="detail.entInfo"></sale-set>
     </el-dialog>
   </div>
 </template>
@@ -183,6 +187,7 @@
     },
     methods: {
       closeDiaLog() {
+        this.detail.entInfo = {}
         this.detail.visiable = false
         this.resetDoQuery()
       },
@@ -219,8 +224,7 @@
           })
           return
         }
-        debugger
-        this.detail.entInfo = this.multipleSelection
+        this.detail.entInfo = JSON.stringify(this.multipleSelection)
         this.detail.visiable = true
       },
       doVerify () {
@@ -257,7 +261,7 @@
       handleSelectionChange(val) {
         this.multipleSelection = []
         val.forEach((item, index, arr) => {
-          if (item.entId) {
+          if (item.entId && item.signState !== '1') {
             this.multipleSelection.push(item)
           }
         })

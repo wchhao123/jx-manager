@@ -104,7 +104,11 @@
            <span class="globalPointer"  size="small" @click.stop="_entBankCardInfo(scope.row)">{{scope.row.entBankcardCount}}</span>
          </template>
        </el-table-column>
-
+       <el-table-column :span="6"  align="center" label="销售代表" >
+         <template slot-scope="scope">
+           <span  size="small">{{scope.row.saleName}}</span>
+         </template>
+       </el-table-column>
        <!--认证状态-->
        <el-table-column :span="6"  align="center" label="认证状态" >
          <template slot-scope="scope">
@@ -114,6 +118,11 @@
                  size="small"
                  @click.stop="_helpVerify(scope.row)"
            >帮助认证</span>
+           <span style="color: #F56C6C; cursor: pointer;"
+                 v-show="scope.row.verifyState=== '3'"
+                 size="small"
+                 @click.stop="_updateVerify(scope.row)"
+           >变更信息</span>
          </template>
        </el-table-column>
 
@@ -161,11 +170,17 @@
        <ent-bank-card :ent-id="detail.entId" @cancelEdit="_closeEntBankCard"></ent-bank-card>
      </el-dialog>
 
-     <el-dialog title="企业认证" center width="65%"
+     <el-dialog title="企业认证" center width="60%"
                 :close-on-click-modal="1==0"
                 @close="() => {this.detail.entId=''}"
                 :visible.sync="detail.helpVerifyVisible">
        <ent-verify :ent-id="detail.entId" @cancelEdit="_closeEntVerify"></ent-verify>
+     </el-dialog>
+     <el-dialog title="企业认证信息变更" center width="60%"
+                :close-on-click-modal="1==0"
+                @close="() => {this.detail.entId=''}"
+                :visible.sync="detail.updateVerifyVisible">
+       <ent-update :ent-id="detail.entId" @cancelEdit="_closeUpdateVerify"></ent-update>
      </el-dialog>
    </div>
 </template>
@@ -178,6 +193,7 @@ import EntDetail from './EntDetail'
 import EntAdmin from './EntAdministrator'
 import EntBankCard from './EntBankCard'
 import EntVerify from './EntVerify'
+import EntUpdate from './EntUpdate'
 export default {
   data () {
     return {
@@ -300,6 +316,16 @@ export default {
       this.detail.entId = row.entId
       this.detail.helpVerifyVisible = true
     },
+    _updateVerify(row) {
+      console.log('企业认证信息变更')
+      let r = this.$store.getters.getBtnIsShowByName('btn_ent_detail')
+      if (!r) {
+        console.log('哈哈, 你木有权限!')
+        return
+      }
+      this.detail.entId = row.entId
+      this.detail.updateVerifyVisible = true
+    },
     pageHandelCurrentChange(val) {
       this.queryModel.pageNum = val
       this.getEntList()
@@ -354,13 +380,20 @@ export default {
       if (state === 1) {
         this.getEntList()
       }
+    },
+    _closeUpdateVerify(state) {
+      this.detail.updateVerifyVisible = false
+      if (state === 1) {
+        this.getEntList()
+      }
     }
   },
   components: {
     EntDetail,
     EntAdmin,
     EntBankCard,
-    EntVerify
+    EntVerify,
+    EntUpdate
   }
 }
 </script>

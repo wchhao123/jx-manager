@@ -52,10 +52,10 @@
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <!--<el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_export')">导出
+        <el-col :span="3">
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList">导出
           </el-button>
-        </el-col>-->
+        </el-col>
       </el-row>
     </el-form>
 
@@ -87,6 +87,11 @@
       <el-table-column align="center" label="运营主企业">
         <template slot-scope="scope">
           <span size="small">{{scope.row.operationEntName}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="任务编号">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.taskId}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="任务名称">
@@ -273,26 +278,18 @@
           }
         })
       },
-      doExportSalaryList () {
-        this.$confirm('确认需要导出发薪批次数据?', '提示', {
+      doExportList () {
+        this.$confirm('确认需要导出报名信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.isLoading = true
           let _salaryMonth = this.queryModel.salaryMonth
-          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
-          if (this.selectDate !== null && this.selectDate) {
-            this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
-            this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])
-          } else {
-            this.queryModel.startDate = null
-            this.queryModel.endDate = null
-          }
-          Api.exportSalaryList(this.queryModel).then(resp => {
+          this.$export(this.$url('/sign_in_export'), this.queryModel).then(resp => {
             this.queryModel.salaryMonth = _salaryMonth
             this.isLoading = false
-            let data = resp.data
+            let data = resp
             if (!data) {
               return
             }
@@ -301,7 +298,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '发薪批次.xls')
+            link.setAttribute('download', '报名信息.xls')
             document.body.appendChild(link)
             link.click()
           })

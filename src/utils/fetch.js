@@ -38,6 +38,37 @@ export function post (url, params = {}) {
       })
   })
 }
+export function json (url, params = {}, header = {}) {
+  return new Promise((resolve, reject) => {
+    service({
+      url: http.prefix + url,
+      method: http.post,
+      params: params,
+      headers: header
+    }).then(response => {
+      if (response.data.code === 'warn') {
+        Message({
+          message: response.data.msg,
+          type: 'warning',
+          duration: 3 * 1000,
+          center: true
+        })
+        reject(response.data.msg)
+      } else if (ERR_OK !== response.data.code) {
+        Message({
+          message: response.data.msg,
+          type: 'error',
+          duration: 3 * 1000,
+          center: true
+        })
+        reject(response.data.msg)
+      }
+      resolve(response.data)
+    }, err => {
+      reject(err)
+    })
+  })
+}
 export function excel (url, data) {
   return new Promise((resolve, reject) => {
     service({

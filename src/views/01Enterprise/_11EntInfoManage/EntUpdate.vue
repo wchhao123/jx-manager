@@ -5,7 +5,7 @@
              :inline="true" label-width="200px">
       <el-row style="border-top: 1px dashed grey; padding-top:10px;">
         <el-form-item label="企业名称" prop="entName">
-          <el-input size="small" v-model="entInfo.entName" placeholder="请输入企业名称"></el-input>
+          <el-input :disabled="true" size="small" v-model="entInfo.entName" placeholder="请输入企业名称"></el-input>
         </el-form-item>
       </el-row>
 
@@ -16,17 +16,10 @@
       </el-row>
 
       <el-row>
-        <el-form-item label="法人代表姓名" prop="legalPerson">
-          <el-input size="small" v-model="entInfo.legalPerson" placeholder="请输入法人代表姓名"></el-input>
+        <el-form-item  label="法人代表姓名" prop="legalPerson">
+          <el-input :disabled="true" size="small" v-model="entInfo.legalPerson" placeholder="请输入法人代表姓名"></el-input>
         </el-form-item>
       </el-row>
-
-   <!--   <el-row>
-        <el-form-item label="法人代表身份证号" prop="legalPersonCard">
-          <el-input size="small" v-model="entInfo.legalPersonCard"></el-input>
-        </el-form-item>
-      </el-row>-->
-
       <el-row>
         <el-form-item label="企业办公地址:" required>
           <el-row>
@@ -66,17 +59,17 @@
 
       <el-row>
         <el-form-item label="证件类型" prop="documentType">
-          <el-radio-group v-model="entInfo.documentType">
-            <el-radio  @change="_radioChange" :label="1">多证合一营业执照(原注册号字样,调整为18为统一的社会信用代码)</el-radio>
+          <el-radio-group v-model="entInfo.documentType" :disabled="true">
+            <el-radio v-show="entInfo.documentType === '1'" @change="_radioChange" :label="1">多证合一营业执照(原注册号字样,调整为18为统一的社会信用代码)</el-radio>
             <br>
-            <el-radio @change="_radioChange" style="margin-top: 10px" :label="2">普通营业执照(仍然标示为15位的'注册号')</el-radio>
+            <el-radio v-show="entInfo.documentType === '2'" @change="_radioChange" style="margin-top: 10px" :label="2">普通营业执照(仍然标示为15位的'注册号')</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-row>
       <el-row>
         <el-form-item label="营业执照" prop="uploadFileUrl" v-model="entInfo.uploadFileUrl">
           <el-input v-show="false" v-model="entInfo.uploadFileUrl"></el-input>
-          <img src="../../../assets/images/entImg.png" style="width: 90px; height: 140px; cursor: pointer" @click="_showBigImg()"/>
+          <img src="../../../assets/images/entImg.png" style="width: 90px; height: 120px; cursor: pointer" @click="_showBigImg()"/>
           <section style="display: inline-block">
             <span
               class="uploadTip">上传营业执照
@@ -100,15 +93,15 @@
 
       <el-row>
         <el-form-item :label="tipLable" prop="comid">
-          <el-input v-model="entInfo.comid" size="small"  :maxlength="maxLength" :placeholder="comiPlaceHolder"></el-input>
+          <el-input :disabled="true" v-model="entInfo.comid" size="small"  :maxlength="maxLength" :placeholder="comiPlaceHolder"></el-input>
         </el-form-item>
       </el-row>
     </el-form>
 
     <el-row type="flex" justify="center" style="margin-top: 30px"
             v-show="this.$store.getters.getBtnIsShowByName('btn_verify_submit')">
-      <el-button size="small" @click="_submitVerify(0)"> 保 存</el-button>
-      <el-button style="margin-left: 30px" size="small" type="primary" plain="" @click="_submitVerify(1)">提交审核
+      <el-button size="small" @click="()=>{this.$emit('cancelEdit', 1)}"> 取 消</el-button>
+      <el-button style="margin-left: 30px" size="small" type="primary" plain="" @click="_submitVerify(1)">确认变更
       </el-button>
     </el-row>
   </div>
@@ -146,8 +139,7 @@
             {required: true, message: '请选择城市', trigger: 'change'}
           ],
           legalPerson: [
-            {required: true, message: '请输入法人代表姓名', trigger: 'blur'},
-            {validator: Validator.validateName, trigger: 'blur'}
+            {required: true, message: '请输入法人代表姓名', trigger: 'blur'}
           ],
           /*legalPersonCard: [
             {required: true, message: '法人代表身份证号', trigger: 'blur'},
@@ -198,37 +190,23 @@
           let eVerifyInfo = response.data.data.verifyInfo
           this.entInfo = Object.assign(e, eVerifyInfo)
           this.entInfo.uploadFileUrl = this.entInfo.businessLicencePath
-          if (!this.entInfo.documentType) {
-            this.entInfo.documentType = 1
-          }
           console.log(this.entInfo)
         })
       },
       _submitVerify(tag) {
-        debugger
-        console.log('提交审核' + tag)
-        let t = tag === 1 ? 'true' : 'false'
         this.$refs.verifyForm.validate(v => {
           if (v) {
-            if (!this.entInfo.uploadFileUrl || this.entInfo.uploadFileUrl.length < 1) {
-              this.$message.error('请上传营业执照')
-              return
-            }
             this.loading = true
-            Api.updateEntVerify({
-              submit: t,
+            Api.updateEntBaseInfo({
               entId: this.entId,
-              entName: this.entInfo.entName,
               contactPhone: this.entInfo.contactPhone,
-              legalPerson: this.entInfo.legalPerson,
-              legalPersonCard: this.entInfo.legalPersonCard,
               province: this.entInfo.province,
               city: this.entInfo.city,
               addrId: this.entInfo.addrId,
               address: this.entInfo.address,
               businessLicencePath: this.entInfo.uploadFileUrl,
-              comid: this.entInfo.comid,
-              documentType: this.entInfo.documentType
+              entName: this.entInfo.entName,
+              entNickName: this.entInfo.entNickName
             }).then(resp => {
               debugger
               this.loading = false

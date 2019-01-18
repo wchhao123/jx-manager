@@ -51,13 +51,16 @@
           <el-input v-model="entInfo.contactName" :disabled="disableBaseInfo" size="small"></el-input>
         </el-form-item>
       </el-row>
-
       <el-row>
         <el-form-item label="办公电话:">
           <el-input v-model="entInfo.contactPhone" :disabled="disableBaseInfo" size="small" maxlength="20"></el-input>
         </el-form-item>
       </el-row>
-
+      <el-row v-show="entInfo.saleName">
+        <el-form-item label="销售代表:">
+          <el-input v-model="entInfo.saleName" :disabled="disableBaseInfo" size="small" maxlength="20"></el-input>
+        </el-form-item>
+      </el-row>
       <section v-show="entInfo.verifyState === '3'">
         <h3 style="margin: 5px auto; border-top: 1px dashed grey">企业认证信息</h3>
 
