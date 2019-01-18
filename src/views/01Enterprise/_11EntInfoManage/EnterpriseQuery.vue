@@ -25,6 +25,23 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="销售代表">
+              <el-autocomplete
+                popper-class="my-autocomplete"
+                v-model="queryModel.saleId"
+                :fetch-suggestions="querySearch"
+                placeholder="请选择销售代表"
+                @select="setEntSale"
+              >
+                <i class="el-icon-edit el-input__icon"
+                   slot="suffix">
+                </i>
+                <template slot-scope="{ item }">
+                  <div class="name">{{ item.saleName }}</div>
+                  <span class="addr">{{ item.value }}</span>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
         </el-row>
 
         <el-row>
@@ -236,6 +253,21 @@ export default {
     }
   },
   methods: {
+    setEntSale(item) {
+    },
+    querySearch(queryString, cb) {
+      if (!queryString) queryString = '张'
+      this.$post(this.$url('/sales_list'), {saleName: queryString}).then(res => {
+        let array = []
+        res.data.forEach((item, index, arr) => {
+          array.push({
+            value: item.sales_id,
+            saleName: item.sales_name
+          })
+        })
+        cb(array)
+      })
+    },
     resetDoQuery() {
       this.queryModel.pageNum = 1
       this.getEntList()
@@ -370,6 +402,7 @@ export default {
     },
     _closeEntAdmin() {
       this.detail.adminVisible = false
+      this.getEntList()
     },
     _closeEntBankCard() {
       this.detail.bankCardVisible = false
@@ -398,6 +431,9 @@ export default {
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  .el-input__inner {
+    height 30px
+  }
   #recharge_manage_new .el-form-item {
     width: 100%;
   }
@@ -416,5 +452,24 @@ export default {
 
   #recharge_manage_new .el-date-editor {
     width: 100%;
+  }
+  .my-autocomplete {
+    li {
+      line-height: normal;
+      padding: 7px;
+
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .addr {
+        font-size: 12px;
+        color: #b4b4b4;
+      }
+
+      .highlighted .addr {
+        color: #ddd;
+      }
+    }
   }
 </style>

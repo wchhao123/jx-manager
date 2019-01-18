@@ -58,7 +58,7 @@
       </el-row>
       <el-row v-show="entInfo.saleName">
         <el-form-item label="销售代表:">
-          <el-input v-model="entInfo.saleName" :disabled="disableBaseInfo" size="small" maxlength="20"></el-input>
+          <el-input :disabled="true" v-model="entInfo.saleName" size="small" maxlength="20"></el-input>
         </el-form-item>
       </el-row>
       <section v-show="entInfo.verifyState === '3'">
