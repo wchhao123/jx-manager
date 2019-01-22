@@ -76,6 +76,16 @@
           <span size="small">{{scope.row.mobile}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="证件类型">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.idType| filterUserIdNumType()}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="证件号码">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.idNumber}}</span>
+        </template>
+      </el-table-column>
       <!--发薪企业-->
       <el-table-column align="center" label="发布企业">
         <template slot-scope="scope">

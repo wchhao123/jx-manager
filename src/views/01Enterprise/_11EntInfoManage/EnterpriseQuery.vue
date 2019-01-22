@@ -28,7 +28,7 @@
             <el-form-item label="销售代表">
               <el-autocomplete
                 popper-class="my-autocomplete"
-                v-model="queryModel.saleId"
+                v-model="queryModel.saleName"
                 :fetch-suggestions="querySearch"
                 placeholder="请选择销售代表"
                 @select="setEntSale"
@@ -37,8 +37,8 @@
                    slot="suffix">
                 </i>
                 <template slot-scope="{ item }">
-                  <div class="name">{{ item.saleName }}</div>
-                  <span class="addr">{{ item.value }}</span>
+                  <div class="name">{{ item.value }}</div>
+                  <span class="addr">{{ item.saleId }}</span>
                 </template>
               </el-autocomplete>
             </el-form-item>
@@ -216,6 +216,7 @@ export default {
     return {
       total: 10,
       isLoading: false,
+      sale: {},
       queryModel: {
         verifyState: null,
         signState: null,
@@ -254,6 +255,8 @@ export default {
   },
   methods: {
     setEntSale(item) {
+      this.sale = item
+      this.queryModel.saleId = item.saleId
     },
     querySearch(queryString, cb) {
       if (!queryString) queryString = '张'
@@ -261,8 +264,8 @@ export default {
         let array = []
         res.data.forEach((item, index, arr) => {
           array.push({
-            value: item.sales_id,
-            saleName: item.sales_name
+            value: item.sales_name,
+            saleId: item.sales_id
           })
         })
         cb(array)
@@ -295,6 +298,9 @@ export default {
       }
       console.log(this.queryModel)
       this.isLoading = true
+      if (this.sale && this.queryModel.saleName !== this.sale.value) {
+        this.queryModel.saleId = null
+      }
       Api.getEntList(this.queryModel).then(response => {
         this.isLoading = false
         this.entDataList = response.data.data.list

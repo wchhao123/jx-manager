@@ -44,7 +44,7 @@
           </el-form-item>
       </el-row>
       <el-row justify="left">
-        <el-col :span="10">
+        <el-col :span="12">
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
             <el-option
@@ -56,7 +56,7 @@
           </el-select>
         </el-form-item>
         </el-col>
-        <el-col>
+        <el-col >
           <el-form-item label="签约主体">
             <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
               <el-option
@@ -68,18 +68,18 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出明细
-          </el-button>
-        </el-col>
-        <el-col :span="4">
-          <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" >下載合同
-          </el-button>
-        </el-col>
-        <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
-          </el-button>
-        </el-col>
+          <el-col :span="5">
+            <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出明细
+            </el-button>
+          </el-col>
+          <el-col :span="5">
+            <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" >下載合同
+            </el-button>
+          </el-col>
+          <el-col :span="3">
+            <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+            </el-button>
+          </el-col>
       </el-row>
     </el-form>
 

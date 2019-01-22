@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row>
-<!--
-      <el-form :inline=true ref="verifyForm" :rules="rules" :model="queryModel" class="toolbar form-inline">
--->
+<!--      <el-form style="width: 100%" ref="verifyForm" :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' }
+    ]">-->
         <el-table :data="dataList" style="width: 100%" v-loading="isLoading"
         >
           <el-table-column align="center" label="企业编号" width="120px">
@@ -18,6 +18,9 @@
           </el-table-column>
           <el-table-column align="center" label="销售代表">
             <template slot-scope="scope">
+<!--
+              <el-form-item :prop="salesIds[scope.$index]">
+-->
                 <el-autocomplete
                   popper-class="my-autocomplete"
                   v-model="salesIds[scope.$index]"
@@ -35,6 +38,9 @@
                     <span class="addr">{{ item.saleId }}</span>
                   </template>
                 </el-autocomplete>
+<!--
+              </el-form-item>
+-->
             </template>
           </el-table-column>
           <!--       <el-table-column width="10px">
@@ -43,9 +49,7 @@
                    </template>
                  </el-table-column>-->
         </el-table>
-<!--
-      </el-form>
--->
+  <!--    </el-form>-->
     </el-row>
     <el-row type="flex" justify="center" style="margin-top: 30px">
       <el-button style="width: 120px" size="small" @click="()=> {this.$emit('close')}">取 消</el-button>

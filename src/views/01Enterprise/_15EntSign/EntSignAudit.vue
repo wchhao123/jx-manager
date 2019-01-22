@@ -23,7 +23,7 @@
         <el-form-item label="销售代表">
           <el-autocomplete
             popper-class="my-autocomplete"
-            v-model="queryModel.saleId"
+            v-model="queryModel.saleName"
             :fetch-suggestions="querySearch"
             placeholder="请选择销售代表"
             @select="setEntSale"
@@ -32,8 +32,8 @@
                slot="suffix">
             </i>
             <template slot-scope="{ item }">
-              <div class="name">{{ item.saleName }}</div>
-              <span class="addr">{{ item.value }}</span>
+              <div class="name">{{ item.value }}</div>
+              <span class="addr">{{ item.saleId }}</span>
             </template>
           </el-autocomplete>
         </el-form-item>
@@ -178,6 +178,7 @@
         isLoading: false,
         tableSpan: 2,
         totalCount: 0,
+        sale: {},
         multipleSelection: [],
         inputDataList: {
           salaryDataList: []
@@ -203,14 +204,19 @@
       }
     },
     methods: {
+      setEntSale(item) {
+        this.sale = item
+        this.queryModel.saleId = item.saleId
+      },
       querySearch(queryString, cb) {
         if (!queryString) queryString = '张'
+        debugger
         this.$post(this.$url('/sales_list'), {saleName: queryString}).then(res => {
           let array = []
           res.data.forEach((item, index, arr) => {
             array.push({
-              value: item.sales_id,
-              saleName: item.sales_name
+              value: item.sales_name,
+              saleId: item.sales_id
             })
           })
           cb(array)
@@ -238,6 +244,19 @@
       },
       doQuery () {
         this.isLoading = true
+        if (this.queryModel.startDate) {
+          this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.queryModel.startDate)
+        } else {
+          this.queryModel.startDate = null
+        }
+        if (this.queryModel.endDate) {
+          this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.queryModel.endDate)
+        } else {
+          this.queryModel.endDate = null
+        }
+        if (this.sale && this.queryModel.saleName !== this.sale.value) {
+            this.queryModel.saleId = null
+        }
         Api.getEntSignInfo(this.queryModel).then(response => {
           this.isLoading = false
           if (response.data.code === ERR_OK) {
