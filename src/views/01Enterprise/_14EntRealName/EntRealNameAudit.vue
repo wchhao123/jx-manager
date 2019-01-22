@@ -24,7 +24,7 @@
 
         <!--// 审批人-->
         <el-form-item label="审批人">
-          <el-input size="small" placeholder="请输入审批人"></el-input>
+          <el-input v-model="queryModel.verifyPerson" size="small" placeholder="请输入审批人"></el-input>
         </el-form-item>
       </el-row>
 

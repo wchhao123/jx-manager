@@ -81,7 +81,7 @@
             <span
               class="uploadTip">上传营业执照
               <br>文件所有信息清晰可见,内容真实有效,不得做人为修改
-              <br>支持文件格式: pdf,jpf,jpeg,bmp,gif,png 大小不超过2M</span>
+              <br>支持文件格式: pdf,jpg,jpeg,bmp,gif,png 大小不超过2M</span>
             <br>
             <el-upload
               v-show="this.$store.getters.getBtnIsShowByName('btn_upload')"

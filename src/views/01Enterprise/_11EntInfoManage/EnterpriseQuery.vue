@@ -25,6 +25,23 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="销售代表">
+              <el-autocomplete
+                popper-class="my-autocomplete"
+                v-model="queryModel.saleName"
+                :fetch-suggestions="querySearch"
+                placeholder="请选择销售代表"
+                @select="setEntSale"
+              >
+                <i class="el-icon-edit el-input__icon"
+                   slot="suffix">
+                </i>
+                <template slot-scope="{ item }">
+                  <div class="name">{{ item.value }}</div>
+                  <span class="addr">{{ item.saleId }}</span>
+                </template>
+              </el-autocomplete>
+            </el-form-item>
         </el-row>
 
         <el-row>
@@ -199,6 +216,7 @@ export default {
     return {
       total: 10,
       isLoading: false,
+      sale: {},
       queryModel: {
         verifyState: null,
         signState: null,
@@ -236,6 +254,23 @@ export default {
     }
   },
   methods: {
+    setEntSale(item) {
+      this.sale = item
+      this.queryModel.saleId = item.saleId
+    },
+    querySearch(queryString, cb) {
+      if (!queryString) queryString = '张'
+      this.$post(this.$url('/sales_list'), {saleName: queryString}).then(res => {
+        let array = []
+        res.data.forEach((item, index, arr) => {
+          array.push({
+            value: item.sales_name,
+            saleId: item.sales_id
+          })
+        })
+        cb(array)
+      })
+    },
     resetDoQuery() {
       this.queryModel.pageNum = 1
       this.getEntList()
@@ -263,6 +298,9 @@ export default {
       }
       console.log(this.queryModel)
       this.isLoading = true
+      if (this.sale && this.queryModel.saleName !== this.sale.value) {
+        this.queryModel.saleId = null
+      }
       Api.getEntList(this.queryModel).then(response => {
         this.isLoading = false
         this.entDataList = response.data.data.list
@@ -370,6 +408,7 @@ export default {
     },
     _closeEntAdmin() {
       this.detail.adminVisible = false
+      this.getEntList()
     },
     _closeEntBankCard() {
       this.detail.bankCardVisible = false
@@ -398,6 +437,9 @@ export default {
 }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  .el-input__inner {
+    height 30px
+  }
   #recharge_manage_new .el-form-item {
     width: 100%;
   }
@@ -416,5 +458,24 @@ export default {
 
   #recharge_manage_new .el-date-editor {
     width: 100%;
+  }
+  .my-autocomplete {
+    li {
+      line-height: normal;
+      padding: 7px;
+
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .addr {
+        font-size: 12px;
+        color: #b4b4b4;
+      }
+
+      .highlighted .addr {
+        color: #ddd;
+      }
+    }
   }
 </style>

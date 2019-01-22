@@ -258,10 +258,9 @@
       },
       doQuery () {
         this.isLoading = true
-        this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
         if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
-          this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDateRange[0])
-          this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDateRange[1])
+          this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[0])
+          this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[1])
         } else {
           this.queryModel.startDate = null
           this.queryModel.endDate = null
@@ -281,10 +280,9 @@
           type: 'warning'
         }).then(() => {
           this.isLoading = true
-          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
           if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
-            this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDateRange[0])
-            this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDateRange[1])
+            this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[0])
+            this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[1])
           } else {
             this.queryModel.startDate = null
             this.queryModel.endDate = null
