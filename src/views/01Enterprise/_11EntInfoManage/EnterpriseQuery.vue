@@ -127,7 +127,7 @@
          </template>
        </el-table-column>
        <!--认证状态-->
-       <el-table-column :span="6"  align="center" label="认证状态ddd" >
+       <el-table-column :span="6"  align="center" label="认证状态" >
          <template slot-scope="scope">
            <span size="small">{{scope.row.verifyState | filterEntVerifyState}}</span>
            <span style="color: #F56C6C; cursor: pointer;"
