@@ -34,6 +34,16 @@ const entVerifyStateMap = {
   3: '已认证'
 }
 
+
+
+const accountAssignStateMap = {
+  1: '成功',
+  2: '处理中',
+  3: '失败'
+}
+
+export {accountAssignStateMap}
+
 export {entVerifyStateMap}
 
 export function entVerifyState () {

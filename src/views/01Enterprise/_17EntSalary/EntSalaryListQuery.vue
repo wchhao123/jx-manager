@@ -7,7 +7,6 @@
         <el-form-item :span="6" label="批次号">
           <el-input size="small" v-model="queryModel.salaryId" placeholder="请输入订单号"></el-input>
         </el-form-item>
-
         <!--工资月份-->
           <el-form-item label="工资月份">
             <el-date-picker
@@ -73,9 +72,15 @@
     <el-table ref="entSignAuditTable" :data="entSalaryList" style="width: 100%" border v-loading="isLoading">
 
       <!--批次号-->
-      <el-table-column align="center" label="批次号" fixed>
+      <el-table-column align="center" label="批次号">
         <template slot-scope="scope">
           <span size="small">{{scope.row.salaryId}}</span>
+        </template>
+
+      </el-table-column>
+      <el-table-column width="100" align="center" label="业务编号" >
+        <template slot-scope="scope">
+          <span size="small" class="globalPointer"  @click="getAccountAssign(scope.row.accClearId)">{{scope.row.accClearId}}</span>
         </template>
 
       </el-table-column>
@@ -184,6 +189,12 @@
         </el-pagination>
       </div>
     </el-col>
+    <el-dialog :title="detail.title" center width="60%"
+               :close-on-click-modal="1==0"
+               @close="() => {this.detail.accClearId=''}"
+               :visible.sync="detail.visiable">
+      <account-assign :acc-clear-id="detail.accClearId"  @cancelEdit="_closeAccountAssignInfo"></account-assign>
+    </el-dialog>
   </div>
 </template>
 
@@ -193,9 +204,16 @@
   import * as Api from 'api'
   import * as filters from 'filters'
   import { ERR_OK } from '../../../api/index'
+  import AccountAssign from './EntSalaryAccountAssign'
+
   export default {
     data () {
       return {
+        detail: {
+          title: '账户分配详情',
+          visiable: false,
+          accClearId: ''
+        },
         isLoading: false,
         selectDate: '',
         tableSpan: 2,
@@ -337,10 +355,19 @@
       pageChange (val) {
         console.log('pageChange')
         console.log(val)
+      },
+      getAccountAssign(accClearId) {
+        console.log(accClearId)
+        this.detail.accClearId = accClearId
+        this.detail.visiable = true
+      },
+      _closeAccountAssignInfo() {
+        this.detail.visiable = false
       }
     },
     components: {
-      EntAuditDetail
+      EntAuditDetail,
+      AccountAssign
     }
   }
 </script>

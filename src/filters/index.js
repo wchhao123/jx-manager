@@ -10,6 +10,12 @@ export function filterLength (list) {
 
 /* eslint-disable */
 
+export function  filterAccountAssignState(key) {
+  if (!key)
+    return ''
+  return state.accountAssignStateMap[parseInt(key)]
+}
+
 export function filterEntVerifyState (key) {
   if (!key)
     return ''

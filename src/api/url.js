@@ -29,5 +29,7 @@ export const contractState = {
   '/ent_sign': '/ent/sign/tosign', //签约审核
   '/ent_clear_export': '/ent/balance/getclearexport', //企业交易流水导出
   '/sign_in_export': '/table/task/signinexport', //用户报名信息导出
-  '/user_clear_export': '/user/account/clearingexport' //用户流水导出
+  '/user_clear_export': '/user/account/clearingexport', //用户流水导出
+  '/get_contract_info': '/table/contract/getcontractinfo', //上上签查询合同信息
+  '/get_account_assign': '/table/salary/getaccountassign'
 }

@@ -97,7 +97,7 @@
       </el-table-column>
       <el-table-column align="center" label="第三方合同编号">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.extContractId}}</span>
+          <span  class="globalPointer" size="small" @click="getContractInfo(scope.row.extContractId)">{{scope.row.extContractId}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同编号">
@@ -178,14 +178,26 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog ></el-dialog>
+    <el-dialog :title="detail.title" center width="50%"
+               :close-on-click-modal="1==0"
+               @close="() => {this.detail.extContractId=''}"
+               :visible.sync="detail.visiable">
+      <contract-info :ext-contract-id="detail.extContractId"  @cancelEdit="_closeContractInfo"></contract-info>
+    </el-dialog>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import contractInfo from './BScontractInfo'
+
   export default {
     data () {
       return {
+        detail: {
+          title: '上上签合同信息详情',
+          visiable: false,
+          extContractId: ''
+        },
         contractTitle: '合同协议',
         queryUrl: '/contract_sign',
         multipleSelection: [],
@@ -201,6 +213,9 @@
         dataList: [],
         editIndex: null
       }
+    },
+    components: {
+     contractInfo
     },
     watch: {
       '$route': {
@@ -253,7 +268,6 @@
         }
       },
       getParams (r) {
-        debugger
         let name = this.$route.name
         if (name === '合同签约管理' && this.$route.params.batchId !== undefined) {
           this.queryModel = {
@@ -369,6 +383,14 @@
             message: '已取消'
           })
         })
+      },
+      getContractInfo (extContractId) {
+        console.log(extContractId)
+        this.detail.extContractId = extContractId
+        this.detail.visiable = true
+      },
+      _closeContractInfo() {
+        this.detail.visiable = false
       }
     }
   }
