@@ -59,8 +59,10 @@
     },
     data () {
       var validatorIdType = (rule, value, callback) => {
-        debugger
         var l = value.length
+        if (this.model.isVerify === '1') {
+          return
+        }
         switch (this.model.idType) {
           case '1': { // 身份证
             if (l !== 18) {
@@ -127,6 +129,7 @@
           this.detail = val
           setTimeout(() => {
             this.model = JSON.parse(JSON.stringify(this.detail))
+            console.log(this.model)
             this.$refs.userInfo.resetFields()
           }, 20)
         }

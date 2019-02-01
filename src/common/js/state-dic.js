@@ -34,12 +34,20 @@ const entVerifyStateMap = {
   3: '已认证'
 }
 
-
+export const taskSettlementType = {
+  0: '线上',
+  1: '线下'
+}
 
 const accountAssignStateMap = {
   1: '成功',
   2: '处理中',
   3: '失败'
+}
+
+export const businessDefaultState = {
+  0: '不开通',
+  1: '开通'
 }
 
 export {accountAssignStateMap}
@@ -670,6 +678,13 @@ export function funAdminRoleType () {
   return [
     {'key': '0', 'value': '无效'},
     {'key': '1', 'value': '有效'}
+  ]
+}
+
+export function funBusinessDefaultType() {
+  return [
+    {'key': '0', 'value': '不开通'},
+    {'key': '1', 'value': '开通'}
   ]
 }
 

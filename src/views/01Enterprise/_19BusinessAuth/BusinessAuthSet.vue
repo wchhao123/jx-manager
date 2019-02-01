@@ -176,7 +176,7 @@
       },
       getBusinessType() {
         this.$post(this.$url('/business_type'), this.queryModelExt).then(res => {
-          this.dataListExt = res.data
+          this.dataListExt = res.data.list
           this.totalCountExt = res.data.totalCount
         }, err => {
           this.isLoadingExt = false

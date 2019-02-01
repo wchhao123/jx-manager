@@ -156,7 +156,7 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title" height="100px" center width="50%" :visible.sync="detail.visiable" :close-on-click-modal="false">
+    <el-dialog :title="detail.title" height="100px" center width="50%" :visible.sync="detail.visiable" :close-on-click-modal="false" :before-close="handleDialogClose">
       <sale-set @close="closeDiaLog"  style="border-top:1px solid #99a9bf;" :detail="detail.entInfo"></sale-set>
     </el-dialog>
   </div>
@@ -210,7 +210,6 @@
       },
       querySearch(queryString, cb) {
         if (!queryString) queryString = '张'
-        debugger
         this.$post(this.$url('/sales_list'), {saleName: queryString}).then(res => {
           let array = []
           res.data.forEach((item, index, arr) => {
@@ -237,6 +236,10 @@
           this.queryModel.entId = null
         }
         console.log(this.queryModel.salaryEntId)
+      },
+      handleDialogClose() {
+        this.detail.entInfo = {}
+        this.detail.visiable = false
       },
       resetDoQuery() {
         this.queryModel.pageNum = 1

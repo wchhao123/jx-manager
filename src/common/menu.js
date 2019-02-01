@@ -129,6 +129,12 @@ let menu = {
           'id': '3000108',
           'parentId': '30001',
           'vueUrl': 'system_log'
+        },
+        {
+          'name': '业务类型管理',
+          'id': '3000107',
+          'parentId': '30001',
+          'vueUrl': 'system_business_manage'
         }
       ]
     }

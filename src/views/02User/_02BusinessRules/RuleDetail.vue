@@ -88,7 +88,6 @@
     },
     data () {
       var checkMinAmount = (rule, value, callback) => {
-        debugger
         if (!value) {
           return callback(new Error('最小金额不能为空!'))
         }

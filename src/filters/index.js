@@ -16,6 +16,18 @@ export function  filterAccountAssignState(key) {
   return state.accountAssignStateMap[parseInt(key)]
 }
 
+export function filterTaskSettlementType(key){
+  if (!key)
+    return ''
+  return state.taskSettlementType[parseInt(key)]
+}
+
+export  function filterBusinessDefaultState(key) {
+  if (!key)
+    return ''
+  return state.businessDefaultState[parseInt(key)]
+}
+
 export function filterEntVerifyState (key) {
   if (!key)
     return ''

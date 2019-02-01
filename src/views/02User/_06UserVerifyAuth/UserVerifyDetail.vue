@@ -101,7 +101,6 @@
             inputPattern: /[^\/\\:\*"<>\|]/,
             inputErrorMessage: '输入不合法'
           }).then(({ value }) => {
-            debugger
             this.model.refuseReason = value
             this.submitVerifyAuth(state)
           }).catch(() => {

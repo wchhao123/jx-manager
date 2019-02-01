@@ -54,7 +54,7 @@ export function json (url, params = {}, header = {}) {
           center: true
         })
         reject(response.data.msg)
-      } else if (ERR_OK !== response.data.code) {
+      } else if (response.data.code === '-1') {
         Message({
           message: response.data.msg,
           type: 'error',

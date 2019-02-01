@@ -71,7 +71,6 @@
     },
     methods: {
       doQuery () {
-        debugger
         this.$refs['update'].validate((valid) => {
           if (valid) {
             this.isLoading = true
@@ -90,7 +89,6 @@
         })
       },
       doQueryAdd () {
-        debugger
         this.$refs['add'].validate((valid) => {
           if (valid) {
             this.isLoadingAdd = true

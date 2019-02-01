@@ -20,6 +20,7 @@ import TaskSettlementList from 'views/04Task/_02Settlement/SettlementListQuery.v
 import TaskSettlementDetailList from 'views/04Task/_02Settlement/EntTaskDetailQuery.vue'
 import TaskManageList from 'views/04Task/_02Settlement/TaskManage.vue'
 import TaskSignInList from 'views/04Task/_02Settlement/TaskSignIn.vue'
+import BusinessListQuery from 'views/03System/_05BusinessManage/BusinessListQuery.vue'
 //import UserResume from 'views/04Task/_02Settlement/UserResume.vue'
 
 import NOFOUND from 'views/404'
@@ -119,7 +120,8 @@ export default new Router({
         {path: '/system_log', component: SystemLog, name: '日志管理'},
         {path: '/system_ent_menu', component: EntMenu, name: '企业端菜单管理'},
         {path: '/system_admin_menu', component: AdminMenu, name: '管理后台菜单管理'},
-        {path: '/contract_update', component: ContractUpdate, name: '添加合同模板'}
+        {path: '/contract_update', component: ContractUpdate, name: '添加合同模板'},
+        {path: '/system_business_manage', component: BusinessListQuery, name: '业务类型管理'}
       ]
     },
     {

@@ -19,6 +19,7 @@ export const contractState = {
   '/sign_simple': '/table/cooperate/getsimple',
   '/business_type': '/ent/business/get', //获取业务权限类型
   '/auth_add': '/ent/business/add', //业务权限
+  '/update_business': '/ent/business/update', //修改业务权限
   '/auth_get': '/ent/get/all/ent/business',
   '/auth_update': '/ent/business/open/again', //更新企业权限
   '/user_image': '/user/info/exportimage', // 下载用户身份证图片
@@ -31,5 +32,5 @@ export const contractState = {
   '/sign_in_export': '/table/task/signinexport', //用户报名信息导出
   '/user_clear_export': '/user/account/clearingexport', //用户流水导出
   '/get_contract_info': '/table/contract/getcontractinfo', //上上签查询合同信息
-  '/get_account_assign': '/table/salary/getaccountassign'
+  '/get_account_assign': '/table/salary/getaccountassign' //开放平台查询账户分配信息
 }

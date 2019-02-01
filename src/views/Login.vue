@@ -99,7 +99,7 @@ export default {
     LoginMenu (formName) {
       // this.$router.push('/')
       this.$refs[formName].validate((valid) => {
-        debugger
+
         if (valid) {
           getCheckCode(this.codeNumber).then(response => {
             // alert(JSON.stringify(this.codeNumber))
