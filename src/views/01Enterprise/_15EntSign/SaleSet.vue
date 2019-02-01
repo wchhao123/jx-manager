@@ -74,12 +74,6 @@
         error: [],
         params: [],
         isVisible: false,
-        success: {
-          border: '0px solid red'
-        },
-        haveError: {
-          border: '1px solid red'
-        },
         queryModel: {
           pageNum: 1,
           pageSize: 10
@@ -196,17 +190,6 @@
           formData.append('saleReparentDTOS', encodeURI(JSON.stringify(array)))
           console.log(this.$url('/ent_sign'))
           /*axios.post('http://jxtest.99payroll.cn/jx-manage/ent/sign/tosign', formData, config)*/
-          // this.$json(this.$url('/ent_sign'), {}, config.headers).then(response => {
-          //   console.log('ok')
-          //   this.$message.success('审核成功！')
-          //   this.$emit('close')
-          //   this.isLoading = false
-          // }, err => {
-          //   this.isLoading = false
-          //   this.$message.error(err)
-          //   console.log(err)
-          // })
-          debugger
           this.$json(this.$url('/ent_sign'), {}, config.headers).then(response => {
             if (response.code === '-3') {
               console.log(response.data)
@@ -219,8 +202,17 @@
                 this.isVisible = true
                 console.log(item)
               }
+            } else {
+                console.log('ok')
+                this.$message.success('审核成功！')
+                this.$emit('close')
+                this.isLoading = false
             }
-          })
+          }, err => {
+              this.isLoading = false
+              this.$message.error(err)
+              console.log(err)
+            })
         })
       },
       doQuery() {
