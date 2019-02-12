@@ -14,12 +14,12 @@
         </el-row>
         <el-row>
           <el-form-item label="总金额">
-          <span  >{{accountAssignInfo.total_amount+' 元'}}</span>
+          <span  >{{accountAssignInfo.total_amount}}</span>
           </el-form-item>
         </el-row>
         <el-row>
           <el-form-item label="分配笔数">
-          <span   >{{accountAssignInfo.assign_num+' 笔'}}</span>
+          <span   >{{accountAssignInfo.assign_num}}</span>
           </el-form-item>
         </el-row>
         <el-row >
@@ -72,9 +72,10 @@
         }
         this.isLoading = true
         this.$post(this.$url(this.queryUrl), this.queryModel).then(response => {
-          debugger
           this.accountAssignInfo = response.data
           this.accountAssignInfo.assign = JSON.parse(this.accountAssignInfo.assign)
+          this.accountAssignInfo.total_amount = this.accountAssignInfo.total_amount + '元'
+          this.accountAssignInfo.assign_num = this.accountAssignInfo.assign_num + '笔'
           this.isLoading = false
         }, err => {
           this.isLoading = false

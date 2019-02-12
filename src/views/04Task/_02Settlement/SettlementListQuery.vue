@@ -14,6 +14,16 @@
         <el-form-item :span="6" label="任务名称">
           <el-input size="small" clearable v-model="queryModel.salaryName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
+        <el-form-item :span="6" label="结算方式">
+          <el-select size="small"  v-model="queryModel.type" filterable clearable  placeholder="全部">
+          <el-option
+            v-for="(item, index) of this.$state.taskSettlementType"
+            :key="index"
+            :label="item"
+            :value="index">
+          </el-option>
+          </el-select>
+        </el-form-item>
       </el-row>
 
       <el-row type="flex">
@@ -84,11 +94,11 @@
           <span size="small">{{scope.row.operationEntName}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="企业管理员">
-        <template slot-scope="scope">
-          <span size="small">{{scope.row.adminName}}</span>
-        </template>
-      </el-table-column>
+      <!--<el-table-column align="center" label="企业管理员">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.adminName}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column align="center" label="任务编号">
         <template slot-scope="scope">
           <span size="small">{{scope.row.businessId}}</span>
@@ -119,7 +129,11 @@
           <span size="small">{{scope.row.realAmount }}</span>
         </template>
       </el-table-column>
-
+      <el-table-column align="center" label="结算方式">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.realAmount }}</span>
+        </template>
+      </el-table-column>
       <!--批次状态-->
       <el-table-column align="center" label="批次状态">
         <template slot-scope="scope">

@@ -399,6 +399,11 @@ export const signInState = {
   4: '已淘汰',
   5: '过期失效'
 }
+export const taskSignUpState = {
+  1: '未开始',
+  2: '报名中',
+  3: '报名结束'
+}
 export function funSignInState () {
   return [
     {'key': 1, 'value': '待处理'},

@@ -208,7 +208,6 @@
               entName: this.entInfo.entName,
               entNickName: this.entInfo.entNickName
             }).then(resp => {
-              debugger
               this.loading = false
               let r = resp.data.code === Api.ERR_OK
               this.$message({

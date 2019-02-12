@@ -62,10 +62,10 @@
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <!--<el-col :span="3">
+        <el-col :span="3">
           <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_export')">导出
           </el-button>
-        </el-col>-->
+        </el-col>
       </el-row>
     </el-form>
 
@@ -189,7 +189,7 @@
         </el-pagination>
       </div>
     </el-col>
-    <el-dialog :title="detail.title" center width="60%"
+    <el-dialog :title="detail.title" center width="40%"
                :close-on-click-modal="1==0"
                @close="() => {this.detail.accClearId=''}"
                :visible.sync="detail.visiable">

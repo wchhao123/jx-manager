@@ -205,7 +205,6 @@
         this.$post(this.$url('/task_detail'), {
           taskId: taskId
         }).then(response => {
-          debugger
           this.detail.taskDetail = response.data
           this.isLoading = false
           this.detail.visiable = true
@@ -248,7 +247,6 @@
       },
       toSignInList(row) {
         console.log(row)
-        debugger
         if (row.signUpTotal === '0') {
           this.open4()
           return

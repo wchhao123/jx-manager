@@ -2,9 +2,17 @@
   <div>
     <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
       <el-row>
-        <ent-select title="企业名称" place-holder="请输入企业名称"
+        <el-col>
+          <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
-        </ent-select>
+          </ent-select>
+        </el-col>
+        <el-col>
+          <el-form-item label="运营主企业">
+            <el-input size="small" clearable v-model="queryModel.entName" placeholder="请输入运营主企业名称"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col>
         <el-form-item label="业务类型">
           <el-select size="small" v-model="queryModel.businessType" filterable clearable placeholder="请选择业务类型">
             <el-option
@@ -15,18 +23,19 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-col :span="6">
-          <el-form-item label="业务状态">
-            <el-select size="small" v-model="queryModel.status" filterable clearable placeholder="请选择业务状态">
-              <el-option
-                v-for="(item, index) of this.$state.businessState"
-                :key="index"
-                :label="item"
-                :value="index">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
+          </el-col>
+        <!--<el-col :span="6">-->
+          <!--<el-form-item label="业务状态">-->
+            <!--<el-select size="small" v-model="queryModel.status" filterable clearable placeholder="请选择业务状态">-->
+              <!--<el-option-->
+                <!--v-for="(item, index) of this.$state.businessState"-->
+                <!--:key="index"-->
+                <!--:label="item"-->
+                <!--:value="index">-->
+              <!--</el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
+        <!--</el-col>-->
       </el-row>
         <el-row>
           <el-col :span="15">
@@ -43,11 +52,6 @@
             </el-date-picker>
           </el-form-item>
           </el-col>
-          <el-col>
-            <el-form-item label="运营主企业">
-              <el-input size="small" clearable v-model="queryModel.entName" placeholder="请输入运营主企业名称"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
       <el-row>
         <el-col :span="2">
@@ -55,15 +59,15 @@
           </el-button>
         </el-col>
         <el-col :span="2">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="openDiaLog">开通业务
+          <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="openDiaLog">开通权限
           </el-button>
         </el-col>
+        <!--<el-col :span="2">-->
+          <!--<el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('1')">重新启用-->
+          <!--</el-button>-->
+        <!--</el-col>-->
         <el-col :span="2">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('1')">重新启用
-          </el-button>
-        </el-col>
-        <el-col :span="2">
-          <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('0')">关闭
+          <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('0')">删除权限
           </el-button>
         </el-col>
       </el-row>
@@ -95,21 +99,21 @@
           <span size="small">{{scope.row.businessType | filterBusinessType($store.getters.businessType)}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="业务状态">
-        <template slot-scope="scope">
-          <span size="small">{{scope.row.status | filterBusinessState()}}</span>
-        </template>
-      </el-table-column>
+      <!--<el-table-column align="center" label="业务状态">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.status | filterBusinessState()}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column align="center" label="开通时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.openDate | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="关闭时间">
-        <template slot-scope="scope">
-          <span size="small">{{scope.row.closeDate | filterdateYMDHMS()}}</span>
-        </template>
-      </el-table-column>
+      <!--<el-table-column align="center" label="关闭时间">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.closeDate | filterdateYMDHMS()}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="block">
@@ -214,14 +218,15 @@
           return
         }
         if (!this.multipleSelection.length > 0 && val === '0') {
-          this.$message.warning('请勾选需要关闭业务的企业')
+          this.$message.warning('请勾选需要删除权限的企业')
           return
         }
         let object = this.multipleSelection
         let keyIds = []
         let status = val
         let flag = true
-        let msg = '确认关闭所选企业的相关业务？'
+     //   let msg = '确认关闭所选企业的相关业务？'
+        let msg = '确认删除所选企业的相关业务权限？'
         let errorMsg = '成功关闭！'
         object.forEach((item, index, arr) => {
           if (status === item.status && status === '0') {

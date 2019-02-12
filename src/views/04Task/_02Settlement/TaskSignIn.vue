@@ -320,7 +320,6 @@
         })
       },
       getUserResume(row) {
-        debugger
         this.get.userId = row.userId
         this.detail.visible = true
         this.doDetail()

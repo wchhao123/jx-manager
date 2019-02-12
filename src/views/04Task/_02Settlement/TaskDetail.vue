@@ -17,6 +17,7 @@
           <div>任务名称：{{model.taskName}}</div>
           <div>发布昵称：{{model.nickname}}</div>
           <div>任务类型：{{model.type}}</div>
+          <div>报名状态：{{model.signUpState |  filterTaskSignUpState()}}</div>
         </el-col>
       </el-row>
       <el-row><h1>任务内容</h1></el-row>
@@ -83,18 +84,16 @@
       detail: {
         immediate: true,
         handler: function () {
-          debugger
           this.model = this.detail
+          console.log(this.model)
           this.taskDownload = []
           if (this.detail && this.detail.taskFile) {
-            debugger
             this.model.taskFile = this.detail.taskFile.split(',')
             this.model.originalFileNames = this.detail.originalFileNames.split(',')
           }
           if (this.detail.entTaskAdds) {
             this.detail.entTaskAdds.forEach((item, index, arr) => {
               if (item.taskAddtionFile && item.originalFileNamesAdd) {
-                debugger
                 let object = {}
                 object.taskAddtionFile = item.taskAddtionFile.split(',')
                 object.originalFileNamesAdd = item.originalFileNamesAdd.split(',')
@@ -110,7 +109,6 @@
         if (!key) {
           return ''
         }
-        debugger
         let array = key.split('.')
         if (array.length > 0) {
           return name[index]

@@ -83,7 +83,6 @@
     },
     methods: {
       watchRoute (r) {
-        debugger
         if (r.path.toString().indexOf(Route.entRoute.EntInfo.route) !== -1 ||
           r.path.toString().indexOf(Route.entRoute.EntTrad.route) !== -1 ||
           r.path.toString().indexOf(Route.entRoute.EntBalance.route) !== -1 ||

@@ -165,6 +165,12 @@ export function filterSignInState (key) {
     return ''
   return state.signInState[parseInt(key)]
 }
+
+export function filterTaskSignUpState(key) {
+  if (!key)
+    return ''
+  return state.taskSignUpState[parseInt(key)]
+}
 // 工资批次发放状态
 export function filterSalaryDetailState (key) {
   if (!key)

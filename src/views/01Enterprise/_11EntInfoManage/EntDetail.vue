@@ -346,7 +346,6 @@
     },
     methods: {
       selectProvince(val) {
-        debugger
         console.log(`选中省份${val}`)
         this.entInfo.province = val.addrName
         Api.getCities({provinceId: val.uniqueId}).then(response => {
@@ -357,7 +356,6 @@
         })
       },
       selectCity(val) {
-        debugger
         console.log(`选中了城市${val}`)
         this.entInfo.city = val.addrName
       },

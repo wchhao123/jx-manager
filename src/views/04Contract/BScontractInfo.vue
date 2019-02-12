@@ -49,7 +49,7 @@
       </el-row>
       <el-row>
         <el-form-item label="合同页数">
-          <span>{{contractDetail.pages+' 页'}}</span>
+          <span>{{contractDetail.pages}}</span>
         </el-form-item>
       </el-row>
       <el-row>
@@ -122,6 +122,7 @@
           this.contractDetail = response.data
           this.contractDetail.expireTime = this.$filter.filterDateYYYYMMDD(parseInt(this.contractDetail.expireTime) * 1000)
           this.contractDetail.signers = JSON.parse(this.contractDetail.signers)
+          this.contractDetail.pages = this.contractDetail.pages + '页'
           console.log(this.contractDetail)
           this.isLoading = false
         }, err => {

@@ -58,15 +58,27 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+        <el-col >
+        <el-form-item :span="6" label="结算方式">
+          <el-select size="small" clearable v-model="queryModel.type" placeholder="全部">
+          <el-option
+            v-for="(item, index) of this.$state.taskSettlementType"
+            :key="index"
+            :label="item"
+            :value="index">
+          </el-option>
+          </el-select>
+        </el-form-item>
+        </el-col>
 
         <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px;margin-right: 50px" @click="doExportSalaryDetailList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_detail_export')">导出明细
           </el-button>
         </el-col>
-  <!--      <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryDetailList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_detail_export')">导出
+        <el-col :span="3">
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px;margin-right: 50px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
-        </el-col>-->
+        </el-col>
       </el-row>
     </el-form>
 
@@ -97,6 +109,16 @@
           <span size="small">{{scope.row.mobile}}</span>
         </template>
       </el-table-column>
+      <!--<el-table-column  align="center" label="证件类型">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.idType| filterUserIdNumType}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column  align="center" label="证件号码">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.idNumber}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <!--发薪企业-->
       <el-table-column  align="center" label="结算企业">
         <template slot-scope="scope">
@@ -111,6 +133,11 @@
       </el-table-column>
 
       <el-table-column  align="center" label="任务名称">
+        <template slot-scope="scope">
+          <span size="small" v-text="scope.row.salaryName"></span>
+        </template>
+      </el-table-column>
+      <el-table-column  align="center" label="结算方式">
         <template slot-scope="scope">
           <span size="small" v-text="scope.row.salaryName"></span>
         </template>
@@ -227,7 +254,7 @@
     },
     methods: {
       getParams (r) {
-        debugger
+
         let name = this.$route.name
         if (name === '结算批次详情查询' && this.$route.params.salaryId !== undefined) {
           this.queryModel = {
@@ -274,7 +301,7 @@
         })
       },
       doExportSalaryDetailList () {
-        this.$confirm('确认需要导出发薪明细数据?', '提示', {
+        this.$confirm('确认需要导出结算明细数据?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -298,7 +325,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '发薪明细.xls')
+            link.setAttribute('download', '结算明细.xls')
             document.body.appendChild(link)
             link.click()
           })
