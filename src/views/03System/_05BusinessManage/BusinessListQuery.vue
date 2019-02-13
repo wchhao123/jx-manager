@@ -70,7 +70,8 @@
     </el-col>
     <el-dialog :title="detail.title" center width="50%"
                :close-on-click-modal="1==0"
-               :visible.sync="detail.visiable">
+               :visible.sync="detail.visiable"
+               :before-close="_closeBusinessInfo">
       <business-info :detail="detail.businessInfo"  style="border-top:0px solid white"  @close="_closeBusinessInfo" ></business-info>
     </el-dialog>
   </div>

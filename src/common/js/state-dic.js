@@ -668,7 +668,12 @@ export const typeAuthority = {
 export function funAuthorityType () {
   return [
     {'key': '1', 'value': '按钮'},
-    {'key': '2', 'value': '菜单'}
+    {'key': '2', 'value': '菜单'},
+    {'key': '01', 'value': '工资发放到员工银行卡'},
+    {'key': '02', 'value': '工资发放至客户端'},
+    {'key': '03', 'value': '工资条发放'},
+    {'key': '04', 'value': '花名册'},
+    {'key': '05', 'value': '合同管理'}
   ]
 }
 

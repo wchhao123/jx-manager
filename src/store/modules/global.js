@@ -38,7 +38,7 @@ const actions = {
   getBusinessType({commit}, businessName) {
     post(url('/business_type'), {businessName: businessName}).then(res => {
       let array = {}
-      res.data.forEach((item, index, arr) => {
+      res.data.list.forEach((item, index, arr) => {
         array[item.businessType] = item.businessName
       })
       commit(vuexTypes.BUSINESS_TYPE, {businessType: array})
@@ -48,7 +48,6 @@ const actions = {
     post(url('/sign_simple'), {cooperateEntName: cooperateEntName}).then(res => {
       let array = {}
       res.data.forEach((item, index, arr) => {
-        debugger
         array[item.cooperateEntId] = item.cooperateEntName
       })
       commit(vuexTypes.COOPERATE_ENT_NAME, {cooperateEntName: array})

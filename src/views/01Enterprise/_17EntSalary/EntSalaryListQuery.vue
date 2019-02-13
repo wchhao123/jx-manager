@@ -78,12 +78,12 @@
         </template>
 
       </el-table-column>
-      <el-table-column width="100" align="center" label="业务编号" >
-        <template slot-scope="scope">
-          <span size="small" class="globalPointer"  @click="getAccountAssign(scope.row.accClearId)">{{scope.row.accClearId}}</span>
-        </template>
+      <!--<el-table-column width="100" align="center" label="业务编号" >-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small" class="globalPointer"  @click="getAccountAssign(scope.row.accClearId)">{{scope.row.accClearId}}</span>-->
+        <!--</template>-->
 
-      </el-table-column>
+      <!--</el-table-column>-->
       <!--工资表名称-->
       <!--<el-table-column align="center" label="工资表名称">-->
         <!--<template slot-scope="scope">-->

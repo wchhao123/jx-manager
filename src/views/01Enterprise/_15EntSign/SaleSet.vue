@@ -155,6 +155,8 @@
           for (let index in this.dataList) {
             let item = this.dataList[index]
             let saleName = this.salesIds[index]
+            item.error = ''
+            item.isVisible = false
             if (item.entId && item.saleId && item.saleName) {
               if (saleName !== item.saleName) {
                 // index = Number(index) + 1
