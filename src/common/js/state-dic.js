@@ -673,7 +673,8 @@ export function funAuthorityType () {
     {'key': '02', 'value': '工资发放至客户端'},
     {'key': '03', 'value': '工资条发放'},
     {'key': '04', 'value': '花名册'},
-    {'key': '05', 'value': '合同管理'}
+    {'key': '05', 'value': '众包平台'},
+    {'key': '06', 'value': '合同管理'}
   ]
 }
 
