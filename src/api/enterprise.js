@@ -206,7 +206,8 @@ export function exportSalaryDetailList(param) {
     url: http.prefix + '/table/salary/record/salaryexportinfo',
     method: http.post,
     params: param,
-    responseType: http.responseType.arraybuffer
+   responseType: 'arraybuffer'
+   // responseType: http.responseType.arraybuffer
   })
 }
 

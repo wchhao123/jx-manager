@@ -109,16 +109,16 @@
           <span size="small">{{scope.row.mobile}}</span>
         </template>
       </el-table-column>
-      <!--<el-table-column  align="center" label="证件类型">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span size="small">{{scope.row.idType| filterUserIdNumType}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column  align="center" label="证件号码">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span size="small">{{scope.row.idNumber}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
+      <el-table-column  align="center" label="证件类型">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.idType| filterUserIdNumType}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column  align="center" label="证件号码">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.idNumber}}</span>
+        </template>
+      </el-table-column>
       <!--发薪企业-->
       <el-table-column  align="center" label="结算企业">
         <template slot-scope="scope">
@@ -139,7 +139,7 @@
       </el-table-column>
       <el-table-column  align="center" label="结算方式">
         <template slot-scope="scope">
-          <span size="small" v-text="scope.row.salaryName"></span>
+          <span size="small">{{scope.row.payType| filterTaskSettlementType()}}</span>
         </template>
       </el-table-column>
       <!--实发金额-->
@@ -254,7 +254,6 @@
     },
     methods: {
       getParams (r) {
-
         let name = this.$route.name
         if (name === '结算批次详情查询' && this.$route.params.salaryId !== undefined) {
           this.queryModel = {
@@ -314,7 +313,7 @@
             this.queryModel.startDate = null
             this.queryModel.endDate = null
           }
-          Api.getTaskExport(this.queryModel).then(resp => {
+          Api.getTaskDetailExport(this.queryModel).then(resp => {
             this.isLoading = false
             let data = resp.data
             if (!data) {

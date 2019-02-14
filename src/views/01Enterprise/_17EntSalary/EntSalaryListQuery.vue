@@ -298,7 +298,7 @@
         })
       },
       doExportSalaryList () {
-        this.$confirm('确认需要导出发薪批次数据?', '提示', {
+        this.$confirm('确认需要导出工资发放批次数据?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -325,7 +325,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '发薪批次.xls')
+            link.setAttribute('download', '工资发放批次.xls')
             document.body.appendChild(link)
             link.click()
           })

@@ -51,3 +51,12 @@ export function getUserResume (param) {
       responseType: http.responseType.arraybuffer
     })
 }
+
+export function getTaskDetailExport (param) {
+  return fetch({
+    url: http.prefix + '/table/task/detailexport',
+    method: http.post,
+    params: param,
+    responseType: http.responseType.arraybuffer
+  })
+}

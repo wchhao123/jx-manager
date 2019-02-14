@@ -82,9 +82,7 @@
           }
         })
         this.queryModel.dataList = encodeURI(JSON.stringify(array))
-        debugger
         this.$post(this.$url(this.queryUrl), this.queryModel).then(response => {
-          console.log('dddd')
           this.$message({
             type: response.code === Api.ERR_OK ? 'success' : 'error',
             message: response.msg
@@ -94,7 +92,7 @@
     }
   }
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus" rel="stylesheet/stylus" >
   /deep/ .el-table th {
     height: 10px !important;
     /*background: #89bebf !important;

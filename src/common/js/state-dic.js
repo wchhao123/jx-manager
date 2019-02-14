@@ -35,8 +35,8 @@ const entVerifyStateMap = {
 }
 
 export const taskSettlementType = {
-  0: '线上',
-  1: '线下'
+  1: '线下结算',
+  2: '线上结算'
 }
 
 const accountAssignStateMap = {
@@ -270,7 +270,8 @@ export const typeSalaryState = {
   7: '有撤回',
   8: '有退款',
   9: '单笔重发中',
-  10: '待发送'
+  10: '待发送',
+  11: '部分失败'
 }
 export function funSalaryState () {
   return [
@@ -282,7 +283,8 @@ export function funSalaryState () {
     {'key': 7, 'value': '有撤回'},
     {'key': 8, 'value': '有退款'},
     {'key': 9, 'value': '单笔重发中'},
-    {'key': 10, 'value': '待发送'}
+    {'key': 10, 'value': '待发送'},
+    {'key': 11, 'value': '部分失败'}
   ]
 }
 // 工资发放详情状态

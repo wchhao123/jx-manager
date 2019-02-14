@@ -327,7 +327,7 @@
         })
       },
       doExportSalaryDetailList () {
-        this.$confirm('确认需要导出发薪明细数据?', '提示', {
+        this.$confirm('确认导出工资发放明细?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -352,7 +352,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '发薪明细.xls')
+            link.setAttribute('download', '工资发放明细.xls')
             document.body.appendChild(link)
             link.click()
           })

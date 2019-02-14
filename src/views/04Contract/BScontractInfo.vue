@@ -133,9 +133,9 @@
     }
   }
 </script>
-<style lang="stylus" rel="stylesheet/stylus">
- .el-form-item__label{
-   min-width:150px;
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  .el-form-item__label{
+    padding: 0 40px 0 0;
    text-align:left;
  }
 </style>

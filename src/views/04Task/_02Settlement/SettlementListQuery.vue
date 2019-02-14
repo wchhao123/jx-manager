@@ -15,7 +15,7 @@
           <el-input size="small" clearable v-model="queryModel.salaryName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
         <el-form-item :span="6" label="结算方式">
-          <el-select size="small"  v-model="queryModel.type" filterable clearable  placeholder="全部">
+          <el-select size="small"  v-model="queryModel.payType" filterable clearable  placeholder="全部">
           <el-option
             v-for="(item, index) of this.$state.taskSettlementType"
             :key="index"
@@ -131,7 +131,7 @@
       </el-table-column>
       <el-table-column align="center" label="结算方式">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.realAmount }}</span>
+          <span size="small">{{scope.row.payType| filterTaskSettlementType()}}</span>
         </template>
       </el-table-column>
       <!--批次状态-->
@@ -265,7 +265,7 @@
         })
       },
       doExportSalaryList () {
-        this.$confirm('确认需要导出任务批次数据?', '提示', {
+        this.$confirm('确认需要导出结算批次数据?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -292,7 +292,7 @@
             let link = document.createElement('a')
             link.style.display = 'none'
             link.href = objectUrl
-            link.setAttribute('download', '任务批次.xls')
+            link.setAttribute('download', '结算批次.xls')
             document.body.appendChild(link)
             link.click()
           })
