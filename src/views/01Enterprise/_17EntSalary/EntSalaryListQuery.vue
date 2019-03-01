@@ -5,7 +5,7 @@
 
         <!-- 批次号-->
         <el-form-item :span="6" label="批次号">
-          <el-input size="small" v-model="queryModel.salaryId" placeholder="请输入订单号"></el-input>
+          <el-input size="small" v-model="queryModel.salaryId" placeholder="请输入批次号"></el-input>
         </el-form-item>
         <!--工资月份-->
           <el-form-item label="工资月份">
@@ -25,7 +25,7 @@
 
       <el-row type="flex">
           <el-form-item label="批次状态">
-            <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择审批状态">
+            <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择批次状态">
               <el-option
                 v-for="item in salaryStateSource"
                 :key="item.key"
@@ -82,7 +82,6 @@
         <!--<template slot-scope="scope">-->
           <!--<span size="small" class="globalPointer"  @click="getAccountAssign(scope.row.accClearId)">{{scope.row.accClearId}}</span>-->
         <!--</template>-->
-
       <!--</el-table-column>-->
       <!--工资表名称-->
       <!--<el-table-column align="center" label="工资表名称">-->
@@ -168,13 +167,20 @@
         </template>
       </el-table-column>
 
-      <el-table-column fixed="right" label="操作" width="120" align="center">
-        <template slot-scope="scope">
-          <el-button  @click="toSalaryDetail(scope.row)"
-                     type="primary" plain size="small">查看发放明细
-          </el-button>
-        </template>
-      </el-table-column>
+      <el-table-column  label="操作" width="120" align="center">
+      <template slot-scope="scope">
+        <el-button  @click="toSalaryDetail(scope.row)"
+                    type="primary" plain size="small">查看发放明细
+        </el-button>
+      </template>
+   </el-table-column>
+      <!--<el-table-column fixed="right" label="操作" width="140" align="center">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-button  @click="getAccountAssign(scope.row.salaryId)"-->
+                      <!--type="primary" plain size="small">查看业务编号详情-->
+          <!--</el-button>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
 
     </el-table>
     <el-col :span="24" class="toolbar">
@@ -191,9 +197,9 @@
     </el-col>
     <el-dialog :title="detail.title" center width="40%"
                :close-on-click-modal="1==0"
-               @close="() => {this.detail.accClearId=''}"
+               @close="() => {this.detail.salaryId=''}"
                :visible.sync="detail.visiable">
-      <account-assign :acc-clear-id="detail.accClearId"  @cancelEdit="_closeAccountAssignInfo"></account-assign>
+      <account-assign :salary-id="detail.salaryId"  @cancelEdit="_closeAccountAssignInfo"></account-assign>
     </el-dialog>
   </div>
 </template>
@@ -304,8 +310,8 @@
           type: 'warning'
         }).then(() => {
           this.isLoading = true
-          let _salaryMonth = this.queryModel.salaryMonth
           this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
+          let _salaryMonth = this.queryModel.salaryMonth
           if (this.selectDate !== null && this.selectDate) {
             this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDate[0])
             this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDate[1])
@@ -356,9 +362,9 @@
         console.log('pageChange')
         console.log(val)
       },
-      getAccountAssign(accClearId) {
-        console.log(accClearId)
-        this.detail.accClearId = accClearId
+      getAccountAssign(salaryId) {
+        console.log(salaryId)
+        this.detail.salaryId = salaryId
         this.detail.visiable = true
       },
       _closeAccountAssignInfo() {

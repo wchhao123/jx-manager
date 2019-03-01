@@ -61,7 +61,7 @@
       var validatorIdType = (rule, value, callback) => {
         var l = value.length
         if (this.model.isVerify === '1') {
-          return
+          return callback()
         }
         switch (this.model.idType) {
           case '1': { // 身份证
@@ -140,6 +140,7 @@
         this.$emit('cancelEdit', val)
       },
       editSubmit() {
+        debugger
         this.$refs.userInfo.validate((valid) => {
           if (valid) {
             Api.editUserInfo({

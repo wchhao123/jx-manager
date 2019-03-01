@@ -60,7 +60,7 @@
         </el-col>
         <el-col >
         <el-form-item :span="6" label="结算方式">
-          <el-select size="small" clearable v-model="queryModel.type" placeholder="全部">
+          <el-select size="small" clearable v-model="queryModel.payType" placeholder="全部">
           <el-option
             v-for="(item, index) of this.$state.taskSettlementType"
             :key="index"

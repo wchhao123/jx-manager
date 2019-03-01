@@ -21,6 +21,7 @@ import TaskSettlementDetailList from 'views/04Task/_02Settlement/EntTaskDetailQu
 import TaskManageList from 'views/04Task/_02Settlement/TaskManage.vue'
 import TaskSignInList from 'views/04Task/_02Settlement/TaskSignIn.vue'
 import BusinessListQuery from 'views/03System/_05BusinessManage/BusinessListQuery.vue'
+import TaskAndContract from 'views/04Task/_02Settlement/TaskAndContract.vue'
 //import UserResume from 'views/04Task/_02Settlement/UserResume.vue'
 
 import NOFOUND from 'views/404'
@@ -92,7 +93,8 @@ export default new Router({
         //{path: '/task_userinfo', component: UserResume, name: '个人履历'},
         {path: '/task_manage', component: TaskManageList, name: '任务管理'},
         {path: '/task_settlement', component: TaskSettlementList, name: '结算批次查询'},
-        {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算批次详情查询'}
+        {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算批次详情查询'},
+        {path: '/task_and_contract', component: TaskAndContract, name: '合同任务列表'}
       ]
     },
     {

@@ -30,8 +30,8 @@
             <el-date-picker
               class="startDate"
               size="small"
-              :editable=false
-              v-model="queryModel.salaryMonth"
+              :editable=true
+              v-model="salaryMonth"
               type="month"
               placeholder="请选择工资月份">
             </el-date-picker>
@@ -180,6 +180,12 @@
         </template>
       </el-table-column>
 
+      <!--<el-table-column width="170"  align="center" label="业务编号">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span size="small">{{scope.row.businessId}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
       <!--提交时间-->
       <el-table-column width="170"  align="center" label="提交时间">
         <template slot-scope="scope">
@@ -219,6 +225,7 @@
       return {
         isLoading: false,
         totalCount: 0,
+        salaryMonth: '',
         inputDataList: {
           salaryDataList: []
         },
@@ -274,18 +281,25 @@
       '$route': {
         immediate: true,
         handler: 'getParams'
+      },
+      salaryMonth () {
+        if (this.salaryMonth !== null && this.salaryMonth) {
+          this.salaryMonth = filters.filterDateYYYYMM(this.salaryMonth)
+        } else {
+          this.salaryMonth = null
+        }
       }
     },
     methods: {
       getParams (r) {
         let name = this.$route.name
-        debugger
         if (name === '发放明细查询' && this.$route.params.salaryId !== undefined) {
           this.queryModel = {
             pageNum: 1,
             pageSize: 10
           }
           this.selectDateRange = ''
+          this.salaryMonth = ''
           let salaryId = this.$route.params.salaryId
           this.queryModel.salaryId = salaryId
           if (!salaryId || salaryId.length < 1) {
@@ -294,6 +308,13 @@
           this.doQuery()
         }
       },
+      // pickTime (val) {
+      //  this.isLoading = true
+      //   this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
+      //  this.isLoading = false
+      // //  Vue.set(this.queryModel, 'salaryMonth', filters.filterDateYYYYMM(val))
+      //   console.log(this.queryModel.salaryMonth)
+      // },
       salaryInputSelect (entId) {
         if (entId !== undefined) {
           this.queryModel.entId = entId
@@ -308,8 +329,11 @@
       },
       doQuery () {
         this.isLoading = true
-        if (this.queryModel.salaryMonth) {
-          this.queryModel.salaryMonth = this.$filter.filterDateYYYYMM(this.queryModel.salaryMonth)
+        console.log(this.salaryMonth)
+        if (this.salaryMonth !== null && this.salaryMonth !== '') {
+          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.salaryMonth)
+        } else {
+          this.queryModel.salaryMonth = null
         }
         if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
           this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[0])
@@ -333,7 +357,13 @@
           type: 'warning'
         }).then(() => {
           this.isLoading = true
-          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.queryModel.salaryMonth)
+          console.log(this.salaryMonth)
+          if (this.salaryMonth !== null && this.salaryMonth !== '') {
+          this.queryModel.salaryMonth = filters.filterDateYYYYMM(this.salaryMonth)
+          } else {
+            this.queryModel.salaryMonth = null
+          }
+          console.log(this.queryModel)
           if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
             this.queryModel.startDate = filters.filterDateYYYYMMDD(this.selectDateRange[0])
             this.queryModel.endDate = filters.filterDateYYYYMMDD(this.selectDateRange[1])
@@ -341,6 +371,7 @@
             this.queryModel.startDate = null
             this.queryModel.endDate = null
           }
+          console.log(this.queryModel)
           Api.exportSalaryDetailList(this.queryModel).then(resp => {
             this.isLoading = false
             let data = resp.data

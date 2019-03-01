@@ -134,8 +134,8 @@
   }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  .el-form-item__label{
-    padding: 0 40px 0 0;
+  /deep/ .el-form-item__label{
+   min-width:160px;
    text-align:left;
  }
 </style>

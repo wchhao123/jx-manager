@@ -174,6 +174,7 @@
     },
     watch: {
       selectDate () {
+        console.log('j监听')
     if (this.selectDate !== null && this.selectDate) {
       this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDate[0])
       this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.selectDate[1])

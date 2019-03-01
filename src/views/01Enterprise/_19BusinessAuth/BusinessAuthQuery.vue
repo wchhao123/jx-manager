@@ -70,6 +70,10 @@
           <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('0')">删除权限
           </el-button>
         </el-col>
+        <el-col :span="2">
+        <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="openAll">开通所有
+        </el-button>
+        </el-col>
       </el-row>
     </el-form>
 
@@ -137,6 +141,7 @@
 
 <script type="text/ecmascript-6">
   import BusinessAuth from './BusinessAuthSet'
+  import * as Api from 'api'
   export default {
     data () {
       return {
@@ -207,6 +212,21 @@
           this.totalCount = response.data.totalCount
           this.isLoading = false
         }, err => {
+          this.isLoading = false
+          console.log(err)
+        })
+      },
+      openAll() {
+        this.isLoading = true
+        debugger
+        this.$post(this.$url('/auth_add_all')).then(response => {
+          this.$message({
+            type: response.code === Api.ERR_OK ? 'success' : 'error',
+            message: response.msg
+          })
+          this.isLoading = false
+        }, err => {
+          this.$message.warning(err)
           this.isLoading = false
           console.log(err)
         })
