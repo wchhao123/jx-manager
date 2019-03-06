@@ -97,7 +97,7 @@
       </el-table-column>
       <el-table-column align="center" label="第三方合同编号">
         <template slot-scope="scope">
-          <span  class="globalPointer" size="small" @click="getContractInfo(scope.row.extContractId)">{{scope.row.extContractId}}</span>
+          <span  class="globalPointer" size="small" @click="getContractInfo(scope.row)">{{scope.row.extContractId}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="合同编号">
@@ -180,9 +180,9 @@
     </el-col>
     <el-dialog :title="detail.title" center width="50%"
                :close-on-click-modal="1==0"
-               @close="() => {this.detail.extContractId=''}"
+               @close="() => {this.detail.contractInfo=''}"
                :visible.sync="detail.visiable">
-      <contract-info :ext-contract-id="detail.extContractId"  @cancelEdit="_closeContractInfo"></contract-info>
+      <contract-info :detail-info="detail.contractInfo"  @cancelEdit="_closeContractInfo"></contract-info>
     </el-dialog>
   </div>
 </template>
@@ -196,7 +196,7 @@ import contractInfo from './BScontractInfo'
         detail: {
           title: '上上签合同信息详情',
           visiable: false,
-          extContractId: ''
+          contractInfo: {}
         },
         contractTitle: '合同协议',
         queryUrl: '/contract_sign',
@@ -356,6 +356,8 @@ import contractInfo from './BScontractInfo'
           this.isLoading = true
           this.queryModel.signIds = this.multipleSelection.toString()
           this.$post(this.$url('/contract_check'), this.queryModel).then(response => {
+            console.log(response.date)
+            debugger
             this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
               this.isLoading = false
               if (!response) {
@@ -384,13 +386,15 @@ import contractInfo from './BScontractInfo'
           })
         })
       },
-      getContractInfo (extContractId) {
-        console.log(extContractId)
-        this.detail.extContractId = extContractId
+      getContractInfo (contractInfo) {
+        console.log(contractInfo)
+        this.detail.contractInfo = contractInfo
+        console.log(this.detail.contractInfo)
         this.detail.visiable = true
       },
       _closeContractInfo() {
         this.detail.visiable = false
+         this.resetDoQuery()
       }
     }
   }

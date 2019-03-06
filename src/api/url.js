@@ -33,10 +33,13 @@ export const contractState = {
   '/sign_in_export': '/table/task/signinexport', //用户报名信息导出
   '/user_clear_export': '/user/account/clearingexport', //用户流水导出
   '/get_contract_info': '/table/contract/getcontractinfo', //上上签查询合同信息
+  '/get_signer_status': '/table/contract/getsignerstatus',
+  '/refresh_contract': '/table/contract/refreshContract',
   '/get_business_ids': '/table/salary/getbusinessids',
   '/get_account_assign': '/table/salary/getaccountassign', //开放平台查询账户分配信息
   '/get_task_contract': '/table/task/get/taskandcontract',
   '/export_task_contract': '/table/task/export/taskandcontract',
   '/rollback_contract': '/table/task/rollback/contract',
-  '/send_task_contract': '/table/task/sendtaskcontract'
+  '/send_task_contract': '/table/task/sendtaskcontract',
+  '/confirm_send_again': '/table/task/confirmsendagain'
 }

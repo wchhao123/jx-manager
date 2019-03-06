@@ -143,6 +143,12 @@ export function filterContractSignState (key) {
   return state.contractSignState[parseInt(key)]
 }
 
+export function filterContractStatus (key) {
+  if (!key)
+    return ''
+  return state.contractStatus[parseInt(key)]
+}
+
 export function filterBusinessState (key) {
   if (!key)
     return ''

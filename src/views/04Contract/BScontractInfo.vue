@@ -53,8 +53,8 @@
         </el-form-item>
       </el-row>
       <el-row>
-        <el-form-item label="合同状态">
-          <span>{{contractDetail.status}}</span>
+        <el-form-item label="合同总状态">
+          <span>{{contractDetail.status|filterContractStatus()}}</span>
         </el-form-item>
       </el-row>
       <el-row>
@@ -62,15 +62,22 @@
           <span>{{contractDetail.developerId}}</span>
         </el-form-item>
       </el-row>
+      <el-row>
+      <el-col :span="3">
+        <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px"  v-if="isShow"  @click="refreshContract">刷新数据
+        </el-button>
+      </el-col>
+      </el-row>
     </el-form>
     </div>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
+  import * as Api from 'api'
   export default {
     props: {
-      extContractId: ''
+      detailInfo: {}
     },
     data () {
       return {
@@ -90,6 +97,7 @@
           contractId: '',
           status: ''
         },
+        isShow: false,
         queryModel: {
           extContractId: ''
         },
@@ -101,13 +109,16 @@
       }
     },
     watch: {
-      extContractId: {
+      detailInfo: {
         immediate: true,
         handler: function (val) {
-          console.log(val)
-          this.queryModel.extContractId = val
+          this.detailInfo = val
+          console.log(this.detailInfo)
+          if (this.detailInfo!='') {
+          this.queryModel.extContractId = this.detailInfo.extContractId
           console.log(this.queryModel.extContractId)
-          this.getBsContractInfo()
+                    this.getBsContractInfo()
+          }
         }
       }
     },
@@ -117,17 +128,37 @@
           return
         }
         this.isLoading = true
-        debugger
         this.$post(this.$url(this.queryUrl), this.queryModel).then(response => {
           this.contractDetail = response.data
           this.contractDetail.expireTime = this.$filter.filterDateYYYYMMDD(parseInt(this.contractDetail.expireTime) * 1000)
           this.contractDetail.signers = JSON.parse(this.contractDetail.signers)
           this.contractDetail.pages = this.contractDetail.pages + '页'
+          if (this.contractDetail.status == '5' && this.detailInfo.signState == '2') {
+           this.isShow = true
+          }
+          if (this.contractDetail.status == '3' && this.detailInfo.signState == '2') {
+            this.$post(this.$url('/get_signer_status'), this.queryModel).then(response => {
+              if (response.data === '2') {
+                this.isShow = true
+              }
+            })
+          }
           console.log(this.contractDetail)
           this.isLoading = false
         }, err => {
           this.isLoading = false
           console.log(err)
+        })
+      },
+      refreshContract () {
+        this.$post(this.$url('/refresh_contract'), this.queryModel).then(response => {
+          this.$message({
+            type: response.code === Api.ERR_OK ? 'success' : 'error',
+            message: response.msg
+          })
+          this.$emit('cancelEdit')
+        }, err => {
+          this.$message.warning('刷新失败！')
         })
       }
     }

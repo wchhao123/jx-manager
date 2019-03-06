@@ -394,6 +394,14 @@ export const contractSignState = {
   6: '发送中',
   7: '签署异常'
 }
+
+export const contractStatus = {
+  2: '已创建',
+  3: '已发送,正在签署中',
+  4: '拒绝签署，已取消',
+  5: '已完成',
+  9: '已过期'
+}
 export const signInState = {
   1: '待处理',
   2: '报名取消',

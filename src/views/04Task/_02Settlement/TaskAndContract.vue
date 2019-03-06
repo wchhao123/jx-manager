@@ -87,7 +87,7 @@
           </el-button>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="sendAgain">重新发送
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="sendAgain()">重新发送
           </el-button>
         </el-col>
         <el-col :span="3">
@@ -201,11 +201,20 @@
         </el-pagination>
       </div>
     </el-col>
+    <el-dialog :title="confirm.title" center width="50%"
+               :close-on-click-modal="1==0"
+               :before-close="_closeConfirm"
+               :visible.sync="confirm.visiable">
+      <confirm-send :detail="confirm.contractSignDetails" @close="_closeConfirm"></confirm-send>
+    </el-dialog>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import { ERR_OK } from '../../../api/index'
+  import axios from 'axios'
+  import ConfirmSend from './confirmSend'
   export default {
+    components: {ConfirmSend},
     data () {
       return {
         queryUrl: '/get_task_contract',
@@ -216,9 +225,15 @@
         selectDate: '',
         queryModel: {
           pageNum: 1,
-          pageSize: 10
+          pageSize: 10,
+          isTaskContract: '1'
+        },
+        confirm: {
+          title: '确认重新给以下用户发送合同',
+          visiable: false
         },
         contractSignList: [],
+        contractSignDetails: '',
         signIds: []
       }
     },
@@ -274,10 +289,16 @@
           type: 'warning'
         }).then(() => { //contract_export
           this.isLoading = true
-          this.queryModel.signIds = this.multipleSelection.toString()
+          if (this.multipleSelection.length > 0) {
+            this.multipleSelection.forEach((item, index, arr) => {
+              this.signIds.push(item.signId)
+            })
+            this.queryModel.signIds = this.signIds.toString()
+          }
           this.$post(this.$url('/contract_check'), this.queryModel).then(response => {
             this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
               this.isLoading = false
+              this.queryModel.signIds = ''
               if (!response) {
                 return
               }
@@ -294,6 +315,7 @@
               console.log(err)
             })
           }, err => {
+            this.queryModel.signIds = ''
             this.isLoading = false
             console.log(err)
           })
@@ -312,7 +334,7 @@
         this.multipleSelection.forEach((item, index, arr) => {
           if (item.signState!= '2') {
             this.$message.warning('只有签署中的合同才可以撤销！')
-            return
+            throw new Error('error')
           }
           this.signIds.push(item.signId)
         })
@@ -323,11 +345,21 @@
         }).then(() => {
           this.isLoading = true
           this.queryModel.signIds = encodeURI(JSON.stringify(this.signIds))
-          this.$export(this.$url('/rollback_contract'), this.queryModel).then(resp => {
+          this.$post(this.$url('/rollback_contract'), this.queryModel).then(resp => {
+            this.$message({
+              type: 'success',
+              message: '撤回成功'
+            })
             this.isLoading = false
+            this.queryModel.signIds = ''
             this.resetDoQuery()
           }, err => {
+            this.$message({
+              type: 'success',
+              message: '撤回失败'
+            })
             this.isLoading = false
+            this.queryModel.signIds = ''
             this.resetDoQuery()
             console.log(err)
           })
@@ -347,21 +379,41 @@
         this.multipleSelection.forEach((item, index, arr) => {
           if (item.signState != '7' && item.signState != '3') {
             this.$message.warning('只有签署异常和发送失败的合同才可重新发送！')
-            return
+            throw new Error('error')
           }
         })
-          this.isLoading = true
-          if (this.multipleSelection.length > 0) {
-            console.log(JSON.stringify(this.multipleSelection))
-            this.queryModel.contractSignDetails = encodeURI(JSON.stringify(this.multipleSelection))
+        for (var i = 0; i < this.multipleSelection.length; i++) {
+          console.log('第'+i+'个'+this.multipleSelection[i].signId)
+          for (var j = i+1; j < this.multipleSelection.length; j++) {
+            console.log('第'+j+'个'+this.multipleSelection[j].signId)
+            if (this.multipleSelection[i].entId == this.multipleSelection[j].entId &&
+              this.multipleSelection[i].extEntId == this.multipleSelection[j].extEntId &&
+              this.multipleSelection[i].templateId == this.multipleSelection[j].templateId &&
+              this.multipleSelection[i].userId == this.multipleSelection[j].userId) {
+              this.$message.warning(this.multipleSelection[i].signId + '和' + this.multipleSelection[j].signId + '为重复合同，不能给同一用户发送相同合同！')
+              throw new Error('error')
+            }
           }
-          this.$export(this.$url('/send_task_contract'), this.queryModel).then(resp => {
+        }
+           this.isLoading = true
+            this.contractSignDetails = encodeURI(JSON.stringify(this.multipleSelection))
+          let token = sessionStorage.getItem('access_token')
+          let config = {
+             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }
+        if (token !== null && token.toString().length > 1) {
+          config.headers['Authorization-manage'] = token
+        }
+        let formData = new FormData()
+        formData.append('contractSignDetails', this.contractSignDetails)
+        axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
             this.isLoading = false
-            this.$message({
-              type: resp.data.code === ERR_OK ? 'success' : 'error',
-              message: resp.data.msg
-            })
-            this.resetDoQuery()
+            this.confirm.visiable = true
+            this.confirm.contractSignDetails = JSON.stringify(res.data.data)
+            console.log(this.confirm.contractSignDetails)
+          }, err => {
+            console.log(err)
+            this.$message.warning('系统繁忙！')
           })
       },
       getContractPage (row) {
@@ -374,6 +426,11 @@
             type: 'warning'
           })
         }
+      },
+      _closeConfirm() {
+        this.confirm.visiable = false
+        this.confirm.contractSignDetails = ''
+        this.resetDoQuery()
       },
       exportList() {
         this.$confirm('确认需要导出任务合同明细?', '提示', {
