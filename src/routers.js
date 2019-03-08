@@ -15,6 +15,7 @@ import ContractQuery from 'views/04Contract/ContractListQuery.vue'
 import ContractSign from 'views/04Contract/ContractSignQuery.vue'
 import BusinessAuth from 'views/01Enterprise/_19BusinessAuth/BusinessAuthQuery'
 import SignSubject from 'views/01Enterprise/_15EntSign/EntSignSubject'
+import EntAgentQuery from 'views/01Enterprise/_20EntAgentManage/EntAgentQuery.vue'
 
 import TaskSettlementList from 'views/04Task/_02Settlement/SettlementListQuery.vue'
 import TaskSettlementDetailList from 'views/04Task/_02Settlement/EntTaskDetailQuery.vue'
@@ -80,7 +81,8 @@ export default new Router({
         {path: '/contract_query', component: ContractQuery, name: '合同批次管理'},
         {path: '/contract_sign', component: ContractSign, name: '合同签约管理'},
         {path: '/business_auth', component: BusinessAuth, name: '业务权限'},
-        {path: '/sign_subject', component: SignSubject, name: '签约主体'}
+        {path: '/sign_subject', component: SignSubject, name: '签约主体'},
+        {path: '/get_agent', component: EntAgentQuery, name: '代运营平台管理'}
       ]
     },
     {

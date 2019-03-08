@@ -275,6 +275,7 @@
         console.log(this.queryModel.entId)
       },
       downloadContract () {
+        this.signIds = []
         if (this.contractSignList.length < 1) {
           this.$notify({
             title: '警告',
@@ -327,6 +328,7 @@
         })
       },
       rollBack() {
+        this.signIds = []
         if (this.multipleSelection.length < 1) {
           this.$message.warning('请选择需要撤销的合同！')
           return
@@ -357,7 +359,7 @@
             this.$message({
               type: 'success',
               message: '撤回失败'
-            })
+          })
             this.isLoading = false
             this.queryModel.signIds = ''
             this.resetDoQuery()
@@ -383,9 +385,7 @@
           }
         })
         for (var i = 0; i < this.multipleSelection.length; i++) {
-          console.log('第'+i+'个'+this.multipleSelection[i].signId)
-          for (var j = i+1; j < this.multipleSelection.length; j++) {
-            console.log('第'+j+'个'+this.multipleSelection[j].signId)
+          for (var j = i + 1; j < this.multipleSelection.length; j++) {
             if (this.multipleSelection[i].entId == this.multipleSelection[j].entId &&
               this.multipleSelection[i].extEntId == this.multipleSelection[j].extEntId &&
               this.multipleSelection[i].templateId == this.multipleSelection[j].templateId &&
@@ -406,7 +406,7 @@
         }
         let formData = new FormData()
         formData.append('contractSignDetails', this.contractSignDetails)
-        axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
+        axios.post('https://admin.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
             this.isLoading = false
             this.confirm.visiable = true
             this.confirm.contractSignDetails = JSON.stringify(res.data.data)

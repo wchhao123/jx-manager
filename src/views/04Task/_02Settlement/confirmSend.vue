@@ -40,6 +40,7 @@
       detail: {
         immediate: true,
         handler: function () {
+          debugger
           console.log(this.detail)
           if (this.detail != '') {
           this.dataList = JSON.parse(this.detail)
@@ -81,7 +82,7 @@
           let formData = new FormData()
           formData.append('contractSignDetails', this.details)
           this.isLoading = true
-          axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/sendtaskcontract', formData, config).then(res => {
+          axios.post('https://admin.99payroll.cn/jx-manage/table/task/sendtaskcontract', formData, config).then(res => {
             this.$message({
               type: res.data.code === Api.ERR_OK ? 'success' : 'error',
               message: res.data.msg
