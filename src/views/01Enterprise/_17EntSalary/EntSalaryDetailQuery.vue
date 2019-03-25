@@ -51,6 +51,9 @@
               </el-option>
             </el-select>
           </el-form-item>
+        <el-form-item :span="6" label="证件号码">
+          <el-input size="small" v-model="queryModel.idNumber" placeholder="请输入证件号码"  clearable></el-input>
+        </el-form-item>
       </el-row>
 
       <el-row  type="flex">
@@ -347,6 +350,9 @@
           if (response.data.code === ERR_OK) {
             this.salaryDetailList = response.data.data.list
             this.totalCount = response.data.data.totalCount
+            // this.salaryDetailList.forEach(
+            //
+            // )
           }
         })
       },

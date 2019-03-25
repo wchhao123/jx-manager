@@ -433,11 +433,37 @@ export function funTaskListState () {
   ]
 }
 
+export function funTaskDeliveryType () {
+  return [
+    {'key': 1, 'value': '批量验收附件'},
+    {'key': 2, 'value': '任务交付附件'},
+  ]
+}
+export const typeTaskDelivery = {
+  1: '批量验收附件',
+  2: '任务交付附件',
+
+}
+
 export const typeTaskListState = {
   1: '待发布',
   2: '进行中',
   3: '已完成',
   4: '已关闭'
+}
+export function funTaskWorkState (){
+  return [
+    {'key': 1, 'value': '工作中'},
+    {'key': 2, 'value': '待验收'},
+    {'key': 3, 'value': '验收通过'},
+    {'key': 4, 'value': '验收中'}
+  ]
+}
+export const typeTaskWorkState = {
+  1: '工作中',
+  2: '待验收',
+  3: '验收通过',
+  4: '验收中'
 }
 //用户激活状态
 export const typeUserActiveState = {
@@ -587,7 +613,8 @@ export function funUserIdType() {
     {'key': '1', 'value': '身份证'},
     {'key': '2', 'value': '护照'},
     {'key': '3', 'value': '港澳居民来往内地通行证'},
-    {'key': '4', 'value': '台湾居民来往大陆通行证'}
+    {'key': '4', 'value': '台湾居民来往大陆通行证'},
+    {'key': '5', 'value': '临时身份证'}
   ]
 }
 
@@ -719,5 +746,12 @@ export function funAdminJobStateType () {
   return [
     {'key': '1', 'value': '离职'},
     {'key': '0', 'value': '在职'}
+  ]
+}
+
+export function dataAdminStatus () {
+  return [
+    {'key': '0', 'value': '不开通'},
+    {'key': '1', 'value': '开通'}
   ]
 }

@@ -6,7 +6,7 @@
     <el-row  v-show="isShow">
       <el-col>
         <el-form-item :span="6"  prop="entId" >
-        <ent-select title="企业名称" place-holder="请输入企业名称"
+        <ent-select title="企业名称" place-holder="请输入企业名称" id="entSelect"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
          </ent-select>
         </el-form-item>
@@ -15,7 +15,7 @@
       <el-row v-show="!isShow">
       <el-col>
         <el-form-item :span="6" label="企业名称"   >
-          <el-input size="small" v-model="queryModel.entName"   disabled="disabled"></el-input>
+          <el-input size="small" v-model="queryModel.entName"   disabled="disabled" ></el-input>
         </el-form-item>
       </el-col>
     </el-row>
@@ -33,11 +33,18 @@
         </el-form-item>
       </el-col>
     </el-row>
+      <el-row>
+        <el-col>
+          <el-form-item :span="6" label="短信签名" prop="smsSign">
+            <el-input size="small" v-model="queryModel.smsSign" placeholder="请输入短信签名" clearable ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <div style="width:600px;height:120px;border:1px solid gainsboro ;padding: 10px">
       <p style="font-size: 20px;color: black;padding: 5px;">举例</p>
       <p style="padding: 2px;">工资到账提醒:</p>
-      <p style="padding: 2px;">【嘉薪payroll】 xxxx提醒您，您的三月工资已到账，请登录<span style="color: red;padding:5px;">“公众号名称”</span>微信公众号查看</p>
+      <p style="padding: 2px;">【<span style="color: red;padding:5px;">短信签名</span>】 xxxx提醒您，您的三月工资已到账，请登录<span style="color: red;padding:5px;">“公众号名称”</span>微信公众号查看</p>
     </div>
     <el-row type="flex" justify="center" style="margin-top: 60px">
       <el-button style="width: 120px" size="small" @click="_cancelEdit" >取 消</el-button>
@@ -48,6 +55,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+  import * as Validator from 'common/js/validator'
   export default {
     props: {
       agentInfo: {}
@@ -57,9 +65,8 @@
         immediate: true,
         deep: true,
         handler: function (val) {
-          debugger
           console.log(this.agentInfo)
-          console.log(typeof (this.agentInfo.detail))
+          console.log('flag  before'+ this.agentInfo.flag)
           if (this.agentInfo.detail != ''&&this.agentInfo.detail!= undefined) {
             this.isShow = false
             this.queryModel = JSON.parse(this.agentInfo.detail)
@@ -67,8 +74,14 @@
           } else {
             this.isShow = true
             this.queryModel = {}
-         //   this.$refs['addEntAgent'].resetFields()
+            this.queryModel.entId = null
+            if (this.agentInfo.flag==='0') {
+              console.log('清楚数据')
+                 document.getElementById('entSelect').getElementsByTagName('input')[0].value='';
+            }
+            this.agentInfo.flag ='0'
           }
+          console.log('flag  after'+ this.agentInfo.flag)
           //清空校验文字
           setTimeout(() => {
             this.$refs['addEntAgent'].clearValidate()
@@ -85,7 +98,9 @@
         entAgent: {
           entId: {required: true, message: '请选择企业', trigger: 'blur'},
           wppName: {required: true, message: '请填写公众号名称', trigger: 'blur'},
-          wppUrl: {required: true, message: '请添加公众号链接', trigger: 'blur'}
+          wppUrl: {required: true, message: '请添加公众号链接', trigger: 'blur'},
+          smsSign: [{required:true,message: '请添加短信签名',trigger: 'blur'},
+                     {validator: Validator.validateSmsSign, trigger: 'blur'}]
         }
       }
     },
@@ -100,8 +115,9 @@
                 this.isLoading = false
                 this.$emit('close')
               }), err => {
+                console.log(err)
                 this.isLoading = false
-                this.$message.error(err)
+                this.$message.warning(err)
               }
             }
             if (this.agentInfo.confirmText === '确认修改') {
@@ -121,9 +137,23 @@
        })
       },
       _cancelEdit() {
-        this.queryModel = {}
+        this.queryModel = {};
         this.$emit('close')
       }
     }
   }
 </script>
+<style  scoped lang="stylus" rel="stylesheet/stylus">
+ /deep/ .el-input--small .el-input__inner {
+    height: 32px;
+    line-height: 32px;
+    width: 300px;
+  }
+ /deep/ .el-form-item__label{
+   min-width:100px;
+   text-align:left;
+ }
+/deep/ element.style {
+   z-index: 2000;
+ }
+</style>

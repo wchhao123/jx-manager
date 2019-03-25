@@ -35,6 +35,21 @@ export function getTaskList (param) {
     params: param
   })
 }
+
+export function getTaskCheckList (param) {
+  return fetch({
+    url: http.prefix + '/table/task/checklist',
+    method: http.post,
+    params: param
+  })
+}
+export function getTaskDeliveryList (param) {
+  return fetch({
+    url: http.prefix + '/table/task/gettaskenclosure',
+    method: http.post,
+    params: param
+  })
+}
   // 获取用户履历/table/task
 export function getUserResume (param) {
     return fetch({

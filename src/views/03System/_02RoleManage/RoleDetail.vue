@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :inline="true" label-width="80px" :model="model" v-show="model" :rules="rules" ref="roleForm">
+        <el-form :inline="true" label-width="80px" :model="model" v-show="model" :rules="rules" ref="roleForm":disabled="model.isEdit">
           <div class="left">
             <el-form-item label="角色名" size="small" prop="roleName">
               <el-input v-model="model.roleName"></el-input>
@@ -138,7 +138,8 @@
       },
       _addAdminRole() {
         this.$refs.roleForm.validate((valid) => {
-          let menuIDs = this.$refs.roleTree.getCheckedKeys()
+          if (valid){
+            let menuIDs = this.$refs.roleTree.getCheckedKeys()
           if (menuIDs.length < 1) {
             this.$message('请勾选权限')
             return
@@ -147,7 +148,6 @@
           menuIDs.forEach((item) => {
             menuIds = menuIds + parseInt(item) + ','
           })
-          if (valid) {
             Api.addAdminRole({
               menuIds: menuIds.substring(0, menuIds.length - 1),
               remark: this.model.remark,
@@ -164,8 +164,13 @@
           }
         })
       },
+
       _updateAdminRole() {
         let menuIDs = this.$refs.roleTree.getCheckedKeys()
+        if (menuIDs.length < 1) {
+          this.$message('请勾选权限')
+          return
+        }
         Api.updateAdminRole({
           roleId: this.model.roleId,
           remark: this.model.remark,

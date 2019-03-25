@@ -38,6 +38,8 @@ export const contractState = {
   '/get_business_ids': '/table/salary/getbusinessids',
   '/get_account_assign': '/table/salary/getaccountassign', //开放平台查询账户分配信息
   '/get_task_contract': '/table/task/get/taskandcontract',
+  '/task_delivery_export': '/table/task/exportext', //任务交付文件下载
+  '/task_delivery_check': '/table/task/exportcheck',
   '/export_task_contract': '/table/task/export/taskandcontract',
   '/rollback_contract': '/table/task/rollback/contract',
   '/send_task_contract': '/table/task/sendtaskcontract',

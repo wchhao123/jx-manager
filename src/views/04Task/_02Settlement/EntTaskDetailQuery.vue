@@ -41,6 +41,9 @@
         <el-form-item :span="6" label="任务名称">
           <el-input size="small" clearable v-model="queryModel.salaryName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
+        <el-form-item :span="6" label="证件号码">
+          <el-input size="small" v-model="queryModel.idNumber" placeholder="请输入证件号码"  clearable></el-input>
+        </el-form-item>
       </el-row>
 
       <el-row  type="flex">

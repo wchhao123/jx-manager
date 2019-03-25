@@ -118,7 +118,7 @@ export function filterContractType (key) {
   return state.contractType[parseInt(key)]
 }
 
-
+//合同状态
 export function filterContractState (key) {
   if (!key)
     return ''
@@ -154,6 +154,7 @@ export function filterBusinessState (key) {
     return ''
   return state.businessState[parseInt(key)]
 }
+
 export function filterExportState (key) {
   if (!key)
     return ''
@@ -164,6 +165,18 @@ export function filterTaskListState (key) {
   if (!key)
     return ''
   return state.typeTaskListState[parseInt(key)]
+}
+//用户任务工作状态
+export function filterTaskWorkState (key) {
+  if (!key)
+    return ''
+  return state.typeTaskWorkState[parseInt(key)]
+}
+//任务交付类型
+export function filterTaskDeliveryState (key) {
+  if (!key)
+    return ''
+  return state.typeTaskDelivery[parseInt(key)]
 }
 //报名状态
 export function filterSignInState (key) {
@@ -292,6 +305,12 @@ export function filterAdminJobStateType (key) {
   if (!key)
     return ''
   return state.typeAdminJobState[key.toString()]
+}
+
+export function filterDataAdminStatus (key) {
+  if (!key)
+    return ''
+  return state.dataAdminStatus[key.toString()]
 }
 
 export function filterEmpty (val) {

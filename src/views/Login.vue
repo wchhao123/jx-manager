@@ -109,7 +109,7 @@ export default {
                 mobile: this.loginForm.mobile,
                 password: md5(this.loginForm.password),
                 thiss: this
-              }).then(() => {
+              }).then((res) => {
                 this.loading = false
               }).catch(err => {
                 this.$message.error(err)

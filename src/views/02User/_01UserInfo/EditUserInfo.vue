@@ -5,7 +5,7 @@
              label-width="80px"
              label-position="left">
 
-      <span class="item-title">未激活的用户手机号修改后,将重新发送邀请短信</span>
+      <!--<span class="item-title">未激活的用户手机号修改后,将重新发送邀请短信</span>-->
       <el-row type="flex">
         <el-form-item label="姓 名" prop="userName">
           <el-input v-model="model.userName" size="small" :disabled="_cannotEdit"></el-input>

@@ -74,7 +74,7 @@
       <!--批次号-->
       <el-table-column align="center" label="批次号">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.salaryId}}</span>
+          <span   class="globalPointer" size="small"  @click.stop="getAccountAssign(scope.row.salaryId)">{{scope.row.salaryId}}</span>
         </template>
 
       </el-table-column>
@@ -174,7 +174,7 @@
         </el-button>
       </template>
    </el-table-column>
-      <!--<el-table-column fixed="right" label="操作" width="140" align="center">-->
+      <!--<el-table-column fixed="right" label="操作" width="140" align="center"  >-->
         <!--<template slot-scope="scope">-->
           <!--<el-button  @click="getAccountAssign(scope.row.salaryId)"-->
                       <!--type="primary" plain size="small">查看业务编号详情-->
@@ -218,7 +218,8 @@
         detail: {
           title: '账户分配详情',
           visiable: false,
-          accClearId: ''
+          accClearId: '',
+        //  isShow: true
         },
         isLoading: false,
         selectDate: '',

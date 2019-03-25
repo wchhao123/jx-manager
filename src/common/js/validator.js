@@ -114,3 +114,13 @@ export function validateEntName(rule, value, callback) {
     callback()
   }, 100)
 }
+//校验短信签名
+export function validateSmsSign(rule, value, callback) {
+  var r1 = Regex.regSmsSign.test(value)
+  if (r1 === false) {
+    return callback(new Error('短信签名为2~20位,不能使用空格和特殊符号“- + * & % # @ ~”等'))
+  }
+  setTimeout(() => {
+    callback()
+  }, 100)
+}

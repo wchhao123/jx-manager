@@ -96,7 +96,7 @@ let menu = {
         }
       ]
     }, {
-      'name': '系统管理',
+      'name': '权限管理',
       'id': '30001',
       'class': 'el-icon-setting',
       'children': [

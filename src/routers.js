@@ -23,6 +23,8 @@ import TaskManageList from 'views/04Task/_02Settlement/TaskManage.vue'
 import TaskSignInList from 'views/04Task/_02Settlement/TaskSignIn.vue'
 import BusinessListQuery from 'views/03System/_05BusinessManage/BusinessListQuery.vue'
 import TaskAndContract from 'views/04Task/_02Settlement/TaskAndContract.vue'
+import  TaskCheckManage from 'views/04Task/_02Settlement/TaskCheckManage.vue'
+import TaskDeliveryQuery from 'views/04Task/_02Settlement/TaskDeliveryQuery.vue'
 //import UserResume from 'views/04Task/_02Settlement/UserResume.vue'
 
 import NOFOUND from 'views/404'
@@ -96,7 +98,9 @@ export default new Router({
         {path: '/task_manage', component: TaskManageList, name: '任务管理'},
         {path: '/task_settlement', component: TaskSettlementList, name: '结算批次查询'},
         {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算批次详情查询'},
-        {path: '/task_and_contract', component: TaskAndContract, name: '合同任务列表'}
+        {path: '/task_and_contract', component: TaskAndContract, name: '合同任务列表'},
+        {path: '/task_check', component: TaskCheckManage, name: '验收管理'},
+        {path: '/task_delivery', component: TaskDeliveryQuery, name: '验收管理'}
       ]
     },
     {
@@ -116,7 +120,7 @@ export default new Router({
     {
       path: '/',
       component: Home,
-      name: '系统管理',
+      name: '权限管理',
       iconCls: 'el-icon-message',
       children: [
         {path: '/system_user', component: UserManage, name: '管理员管理'},

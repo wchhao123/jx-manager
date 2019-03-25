@@ -8,6 +8,11 @@
           </ent-select>
         </el-col>
         <el-col>
+          <el-form-item :span="6" label="短信签名">
+            <el-input size="small" v-model="queryModel.smsSign" placeholder="请输入短信签名" clearable></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col>
           <el-form-item :span="6" label="公众号名称">
             <el-input size="small" v-model="queryModel.wppName" placeholder="请输入公众号名称" clearable></el-input>
           </el-form-item>
@@ -74,6 +79,11 @@
       <el-table-column align="center" label="公众号名称">
         <template slot-scope="scope">
           <span size="small">{{scope.row.wppName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="短信签名">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.smsSign }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="添加时间">
@@ -174,10 +184,11 @@
         })
       },
       addEntAgent() {
-        this.agentInfo.hintText = '添加后，消息通知内容均显示已关联的公众号名称'
+        this.agentInfo.hintText = '添加后，消息通知内容均显示已关联的短信签名和公众号名称'
         this.agentInfo.confirmText = '确认添加'
         this.agentInfo.detail = ''
         this.detail.title = '添加'
+        this.agentInfo.flag = '1' //用于判断是否是退出
         this.detail.visiable = true
         console.log(this.agentInfo)
       },
@@ -186,7 +197,7 @@
           this.$message.warning('请选择要删除的关联数据')
           return
         }
-        this.$confirm('确认解除企业和公众平台的关联？删除后短信内容“公众号名称”将恢复默认值“嘉薪”', '确认删除', {
+        this.$confirm('确认解除企业和公众平台的关联？删除后短信内容“公众号名称”将恢复默认值“嘉薪”，短信签名将恢复默认值【嘉薪】', '确认删除', {
           cancelButtonText: '取消',
           confirmButtonText: '确定',
           type: 'warning'
@@ -200,7 +211,7 @@
             })
             this.isLoading = false
             this.queryModel.entIds = ''
-            this.resetDoQuery()
+            this.doQuery()
           }, err => {
             this.$message({
               type: 'error',
@@ -208,7 +219,7 @@
             })
             this.isLoading = false
             this.queryModel.signIds = ''
-            this.resetDoQuery()
+            this.doQuery()
             console.log(err)
           })
           console.log()
@@ -221,10 +232,11 @@
       },
       updateAgent(row) {
         console.log(row)
-        this.agentInfo.hintText = '修改后，消息通知内容均显示已关联的公众号名称'
+        this.agentInfo.hintText = '修改后，消息通知内容均显示已关联的短信签名和公众号名称'
         this.agentInfo.confirmText = '确认修改'
         this.agentInfo.detail = JSON.stringify(row)
         this.detail.title = '编辑'
+        this.agentInfo.flag = '1'
         this.detail.visiable = true
         console.log(this.agentInfo)
       },
@@ -232,7 +244,7 @@
         this.detail.visiable = false
         this.agentInfo.hintText =''
         this.agentInfo.detail = ''
-        this.doQuery()
+        this.doQuery();
       }
     }
   }

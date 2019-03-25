@@ -44,6 +44,18 @@
           </el-select>
         </el-form-item>
         </el-row>
+      <el-row>
+        <el-form-item size="small" label="数据权限"  prop="isOpen">
+          <el-select size="small" v-model="model.isOpen" :disabled="this.model.isSuper"  >
+            <el-option
+              v-for="item in _filterDataAdminStatus"
+              :key="item.key"
+              :label="item.value"
+              :value="item.key">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-row>
       <span class="item-title">角色关联</span>
       <el-row v-loading="isLoading">
         <el-transfer
@@ -104,7 +116,9 @@
           ],
           'mobile': [
             { required: true, message: '请输入手机号', trigger: 'blur' },
-            {validator: Validator.validatorMobile, trigger: 'blur'}]
+            {validator: Validator.validatorMobile, trigger: 'blur'}],
+          'isOpen': [
+            { required: true, message: '请选择数据权限状态', trigger: 'blur' }]
         },
         rulesUpdate: {
           'adminName': {required: true, validator: Validator.validatorName, trigger: 'blur'},
@@ -124,6 +138,9 @@
     computed: {
       _AdminJobStateResource() {
         return state.funAdminJobStateType()
+      },
+      _filterDataAdminStatus() {
+        return state.dataAdminStatus()
       }
     },
     methods: {
@@ -131,36 +148,63 @@
         this.isLoading = true
         Api.getAdminRoleInfo({}).then(resp => {
           this.isLoading = false
+          console.log(this.roleList )
           if (resp.data.code === Api.ERR_OK) {
             this.roleList = resp.data.data.list
+          }
+          for (var i = 0; i <= this.roleList.length; ++i) {
+            if(this.roleList[i].dataState == '0'){
+              this.roleList.splice(i,1)
+            }
+            if (this.model.isSuper == true&& this.roleList[i].roleName == '超级管理员') {
+              this.roleList.splice(i,1)
+            }
           }
         })
       },
       _addAdmin() {
+        debugger
+        console.log(this.$store.state.user)
         this.$refs.adminForm.validate((valid) => {
           let roleIds = Utils.utilStringArray2NumString(this.queryRoles)
           if (!roleIds) {
+            console.log(this.$store.state.user.user.isOpen)
             this.$message.error('请分配角色')
             return
           }
-          if (valid) {
-            Api.addAdminInfo({
-              adminName: this.model.adminName,
-              passWord: md5(this.model.passWord),
-              isCancel: this.model.isCancel,
-              email: this.model.email,
-              mobile: this.model.mobile,
-              roleIds: roleIds
-            }).then(resp => {
-              this.$message({
-                type: resp.data.code === Api.ERR_OK ? 'success' : 'error',
-                message: resp.data.msg
+          console.log(this.model.isSuper)
+          if (this.model.isSuper == true) {
+            //非超级管理员
+            this.queryRoles.forEach((item, index, arr) => {
+              this.roleList.forEach((it, index, arr) => {
+                if (item == it.roleId && it.roleName == '超级管理员') {
+                  this.$message.error('角色不可关联到超级管理员')
+                  throw new Error("error");
+                }
               })
-              if (resp.data.code === Api.ERR_OK) {
-                this.$emit('cancelEdit', 'refresh')
-              }
             })
           }
+            console.log(valid)
+            if (valid) {
+              Api.addAdminInfo({
+                adminName: this.model.adminName,
+                passWord: md5(this.model.passWord),
+                isCancel: this.model.isCancel,
+                email: this.model.email,
+                mobile: this.model.mobile,
+                isOpen: this.model.isOpen,
+                roleIds: roleIds
+              }).then(resp => {
+                this.$message({
+                  type: resp.data.code === Api.ERR_OK ? 'success' : 'error',
+                  message: resp.data.msg
+                })
+                if (resp.data.code === Api.ERR_OK) {
+                  this.$emit('cancelEdit', 'refresh')
+                }
+              })
+            }
+
         })
       },
       _updateAdmin() {
@@ -170,6 +214,17 @@
             this.$message.error('请分配角色')
             return
           }
+          if(this.model.isSuper ==true ){
+            //非超级管理员
+            this.queryRoles.forEach((item,index,arr)=> {
+              this.roleList.forEach((it, index, arr) => {
+                if (item == it.roleId && it.roleName == '超级管理员') {
+                  this.$message.error('角色不可关联到超级管理员')
+                  throw new Error("error");
+                }
+              })
+            })
+         }
           if (valid) {
             this.model.roleIds = roleIds
             this.model.rolesDTOS = []
@@ -189,6 +244,7 @@
         this.$emit('cancelEdit')
       },
       _setModel() {
+        debugger
         var thiss = this
         thiss.queryRoles = []
         this._getRoleList()
@@ -196,9 +252,15 @@
           if (this.type === 'add') {
             thiss.model = {isCancel: '0'}
             thiss.$refs.adminForm.resetFields()
+           if(this.detail.isSuper ==true) {
+             thiss.model.isOpen = '0'
+             thiss.model.isSuper = true
+           }
+            console.log(thiss.model)
             return
           }
-          thiss.model = thiss.detail
+          thiss.model = this.detail
+          console.log(this.model)
           let list = this.model['rolesDTOS']
           if (list) {
             for (let i = 0; i < list.length; i++) {

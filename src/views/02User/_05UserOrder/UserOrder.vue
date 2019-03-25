@@ -50,6 +50,9 @@
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
+        <el-form-item label="第三方订单号">
+          <el-input size="small" v-model="queryModel.extOrderId" placeholder="请输入第三方订单号"></el-input>
+        </el-form-item>
       </el-row>
       <el-row type="flex" justify="left">
         <el-col :span="3">

@@ -180,12 +180,23 @@
         this.detail.model = JSON.parse(JSON.stringify(row))
         this.detail.type = 'update'
         this.detail.visiable = true
+        if(this.$store.state.user.user.roleName == '超级管理员' ){
+           this.detail.model.isSuper = false
+        }
+        else
+          this.detail.model.isSuper = true
       },
       _addAdminUser() {
         this.detail.title = '新增管理员信息'
         this.detail.model = {}
         this.detail.type = 'add'
         this.detail.visiable = true
+        console.log(this.$store.state.user.user)
+        if(this.$store.state.user.user.roleName == '超级管理员' ){
+          this.detail.model.isSuper = false
+        }
+        else
+          this.detail.model.isSuper = true
       },
       _refreshCache() {
         Api.refreshEntMenuCache().then(resp => {

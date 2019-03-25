@@ -54,16 +54,23 @@
           </template>
         </el-table-column>
 
-        <el-table-column fixed="right" label="操作" align="center">
-          <template slot-scope="scope">
+        <el-table-column fixed="right" label="操作" align="center" >
+          <template slot-scope="scope" >
             <el-button @click.native.prevent="_doUpdate(scope.row)"
                        v-show="isOwnUpdate"
+                       v-if="scope.row.isEdit"
                        icon="el-icon-edit" circle
                        type="primary" size="mini">
             </el-button>
             <el-button icon="el-icon-delete" size="mini" type="danger" circle
                        v-show="isOwnDelete"
+                       v-if="scope.row.isEdit"
                        @click="_doDelete(scope.row,scope.$index)">
+            </el-button>
+            <el-button icon="el-icon-search" size="mini" type="primary"   circle
+                       v-show="isOwnUpdate"
+                       v-if="!scope.row.isEdit"
+                       @click.native.prevent="_doUpdate(scope.row)">
             </el-button>
           </template>
         </el-table-column>
@@ -94,6 +101,7 @@
   import * as Api from 'api'
   import * as state from 'common/js/state-dic'
   import RoleDetail from './RoleDetail'
+  import Vue from 'vue'
   export default {
     data () {
       return {
@@ -133,6 +141,15 @@
           if (resp.data.code === Api.ERR_OK) {
             this.dataList = resp.data.data.list
             this.totalCount = resp.data.data.totalCount
+            this.dataList.forEach((item, index, arr)=> {
+              if(item.roleName == '超级管理员'){
+                item.isEdit = false
+                Vue.set(this.dataList, index, item)
+              }else {
+                item.isEdit = true
+                Vue.set(this.dataList, index, item)
+              }
+            })
           }
         })
       },
@@ -147,6 +164,8 @@
         this.detail.type = 'update'
         this.detail.model = JSON.parse(JSON.stringify(row))
         this.detail.visiable = true
+        console.log(row.isEdit)
+        this.detail.model.isEdit = !row.isEdit
       },
       _doDelete(row, index) {
         this.$confirm(`确定要删除角色 < ${row.roleName} >?`, '提示', {

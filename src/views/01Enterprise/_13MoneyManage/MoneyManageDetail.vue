@@ -73,6 +73,11 @@
         </el-form-item>
       </el-row>
       <el-row>
+        <el-form-item label="法人实名手机号 :">
+          <span v-text="detail.legalPersonPhone"></span>
+        </el-form-item>
+      </el-row>
+      <el-row>
         <el-form-item label="身份证号 :">
           <span v-text="detail.certNo"></span>
         </el-form-item>
