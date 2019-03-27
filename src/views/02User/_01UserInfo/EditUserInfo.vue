@@ -39,7 +39,7 @@
     </el-form>
     <el-row  style="padding-top: 50px" type="flex">
       <el-col :span="12" :offset="2">
-        <el-button class="role_off" size="small" @click="cancelEdit">取消</el-button>
+        <el-button class="role_off" size="small" @click="cancelEdit" >取消</el-button>
       </el-col>
       <el-col :span="2" :offset="4">
         <el-button type="primary" size="small" @click.native="editSubmit">保存</el-button>
@@ -84,6 +84,12 @@
           }
           case '4': { //台湾同胞
             if (l !== 8) {
+              return callback(new Error('证件输入不合法'))
+            }
+            break
+          }
+          case '5': { //临时身份证
+            if (l !== 18) {
               return callback(new Error('证件输入不合法'))
             }
             break

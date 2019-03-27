@@ -297,7 +297,8 @@ export const typeSalaryDetailState = {
   7: '已撤回',
   8: '已退款',
   9: '重发中',
-  10: '待发送'
+  10: '待发送',
+  11: '部分失败'
 }
 export function funSalaryDetailState () {
   return [
@@ -309,7 +310,8 @@ export function funSalaryDetailState () {
     {'key': 7, 'value': '已撤回'},
     {'key': 8, 'value': '已退款'},
     {'key': 9, 'value': '重发中'},
-    {'key': 10, 'value': '待发送'}
+    {'key': 10, 'value': '待发送'},
+    {'key': 11, 'value': '部分失败'}
   ]
 }
 
@@ -465,6 +467,12 @@ export const typeTaskWorkState = {
   3: '验收通过',
   4: '验收中'
 }
+export const typeTaskWorkReportState = {
+  1: '反馈内容',
+  2: '提交验收',
+  3: '验收通过',
+}
+
 //用户激活状态
 export const typeUserActiveState = {
   1: '已激活',
@@ -606,7 +614,8 @@ export const typeUserIdType = {
   '1': '身份证',
   '2': '护照',
   '3': '港澳居民来往内地通行证',
-  '4': '台湾居民来往大陆通行证'
+  '4': '台湾居民来往大陆通行证',
+  '5': '临时身份证'
 }
 export function funUserIdType() {
   return [

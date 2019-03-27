@@ -37,7 +37,7 @@
     </el-form>
 
     <el-table ref="ContractSignTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
-      <el-table-column width="300px" align="center" label="文件名称">
+      <el-table-column width="320px" align="center" label="文件名称">
         <template slot-scope="scope">
           <span size="small">{{scope.row.fileName }}</span>
         </template>

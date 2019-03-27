@@ -81,6 +81,7 @@
       querySearch(queryString, cb) {
         console.log(this.queryModel)
         this.businessIds = []
+        this.accountAssignInfo = {}
         this.$post(this.$url('/get_business_ids'), {salaryId: this.salary}).then(res => {
           console.log(res.data)
           res.data.forEach((item) => {

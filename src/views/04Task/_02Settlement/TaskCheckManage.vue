@@ -9,7 +9,7 @@
           <el-input size="small" clearable v-model="queryModel.mobile" placeholder="请输入手机号码"></el-input>
         </el-form-item>
         <el-form-item :span="6" label="任务名称">
-          <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务名称"></el-input>
+          <el-input size="small" clearable v-model="queryModel.taskName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
         <el-form-item :span="6" label="运营主企业">
           <el-input size="small" clearable v-model="queryModel.operationEntName" placeholder="请输入运营主企业名称"></el-input>
@@ -109,7 +109,7 @@
 
       <el-table-column fixed="right" label="操作" width="120" align="center">
         <template slot-scope="scope">
-          <el-button  @click="toSignInList(scope.row)"
+          <el-button  @click="readWorkReport(scope.row)"
                       type="primary" plain size="small">查看工作汇报
           </el-button>
         </template>
@@ -130,8 +130,8 @@
     </el-col>
     <el-dialog title="工作进展汇报" center :close-on-click-modal=false
                :visible.sync="detail.visiable"
-               width="67%">
-      <task-detail :detail="detail.taskDetail"></task-detail>
+               width="57%">
+      <task-work-report :recordId="detail.recordId"></task-work-report>
     </el-dialog>
   </div>
 </template>
@@ -141,7 +141,7 @@
   import * as Api from 'api'
   import * as filters from 'filters'
   import { ERR_OK } from '../../../api/index'
-  import TaskDetail from './TaskDetail'
+  import TaskWorkReport from './TaskWorkReport'
   export default {
     data () {
       return {
@@ -191,7 +191,7 @@
       }
     },
     components: {
-      TaskDetail
+      TaskWorkReport
     },
     computed: {
       taskWorkSource () {
@@ -231,19 +231,10 @@
           this.queryModel.salaryMonth = _salaryMonth
         })
       },
-      toSignInList(row) {
+      readWorkReport(row) {
         console.log(row)
-        if (row.signUpTotal === '0') {
-          this.open4()
-          return
-        }
-      },
-      open4() {
-        this.$notify({
-          title: '警告',
-          message: '该任务暂无用户报名！',
-          type: 'warning'
-        })
+        this.detail.visiable = true;
+        this.detail.recordId = row.recordId
       },
       pageHandelCurrentChange (val) {
         this.queryModel.pageNum = val

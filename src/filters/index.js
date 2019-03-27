@@ -172,6 +172,11 @@ export function filterTaskWorkState (key) {
     return ''
   return state.typeTaskWorkState[parseInt(key)]
 }
+export function filterTaskWorkReportState (key) {
+  if (!key)
+    return ''
+  return state.typeTaskWorkReportState[parseInt(key)]
+}
 //任务交付类型
 export function filterTaskDeliveryState (key) {
   if (!key)

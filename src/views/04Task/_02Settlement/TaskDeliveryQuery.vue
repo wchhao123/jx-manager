@@ -9,7 +9,7 @@
                     @input-select="salaryInputSelect">
         </ent-select>
         <el-form-item label="运营主企业">
-          <el-input size="small" clearable v-model="queryModel.entId" placeholder="请输入运营主企业名称"></el-input>
+          <el-input size="small" clearable v-model="queryModel.entName" placeholder="请输入运营主企业名称"></el-input>
         </el-form-item>
         <el-form-item label="任务编号">
           <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
@@ -67,7 +67,8 @@
       </el-row>
     </el-form>
 
-    <el-table ref="ContractListTable" :data="dataList" style="width: 100%" border v-loading="isLoading">
+    <el-table ref="ContractListTable" :data="dataList" style="width: 100%" border v-loading="isLoading"
+              @selection-change="handleSelectionChange">
       <!--批次号-->
       <el-table-column
         type="selection"
@@ -147,7 +148,8 @@
           pageNum: 1,
           pageSize: 10
         },
-        dataList: []
+        dataList: [],
+        fileIds: []
       }
     },
     watch: {
@@ -171,13 +173,22 @@
       }
     },
     methods: {
+      handleSelectionChange(val) {
+        debugger
+        this.fileIds = []
+        val.forEach((item, index, arr) => {
+          console.log(item)
+            this.fileIds.push(item.fileId)
+        })
+        console.log( this.fileIds)
+      },
       salaryInputSelect(entId) {
         if (entId !== undefined) {
-          this.queryModel.salaryEntId = entId
+          this.queryModel.entId = entId
         } else {
-          this.queryModel.salaryEntId = null
+          this.queryModel.entId = null
         }
-        console.log(this.queryModel.salaryEntId)
+        console.log(this.queryModel.entId)
       },
       resetDoQuery() {
         this.queryModel.pageNum = 1
@@ -185,6 +196,7 @@
       },
       doQuery () {
         this.isLoading = true
+        this.queryModel.fileIds = this.fileIds.toString()
         Api.getTaskDeliveryList(this.queryModel).then(response => {
           console.log(response)
           this.isLoading = false
@@ -212,6 +224,8 @@
           type: 'warning'
         }).then(() => { //contract_export
           this.isLoading = true
+          console.log(this.fileIds)
+          this.queryModel.fileIds = this.fileIds.toString()
           debugger
           this.$post(this.$url('/task_delivery_check'), this.queryModel).then(response => {
             console.log(response.date)

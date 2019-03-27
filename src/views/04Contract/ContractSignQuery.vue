@@ -355,26 +355,25 @@ import contractInfo from './BScontractInfo'
         }).then(() => { //contract_export
           this.isLoading = true
           this.queryModel.signIds = this.multipleSelection.toString()
-          this.$post(this.$url('/contract_check'), this.queryModel).then(response => {
+          this.$post(this.$url('/contract_hi check'), this.queryModel).then(response => {
             console.log(response.date)
-            debugger
-            this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
-              this.isLoading = false
-              if (!response) {
-                return
-              }
-              let blob = new Blob([response])
-              let objectUrl = URL.createObjectURL(blob)
-              let link = document.createElement('a')
-              link.style.display = 'none'
-              link.href = objectUrl
-              link.setAttribute('download', '合同文件.zip')
-              document.body.appendChild(link)
-              link.click()
-            }, err => {
-              this.isLoading = false
-              console.log(err)
-            })
+            // this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
+            //   this.isLoading = false
+            //   if (!response) {
+            //     return
+            //   }
+            //   let blob = new Blob([response])
+            //   let objectUrl = URL.createObjectURL(blob)
+            //   let link = document.createElement('a')
+            //   link.style.display = 'none'
+            //   link.href = objectUrl
+            //   link.setAttribute('download', '合同文件.zip')
+            //   document.body.appendChild(link)
+            //   link.click()
+            // }, err => {
+            //   this.isLoading = false
+            //   console.log(err)
+            // })
           }, err => {
             this.isLoading = false
             console.log(err)

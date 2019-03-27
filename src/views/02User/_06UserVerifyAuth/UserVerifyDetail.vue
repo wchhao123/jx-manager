@@ -33,10 +33,10 @@
       </el-row>
       <el-row v-show="!isShowBigImg && detail.verifyState === '0'" style="margin-top: 40px">
         <el-col :span="12" align="center">
-          <el-button size="mini" @click="_doVerifyAuth(3)">拒绝</el-button>
+          <el-button size="mini" @click="_doVerifyAuth(3)" :disabled="this.disabled">拒绝</el-button>
         </el-col>
         <el-col :span="12" align="center">
-          <el-button size="mini" type="primary" @click.native="_doVerifyAuth(1)">同意</el-button>
+          <el-button size="mini" type="primary" @click.native="_doVerifyAuth(1)" :disabled="this.disabled">同意</el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -55,6 +55,7 @@
     data () {
       return {
         isLoading: false,
+        disabled : false,
         style: {
           inputspan: 14
         },
@@ -93,6 +94,8 @@
         })
       },
       _doVerifyAuth (state) {
+        debugger
+        this.disabled = true
         if (state === 3) {
           this.$prompt('', {
             confirmButtonText: '确定',
@@ -104,6 +107,7 @@
             this.model.refuseReason = value
             this.submitVerifyAuth(state)
           }).catch(() => {
+            this.disabled = false
             this.$message({
               type: 'info',
               message: '操作已取消'
@@ -114,6 +118,7 @@
         }
       },
       submitVerifyAuth(state) {
+        this.disabled = false
         Api.doUserRealNameVerify({
           userId: this.detail.userId,
           verifyState: state,

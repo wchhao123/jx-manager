@@ -302,6 +302,9 @@
             this.totalCount = response.data.data.totalCount
           }
           this.queryModel.salaryMonth = _salaryMonth
+        },err=>{
+          this.isLoading = false
+          console.log(err)
         })
       },
       doExportSalaryList () {

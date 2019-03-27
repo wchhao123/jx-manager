@@ -43,6 +43,14 @@ export function getTaskCheckList (param) {
     params: param
   })
 }
+
+export function getTaskWorkReport (param) {
+  return fetch({
+    url: http.prefix + '/table/task/workreport',
+    method: http.post,
+    params: param
+  })
+}
 export function getTaskDeliveryList (param) {
   return fetch({
     url: http.prefix + '/table/task/gettaskenclosure',
