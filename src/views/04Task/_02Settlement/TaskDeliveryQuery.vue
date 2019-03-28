@@ -196,7 +196,7 @@
       },
       doQuery () {
         this.isLoading = true
-        this.queryModel.fileIds = this.fileIds.toString()
+        this.queryModel.fileIds = []
         Api.getTaskDeliveryList(this.queryModel).then(response => {
           console.log(response)
           this.isLoading = false
@@ -226,14 +226,17 @@
           this.isLoading = true
           console.log(this.fileIds)
           this.queryModel.fileIds = this.fileIds.toString()
-          debugger
+          this.queryModel.pageNum = 1
+          this.queryModel.pageSize = 10
           this.$post(this.$url('/task_delivery_check'), this.queryModel).then(response => {
             console.log(response.date)
+         //   this.queryModel.fileIds = []
           }, err => {
             this.isLoading = false
             console.log(err)
           })
         }).catch(() => {
+      //    this.queryModel.fileIds = []
           this.$message({
             type: 'info',
             message: '已取消'

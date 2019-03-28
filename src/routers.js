@@ -100,7 +100,7 @@ export default new Router({
         {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算批次详情查询'},
         {path: '/task_and_contract', component: TaskAndContract, name: '合同任务列表'},
         {path: '/task_check', component: TaskCheckManage, name: '验收管理'},
-        {path: '/task_delivery', component: TaskDeliveryQuery, name: '验收管理'}
+        {path: '/task_delivery', component: TaskDeliveryQuery, name: '验收交付文件管理'}
       ]
     },
     {

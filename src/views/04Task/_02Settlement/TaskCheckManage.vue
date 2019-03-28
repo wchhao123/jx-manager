@@ -131,7 +131,7 @@
     <el-dialog title="工作进展汇报" center :close-on-click-modal=false
                :visible.sync="detail.visiable"
                width="57%">
-      <task-work-report :recordId="detail.recordId"></task-work-report>
+      <task-work-report :recordId="detail.recordId" @Close="closeDiaLog"></task-work-report>
     </el-dialog>
   </div>
 </template>
@@ -230,6 +230,9 @@
           }
           this.queryModel.salaryMonth = _salaryMonth
         })
+      },
+      closeDiaLog(){
+        this.detail.visiable = false
       },
       readWorkReport(row) {
         console.log(row)
