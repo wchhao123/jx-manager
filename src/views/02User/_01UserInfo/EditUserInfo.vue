@@ -119,7 +119,11 @@
     },
     computed: {
       _IDtypeResource () {
-        return state.funUserIdType()
+        let idtype = state.funUserIdType()
+        let typeList = JSON.parse(JSON.stringify(idtype))
+        console.log(typeList)
+        delete  typeList[4]
+      return  state.funUserIdType()
       },
       _cannotEdit() {
         if (this.model.isVerify === '1' || this.model.isVerify === '2') {
@@ -132,6 +136,7 @@
       'detail': {
         immediate: true,
         handler: function (val) {
+          console.log(val)
           this.detail = val
           setTimeout(() => {
             this.model = JSON.parse(JSON.stringify(this.detail))

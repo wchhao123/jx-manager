@@ -279,6 +279,11 @@
         Api.getUserResume(this.get).then(response => {
           this.isLoading = false
           if (response.data.code === ERR_OK) {
+            if(response.data.data == null){
+              this.$message.error('该用户暂未填写个人简历')
+              return
+            }
+            this.detail.visible = true
             this.detail.model = response.data.data
             this.detail.model.labels = []
               if (this.detail.model.label !== undefined) {
@@ -321,7 +326,6 @@
       },
       getUserResume(row) {
         this.get.userId = row.userId
-        this.detail.visible = true
         this.doDetail()
       },
       pageHandelCurrentChange (val) {

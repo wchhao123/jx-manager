@@ -2,20 +2,30 @@
   <div>
     <el-row>
       <el-table :data="dataList" style="width: 250px" v-loading="isLoading">
-        <el-table-column align="center" label="用户姓名" width="120px">
+        <el-table-column align="center" label="用户姓名" width="100px">
           <template slot-scope="scope">
             <span size="small">{{scope.row.userName}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="手机号" width="180px" :show-overflow-tooltip="true">
+        <el-table-column align="center" label="手机号" width="160px" :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span size="small">{{scope.row.mobile }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="合同名称" width="160px" :show-overflow-tooltip="true" v-if="this.isTask">
+          <template slot-scope="scope">
+            <span size="small">{{scope.row.contractName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="企业名称" width="160px" :show-overflow-tooltip="true"  v-if="this.isTask">
+          <template slot-scope="scope">
+            <span size="small">{{scope.row.entName }}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="状态" >
           <template slot-scope="scope">
             <span size="small" v-if="scope.row.isRepeatSend==='0'">{{'可发送'}}</span>
-            <span size="small" v-if="scope.row.isRepeatSend==='1'">{{'已给该用户发送合同,不可重复发送'}}</span>
+            <span size="small" v-if="scope.row.isRepeatSend==='1'" style="color: red">{{'已给该用户发送合同,不可重复发送'}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -45,8 +55,12 @@
           if (this.detail != '') {
           this.dataList = JSON.parse(this.detail)
           console.log(this.dataList)
-            console.log(typeof (this.dataList))
+          if(this.dataList[0].taskId != null&&this.dataList[0].taskId != ''){
+            this.isTask = false
+          }else
+            this.isTask = true
           }
+          console.log(this.isTask)
         }
       }
     },
@@ -56,8 +70,8 @@
         queryUrl: '/send_task_contract',
         dataList: [],
         contractSignDetails: [],
-        details: ''
-
+        details: '',
+        isTask: true
       }
     },
       methods: {
@@ -82,7 +96,7 @@
           let formData = new FormData()
           formData.append('contractSignDetails', this.details)
           this.isLoading = true
-          axios.post('https://admin.99payroll.cn/jx-manage/table/task/sendtaskcontract', formData, config).then(res => {
+          axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/sendtaskcontract', formData, config).then(res => {
             this.$message({
               type: res.data.code === Api.ERR_OK ? 'success' : 'error',
               message: res.data.msg

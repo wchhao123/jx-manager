@@ -195,6 +195,15 @@
           <span size="small">{{scope.row.createTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
+      <el-table-column width="170"  align="center" label="操作">
+        <template slot-scope="scope">
+          <el-button @click.native.prevent="rollBack(scope.row)"
+                     v-if="(scope.row.salaryType == '1'||scope.row.salaryType == '3')&&scope.row.salaryState=='1'&&scope.row.isActive=='0'"
+                     v-else-if="scope.row.salaryType == '2'&&scope.row.state =='0'"
+                     type="primary" plain size="small">撤回
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="block">
@@ -418,6 +427,27 @@
       pageChange (val) {
         console.log('pageChange')
         console.log(val)
+      },
+      rollBack(val){
+        if(val.salaryType == '1'){
+          this.$confirm('确认撤回该笔工资?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            console.log('撤回工资')
+          })
+        }
+        if(val.salaryType == '2'){
+          this.$confirm('确认撤回工资条?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            console.log('撤回工资条')
+          })
+        }
+
       }
     },
     components: {

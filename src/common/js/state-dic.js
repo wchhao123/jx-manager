@@ -138,6 +138,7 @@ export function funEntMoneyManageAuthState() {
 const typeEntTransfer = {
   1: '工资发放',
   2: '工资代发充值',
+  3: '工资发放退款',
   7: '工资发放撤回',
   8: '企业垫资还款',
   12: '工资发放',
@@ -437,12 +438,12 @@ export function funTaskListState () {
 
 export function funTaskDeliveryType () {
   return [
-    {'key': 1, 'value': '批量验收附件'},
+    {'key': 1, 'value': '验收附件'},
     {'key': 2, 'value': '任务交付附件'},
   ]
 }
 export const typeTaskDelivery = {
-  1: '批量验收附件',
+  1: '验收附件',
   2: '任务交付附件',
 
 }

@@ -75,11 +75,11 @@
 
       <el-row type="flex" justify="left">
         <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="exportList">导出详情
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" :disabled="isLoading" @click="exportList">导出详情
           </el-button>
         </el-col>
         <el-col :span="3">
-        <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="downloadContract">下载合同
+        <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="downloadContract">下载合同
         </el-button>
       </el-col>
         <el-col :span="3">
@@ -91,7 +91,7 @@
           </el-button>
         </el-col>
         <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-check" style="margin-bottom: 10px" @click="resetDoQuery">查询
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" @click="resetDoQuery">查询
           </el-button>
         </el-col>
       </el-row>
@@ -223,6 +223,7 @@
         visible: false,
         totalCount: 0,
         selectDate: '',
+        isTask: true,
         queryModel: {
           pageNum: 1,
           pageSize: 10,
@@ -406,7 +407,7 @@
         }
         let formData = new FormData()
         formData.append('contractSignDetails', this.contractSignDetails)
-        axios.post('https://admin.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
+        axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
             this.isLoading = false
             this.confirm.visiable = true
             this.confirm.contractSignDetails = JSON.stringify(res.data.data)

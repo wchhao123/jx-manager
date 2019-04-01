@@ -132,6 +132,7 @@
         this.$export(this.$url('/download'), {
           fileUrl: data.fileUrl
         }).then(response => {
+          console.log(response)
           this.isLoading = false
           if (!response) {
             return

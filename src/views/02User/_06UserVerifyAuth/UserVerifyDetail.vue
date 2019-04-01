@@ -94,7 +94,6 @@
         })
       },
       _doVerifyAuth (state) {
-        debugger
         this.disabled = true
         if (state === 3) {
           this.$prompt('', {
@@ -118,17 +117,18 @@
         }
       },
       submitVerifyAuth(state) {
-        this.disabled = false
         Api.doUserRealNameVerify({
           userId: this.detail.userId,
           verifyState: state,
           refuseReason: this.model.refuseReason
         }).then(resp => {
+
           this.$message({
             type: resp.data.code === ERR_OK ? 'success' : 'error',
             message: resp.data.msg
           })
           if (resp.data.code === ERR_OK) {
+            this.disabled = false
             this.$emit('cancelEdit')
           }
         })

@@ -42,6 +42,7 @@ export const contractState = {
   '/task_delivery_check': '/table/task/exportcheck',
   '/export_task_contract': '/table/task/export/taskandcontract',
   '/rollback_contract': '/table/task/rollback/contract',
+  '/send_signremind': '/table/contract/send/signremind',
   '/send_task_contract': '/table/task/sendtaskcontract',
   '/confirm_send_again': '/table/task/confirmsendagain',
   '/add_agent': '/entagent/add',
