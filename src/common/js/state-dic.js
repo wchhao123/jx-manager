@@ -562,7 +562,8 @@ export function funUserTradeType () {
 export const typeUserOrderType = {
   '01': '提现',
   '02': '转账 (出)',
-  '03': '转账 (入)'
+  '03': '转账 (入)',
+  '08': '提现'
 }
 export function funUserOrderType () {
   return [

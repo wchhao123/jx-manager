@@ -190,6 +190,22 @@ export function getSalaryDetailList (param) {
     params: param
   })
 }
+//撤回未激活工资
+export function rollBackSalary (param) {
+  return fetch({
+    url: http.prefix + '/table/salary/salary/withdraw',
+    method: http.post,
+    params: param
+  })
+}
+//撤回未确认工资条
+export function rollBackSalarySlip (param) {
+  return fetch({
+    url: http.prefix + '/table/salary/salaryslip/recordwithdraw',
+    method: http.post,
+    params: param
+  })
+}
 
 // 发薪批次导出
 export function exportSalaryList (param) {

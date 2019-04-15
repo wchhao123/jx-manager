@@ -130,7 +130,7 @@
     </el-col>
     <el-dialog title="工作进展汇报" center :close-on-click-modal=false
                :visible.sync="detail.visiable"
-               width="57%">
+               width="80%">
       <task-work-report :recordId="detail.recordId" @Close="closeDiaLog"></task-work-report>
     </el-dialog>
   </div>

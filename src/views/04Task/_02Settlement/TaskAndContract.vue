@@ -210,7 +210,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  import { ERR_OK } from '../../../api/index'
+  import { ERR_OK, http } from '../../../api/index'
   import axios from 'axios'
   import ConfirmSend from './confirmSend'
   export default {
@@ -407,7 +407,7 @@
         }
         let formData = new FormData()
         formData.append('contractSignDetails', this.contractSignDetails)
-        axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
+        axios.post(http.prefix+'/table/task/confirmsendagain', formData, config).then(res => {
             this.isLoading = false
             this.confirm.visiable = true
             this.confirm.contractSignDetails = JSON.stringify(res.data.data)

@@ -25,6 +25,7 @@
             <el-option
               v-for="item in _IDtypeResource"
               :key="item.key"
+              v-show="item.key=='5'?false:true"
               :label="item.value"
               :value="item.key">
             </el-option>
@@ -120,10 +121,7 @@
     computed: {
       _IDtypeResource () {
         let idtype = state.funUserIdType()
-        let typeList = JSON.parse(JSON.stringify(idtype))
-        console.log(typeList)
-        delete  typeList[4]
-      return  state.funUserIdType()
+        return idtype
       },
       _cannotEdit() {
         if (this.model.isVerify === '1' || this.model.isVerify === '2') {

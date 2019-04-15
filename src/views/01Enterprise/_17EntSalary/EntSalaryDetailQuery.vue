@@ -142,14 +142,14 @@
       </el-table-column>
 
       <!--发薪企业-->
-      <el-table-column  align="center" label="发薪企业">
+      <el-table-column  align="center" label="发薪企业" width="130">
         <template slot-scope="scope">
           <span size="small" v-text="scope.row.salaryEntName"></span>
         </template>
       </el-table-column>
 
       <!--运营主企业-->
-      <el-table-column  align="center" label="运营主企业">
+      <el-table-column  align="center" label="运营主企业" width="130">
         <template slot-scope="scope">
           <span size="small">{{scope.row.operationEntName}}</span>
         </template>
@@ -190,17 +190,17 @@
       <!--</el-table-column>-->
 
       <!--提交时间-->
-      <el-table-column width="170"  align="center" label="提交时间">
+      <el-table-column width="150"  align="center" label="提交时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.createTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="170"  align="center" label="操作">
+      <el-table-column width="100"  align="center" label="操作">
         <template slot-scope="scope">
           <el-button @click.native.prevent="rollBack(scope.row)"
-                     v-if="(scope.row.salaryType == '1'||scope.row.salaryType == '3')&&scope.row.salaryState=='1'&&scope.row.isActive=='0'"
-                     v-else-if="scope.row.salaryType == '2'&&scope.row.state =='0'"
-                     type="primary" plain size="small">撤回
+ v-if="((scope.row.salaryType == '1'||scope.row.salaryType == '3')&&scope.row.salaryState=='1'&&scope.row.isActive=='0')
+       ||(scope.row.salaryType == '2'&&scope.row.state =='0'&&scope.row.salaryState == '1')"
+          type="primary" plain size="small">撤回
           </el-button>
         </template>
       </el-table-column>
@@ -270,7 +270,7 @@
               picker.$emit('pick', [start, end])
             }
           }, {
-            text: '最近三个月',
+                text: '最近三个月',
             onClick (picker) {
               const end = new Date()
               const start = new Date()
@@ -429,13 +429,30 @@
         console.log(val)
       },
       rollBack(val){
-        if(val.salaryType == '1'){
+        if(val.salaryType == '1'||val.salaryType == '3'){
           this.$confirm('确认撤回该笔工资?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
             console.log('撤回工资')
+            this.isLoading = true
+            this.queryModel.salaryDetailId = val.salaryDetailId
+            Api.rollBackSalary(this.queryModel).then(resp => {
+              console.log(resp)
+              this.isLoading = false
+              this.$message({
+                type: resp.data.code === Api.ERR_OK ? 'success' : 'error',
+                message: resp.data.msg
+              })
+              this.queryModel.salaryDetailId =''
+              this.doQuery()
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+              this.queryModel.salaryDetailId =''
+              this.doQuery()
+            })
           })
         }
         if(val.salaryType == '2'){
@@ -445,6 +462,22 @@
             type: 'warning'
           }).then(() => {
             console.log('撤回工资条')
+            this.isLoading = true
+            this.queryModel.salaryDetailId = val.salaryDetailId
+            Api.rollBackSalarySlip(this.queryModel).then(resp => {
+              this.isLoading = false
+              this.$message({
+                type: resp.data.code === Api.ERR_OK ? 'success' : 'error',
+                message: resp.data.msg
+              })
+              this.queryModel.salaryDetailId =''
+              this.doQuery()
+            }, err => {
+              this.isLoading = false
+              console.log(err)
+              this.queryModel.salaryDetailId =''
+              this.doQuery()
+            })
           })
         }
 

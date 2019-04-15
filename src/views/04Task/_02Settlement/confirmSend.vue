@@ -42,6 +42,7 @@
 <script type="text/ecmascript-6">
   import axios from 'axios'
   import * as Api from 'api'
+  import { http } from '../../../api/index'
   export default {
     props: {
       detail: {}
@@ -96,7 +97,7 @@
           let formData = new FormData()
           formData.append('contractSignDetails', this.details)
           this.isLoading = true
-          axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/sendtaskcontract', formData, config).then(res => {
+          axios.post(http.prefix+ '/table/task/sendtaskcontract', formData, config).then(res => {
             this.$message({
               type: res.data.code === Api.ERR_OK ? 'success' : 'error',
               message: res.data.msg

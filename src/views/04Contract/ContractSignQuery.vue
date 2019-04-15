@@ -69,28 +69,28 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
-          <el-col :span="6">
+      <el-row type="flex" justify="left">
+          <el-col :span="3">
             <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出明细
             </el-button>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="3">
             <el-button size="small" type="danger" icon="el-icon-download" style="margin-bottom: 10px" @click="doExportSalaryList" >下載合同
             </el-button>
           </el-col>
-        <el-col :span="6">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" @click="rollBack" >撤销合同
+        <el-col :span="3">
+          <el-button size="small" type="danger"  icon="el-icon-check"  style="margin-bottom: 10px" @click="rollBack" >撤销合同
           </el-button>
         </el-col>
-        <el-col :span="6">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" @click="sendAgain" >重新发送
+        <el-col :span="3">
+          <el-button size="small" type="danger"   icon="el-icon-check" style="margin-bottom: 10px" @click="sendAgain" >重新发送
           </el-button>
         </el-col>
-        <el-col :span="6">
-          <el-button size="small" type="danger"  style="margin-bottom: 10px" @click="signRemind" >签约提醒
+        <el-col :span="3">
+          <el-button size="small" type="danger"  icon="el-icon-check"  style="margin-bottom: 10px" @click="signRemind" >签约提醒
           </el-button>
         </el-col>
-          <el-col :span="6">
+          <el-col :span="3">
             <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
             </el-button>
           </el-col>
@@ -211,6 +211,7 @@
 import contractInfo from './BScontractInfo'
 import confirmSend from 'views/04Task/_02Settlement/confirmSend.vue'
 import axios from 'axios'
+import { http } from '../../api/index'
   export default {
     data () {
       return {
@@ -378,7 +379,7 @@ import axios from 'axios'
         }).then(() => { //contract_export
           this.isLoading = true
           this.queryModel.signIds = this.multipleSelection.toString()
-          this.$post(this.$url('/contract_hi check'), this.queryModel).then(response => {
+          this.$post(this.$url('/contract_check'), this.queryModel).then(response => {
             console.log(response.date)
             // this.$export(this.$url('/contract_export'), this.queryModel).then(response => {
             //   this.isLoading = false
@@ -445,7 +446,7 @@ import axios from 'axios'
             })
             this.isLoading = false
             this.queryModel.signIds = ''
-            this.resetDoQuery()
+            this.doQuery()
           }, err => {
             this.$message({
               type: 'success',
@@ -453,7 +454,7 @@ import axios from 'axios'
             })
             this.isLoading = false
             this.queryModel.signIds = ''
-            this.resetDoQuery()
+            this.doQuery()
             console.log(err)
           })
         }).catch(() => {
@@ -498,7 +499,7 @@ import axios from 'axios'
        // config.headers['Access-Control-Allow-Origin'] = '*'
         let formData = new FormData()
         formData.append('contractSignDetails', this.contractSignDetails)
-        axios.post('http://jxtest.99payroll.cn/jx-manage/table/task/confirmsendagain', formData, config).then(res => {
+        axios.post(http.prefix+'/table/task/confirmsendagain', formData, config).then(res => {
           this.isLoading = false
           this.confirm.visiable = true
           this.confirm.contractSignDetails = JSON.stringify(res.data.data)
