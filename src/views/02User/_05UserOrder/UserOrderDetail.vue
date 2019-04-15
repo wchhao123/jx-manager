@@ -39,11 +39,12 @@
         </el-form-item>
       </el-row>
 
-      <el-row v-show="detail.orderType=='08'">
+      <el-row v-show="detail.orderType=='08'||detail.orderType=='01'">
         <el-form-item label="提现方式:">
-          <span>{{'预约提现'}}</span>
+          <span>{{detail.orderType|filterWithdrawType}}</span>
         </el-form-item>
       </el-row>
+
 
       <span class="item-title">用户信息</span>
       <el-row type="flex">
@@ -116,7 +117,7 @@
         this.isLoading = true
         Api.getUserOrderDetail({
           orderId: this.model.orderId,
-          orderType: this.model.orderType=='08'? this.model.orderType='01':this.model.orderType
+          orderType: this.model.orderType=='08'?this.model.orderType='01':this.model.orderType
         }).then(resp => {
           this.isLoading = false
           if (resp.data.code === Api.ERR_OK) {

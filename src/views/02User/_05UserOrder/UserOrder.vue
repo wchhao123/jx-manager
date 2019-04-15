@@ -88,7 +88,7 @@
       </el-table-column>
 
       <!--用户姓名-->
-      <el-table-column align="center" width="120" label="用户姓名">
+      <el-table-column align="center" width="100" label="用户姓名">
         <template slot-scope="scope">
           <span size="small">{{scope.row.userName}}</span>
         </template>
@@ -102,7 +102,7 @@
       </el-table-column>
 
       <!--订单类型-->
-      <el-table-column align="center" width="50" label="订单类型">
+      <el-table-column align="center" width="100" label="订单类型">
         <template slot-scope="scope">
           <span size="small">{{scope.row.orderType | filterUserOrderType}}</span>
         </template>

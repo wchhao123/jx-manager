@@ -245,12 +245,19 @@ export function filterUserOrderType (key) {
     return ''
   return state.typeUserOrderType[key.toString()]
 }
+
+export function filterWithdrawType (key) {
+  if (!key)
+    return ''
+  return state.typeWithdrawType[key.toString()]
+}
 // 用户订单状态
 export function filterUserOrderState (key) {
   if (!key)
     return ''
   return state.typeUserOrderState[key.toString()]
 }
+
 
 // 用户实名认证审核状态
 export function filterUserVerifyAuthState(key) {
