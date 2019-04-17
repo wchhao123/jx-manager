@@ -568,9 +568,10 @@ export const typeUserOrderType = {
 export function funUserOrderType () {
   return [
     {'key': '01', 'value': '提现（手动提现）'},
+    {'key': '08', 'value': '提现（预约提现）'},
     {'key': '02', 'value': '转账 (出)'},
-    {'key': '03', 'value': '转账 (入)'},
-    {'key': '08', 'value': '提现（预约提现）'}
+    {'key': '03', 'value': '转账 (入)'}
+
   ]
 }
 
