@@ -83,3 +83,11 @@ export function getTaskDetailExport (param) {
     responseType: http.responseType.arraybuffer
   })
 }
+
+export function taskSettleWithdraw (param) {
+  return fetch({
+    url: http.prefix + '/table/task/record/withdraw',
+    method: http.post,
+    params: param
+  })
+}

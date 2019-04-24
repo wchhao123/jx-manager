@@ -321,7 +321,8 @@ export const typeTaskState = {
   0: '发放失败',
   3: '待付款',
   4: '订单关闭',
-  5: '发放中'
+  5: '发放中',
+  7: '有撤回'
 }
 export function funTaskState () {
   return [
@@ -329,7 +330,8 @@ export function funTaskState () {
     {'key': 0, 'value': '发放失败'},
     {'key': 3, 'value': '待付款'},
     {'key': 4, 'value': '订单关闭'},
-    {'key': 5, 'value': '发放中'}
+    {'key': 5, 'value': '发放中'},
+    {'key': 7, 'value': '有撤回'}
   ]
 }
 export const contractType = {

@@ -137,6 +137,10 @@ let menu = {
           'vueUrl': 'system_business_manage'
         }
       ]
+    },{
+      'name': '财务报表',
+      'id': '30001',
+      'class': 'el-icon-setting',
     }
   ]
 }

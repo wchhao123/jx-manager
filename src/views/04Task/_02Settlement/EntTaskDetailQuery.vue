@@ -165,6 +165,14 @@
           <span size="small">{{scope.row.createTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
+      <el-table-column fixed="right" label="操作" width="120" align="center"  >
+        <template slot-scope="scope" >
+          <el-button  @click="refundSettle(scope.row.salaryDetailId)"
+                      v-if="scope.row.payType=='2' && scope.row.isActive=='0' && scope.row.salaryState=='1'  "
+                      type="primary" plain size="small">撤回
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="block">
@@ -345,6 +353,34 @@
           this.detail.model = val
           this.detail.visiable = true
         }
+      },
+      refundSettle (val) {
+        this.$confirm('确认撤回该笔任务结算费用?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.queryModel.salaryDetailId = val
+          this.isLoading = true
+        Api.taskSettleWithdraw(this.queryModel).then(response => {
+          this.isLoading = false
+          if (response.code === ERR_OK) {
+            this.$message.success("撤回成功！")
+          }
+          this.queryModel.salaryDetailId = ''
+          this.doQuery()
+        },err=>{
+          this.isLoading = false
+          this.$message.error("撤回失败！")
+          this.queryModel.salaryDetailId = ''
+          this.doQuery()
+        })
+       }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          })
+        })
       },
       pageHandelCurrentChange (val) {
         this.queryModel.pageNum = val

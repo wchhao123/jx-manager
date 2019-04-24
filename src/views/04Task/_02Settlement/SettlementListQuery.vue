@@ -140,6 +140,12 @@
           <span size="small">{{scope.row.salaryState | filterTaskState()}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="撤回总额">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.refundAmount}}</span>
+        </template>
+      </el-table-column>
+
 
       <!--提交时间-->
       <el-table-column width="170" align="center" label="结算时间">

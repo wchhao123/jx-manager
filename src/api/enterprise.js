@@ -261,3 +261,20 @@ export function getContractSignExport (param) {
     responseType: http.responseType.arraybuffer
   })
 }
+
+export function getEntStatisticsInfo (param) {
+  return fetch({
+    url: http.prefix + '/ent/statistics/getinfo',
+    method: http.get,
+    params: param,
+  })
+}
+
+export function getEntStatisticsInfoExport (param) {
+  return fetch({
+    url: http.prefix + '/ent/statistics/export',
+    method: http.get,
+    params: param,
+    responseType: http.responseType.arraybuffer
+  })
+}

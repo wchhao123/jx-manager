@@ -25,6 +25,7 @@ import BusinessListQuery from 'views/03System/_05BusinessManage/BusinessListQuer
 import TaskAndContract from 'views/04Task/_02Settlement/TaskAndContract.vue'
 import  TaskCheckManage from 'views/04Task/_02Settlement/TaskCheckManage.vue'
 import TaskDeliveryQuery from 'views/04Task/_02Settlement/TaskDeliveryQuery.vue'
+import  EntStatisticsQuery from 'views/06Finance/EntStatisticsQuery.vue'
 //import UserResume from 'views/04Task/_02Settlement/UserResume.vue'
 
 import NOFOUND from 'views/404'
@@ -139,6 +140,15 @@ export default new Router({
       iconCls: 'el-icon-message',
       children: [
         {path: '/download_list', component: DownLoad, name: '下载管理'}
+      ]
+    },
+    {
+      path: '/',
+      component: Home,
+      name: '财务报表',
+      iconCls: 'el-icon-message',
+      children: [
+        {path: '/ent_statistics_info', component: EntStatisticsQuery, name: '企业日余额报表'}
       ]
     }
   ]

@@ -22,9 +22,9 @@
           <span>{{detail.orderState | filterUserOrderState}}</span>
         </el-form-item>
       </el-row>
-      <el-row v-show="detail.errorMsg">
+      <el-row v-show="detail.errorMsg" style="width: 800px">
         <el-form-item label="退款原因:">
-          <span>{{detail.errorMsg}}</span>
+          <span >{{detail.errorMsg}}</span>
         </el-form-item>
       </el-row>
       <el-row type="flex" v-show="detail.toUserMobile">
