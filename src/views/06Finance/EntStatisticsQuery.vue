@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" :rules="rules"  ref="entStatisticsForm">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline"   ref="entStatisticsForm">
       <el-row type="flex">
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="salaryInputSelect">
@@ -101,7 +101,7 @@
     data () {
       return {
         isLoading: false,
-        selectDate: '',
+        selectDate: [new Date().setDate(new Date().getDate() - 31),new Date()],
         tableSpan: 2,
         totalCount: 0,
         inputDataList: {
@@ -140,24 +140,9 @@
             }
           }]
         },
-        rules: {
-          'selectDate':[
-            {required: true, message: '请选择统计时间', trigger: 'blur'},
-            ]
-        }
       }
     },
     computed: {
-    },
-    watch: {
-      'selectDate': {
-        immediate: true,
-        handler: function (val) {
-          setTimeout(() => {
-            this.$refs['entStatisticsForm'].resetFields()
-          }, 50)
-        }
-      }
     },
     methods: {
       salaryInputSelect (entId) {
