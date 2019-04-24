@@ -1,8 +1,7 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" rules="rules" >
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" :rules="rules"  ref="entStatisticsForm">
       <el-row type="flex">
-
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
@@ -34,7 +33,7 @@
       </el-row>
     </el-form>
 
-    <el-table ref="entSignAuditTable" :data="entSalaryList" style="width: 100%" border v-loading="isLoading">
+    <el-table :data="entSalaryList" style="width: 100%" border v-loading="isLoading">
 
       <!--批次号-->
       <el-table-column align="center" label="企业编号" fixed>
@@ -142,13 +141,23 @@
           }]
         },
         rules: {
-          'selectDate': [
+          'selectDate':[
             {required: true, message: '请选择统计时间', trigger: 'blur'},
-            {validator: Validator.validateName, trigger: 'blur'}],
+            ]
         }
       }
     },
     computed: {
+    },
+    watch: {
+      'selectDate': {
+        immediate: true,
+        handler: function (val) {
+          setTimeout(() => {
+            this.$refs['entStatisticsForm'].resetFields()
+          }, 50)
+        }
+      }
     },
     methods: {
       salaryInputSelect (entId) {
