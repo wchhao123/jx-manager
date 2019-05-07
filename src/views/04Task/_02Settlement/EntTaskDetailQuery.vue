@@ -165,7 +165,7 @@
           <span size="small">{{scope.row.createTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="120" align="center"  >
+      <el-table-column label="操作" width="120" align="center"  >
         <template slot-scope="scope" >
           <el-button  @click="refundSettle(scope.row.salaryDetailId)"
                       v-if="scope.row.payType=='2' && scope.row.isActive=='0' && scope.row.salaryState=='1'  "

@@ -39,7 +39,7 @@
         </el-form-item>
       </el-row>
 
-      <el-row v-show="detail.orderType=='08'||detail.orderType=='01'">
+      <el-row v-show="detail.orderType=='08'||detail.orderType=='01'||detail.orderType=='09'">
         <el-form-item label="提现方式:">
           <span>{{detail.orderType|filterWithdrawType}}</span>
         </el-form-item>
@@ -60,6 +60,9 @@
       <el-row type="flex">
         <el-form-item label="提现银行卡号:" v-show="detail.bankNo">
           <span>{{detail.bankNo}}</span>
+        </el-form-item>
+        <el-form-item label="提现支付宝账号:" v-show="detail.alipayNo">
+          <span>{{detail.alipayNo}}</span>
         </el-form-item>
 
         <el-form-item label="证件号:">

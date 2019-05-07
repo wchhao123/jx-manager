@@ -506,15 +506,17 @@ export function funUserVerifyState () {
 
 // 用户业务规则状态
 export const typeUserBusinessRule = {
-  1: '提现',
+  1: '提现到银行卡',
   2: '工资发放到银行卡',
-  3: '小额提现'
+  3: '小额提现',
+  4: '提现到支付宝'
 }
 export function funUserBusinessRuleType () {
   return [
-    {'key': '1', 'value': '提现'},
+    {'key': '1', 'value': '提现到银行卡'},
     {'key': '2', 'value': '工资发放到银行卡'},
-    {'key': '3', 'value': '小额提现'}
+    {'key': '3', 'value': '小额提现'},
+    {'key': '4', 'value': '提现到支付宝'}
   ]
 }
 
@@ -562,15 +564,17 @@ export function funUserTradeType () {
 
 // 用户订单类型
 export const typeUserOrderType = {
-  '01': '提现（手动提现）',
+  '01': '提现至银行卡（手动提现）',
   '02': '转账 (出)',
   '03': '转账 (入)',
-  '08': '提现（预约提现）'
+  '08': '提现至银行卡（预约提现）',
+  '09': '提现至支付宝（手动提现）'
 }
 export function funUserOrderType () {
   return [
-    {'key': '01', 'value': '提现（手动提现）'},
-    {'key': '08', 'value': '提现（预约提现）'},
+    {'key': '01', 'value': '提现至银行卡（手动提现）'},
+    {'key': '09', 'value': '提现至支付宝（手动提现）'},
+    {'key': '08', 'value': '提现至银行卡（预约提现）'},
     {'key': '02', 'value': '转账 (出)'},
     {'key': '03', 'value': '转账 (入)'}
 
@@ -589,7 +593,8 @@ export const typeUserOrderState = {
 }
 export const typeWithdrawType = {
   '01': '手动提现',
-  '08': '预约提现'
+  '08': '预约提现',
+  '09': '手动提现'
 }
 export function funUserOrderState () {
   return [
@@ -647,7 +652,11 @@ export const typeSystemErrorType = {
   '10': '充值订单异常',
   '11': '任务结算异常',
   '12': '发薪更新状态异常',
-  '13': '合同异常'
+  '13': '合同异常',
+  '14': '小批次福利分配异常',
+  '15':"更新福利分配多批次状态异常",
+  '16': '福利分配MQ开户失败',
+  '17':"工资发放到银行卡异常"
 }
 
 export function funSystemErrorType () {
@@ -661,7 +670,11 @@ export function funSystemErrorType () {
     {'key': '10', 'value': '充值订单异常'},
     {'key': '11', 'value': '任务结算异常'},
     {'key': '12', 'value': '发薪更新状态异常'},
-    {'key': '13', 'value': '合同异常'}
+    {'key': '13', 'value': '合同异常'},
+    {'key': '14', 'value': '小批次福利分配异常'},
+    {'key': '15', 'value': '更新福利分配多批次状态异常'},
+    {'key': '16', 'value': '福利分配MQ开户失败'},
+    {'key': '17', 'value': '工资发放到银行卡异常'}
   ]
 }
 
