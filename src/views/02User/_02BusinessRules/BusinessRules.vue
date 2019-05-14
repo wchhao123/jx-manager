@@ -30,13 +30,13 @@
                      @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check"
-                     v-show="this.$store.getters.getBtnIsShowByName('btn_user_role_add')"
-                     style="margin-bottom: 10px; margin-left: 50px"
-                     @click="addRule">新增规则
-          </el-button>
-        </el-col>
+        <!--<el-col :span="3">-->
+          <!--<el-button size="small" type="danger" icon="el-icon-check"-->
+                     <!--v-show="this.$store.getters.getBtnIsShowByName('btn_user_role_add')"-->
+                     <!--style="margin-bottom: 10px; margin-left: 50px"-->
+                     <!--@click="addRule">新增规则-->
+          <!--</el-button>-->
+        <!--</el-col>-->
       </el-row>
     </el-form>
     <el-table ref="businessRule" :data="dataList" style="width: 100%" border v-loading="isLoading">
@@ -83,6 +83,13 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="当月按证件限额全额(元)">
+        <template slot-scope="scope">
+          <span size="small" v-if="scope.row.monthMaxAmountByIdNumber!=''||scope.row.monthMaxAmountByIdNumber!=null">{{scope.row.monthMaxAmountByIdNumber}}</span>
+          <span size="small" v-if="scope.row.monthMaxAmountByIdNumber==null">{{'= ='}}</span>
+        </template>
+      </el-table-column>
+
       <!--规则状态-->
       <el-table-column align="center" label="规则状态">
         <template slot-scope="scope">
@@ -92,15 +99,19 @@
 
       <el-table-column fixed="right" label="操作" width="150" align="center">
         <template slot-scope="scope">
-          <el-button @click="changeRule(scope.row)"
-                     :type="scope.row.ruleState.toString() === '0' ? 'danger' : 'warning'"
-                     v-show="isOwnCloseRole"
-                     plain size="small">
-            {{scope.row.ruleState.toString() === '0' ? '启用' : '关闭'}}
-          </el-button>
+          <!--<el-button @click="changeRule(scope.row)"-->
+                     <!--:type="scope.row.ruleState.toString() === '0' ? 'danger' : 'warning'"-->
+                     <!--v-show="isOwnCloseRole"-->
+                     <!--plain size="small">-->
+            <!--{{scope.row.ruleState.toString() === '0' ? '启用' : '关闭'}}-->
+          <!--</el-button>-->
+          <!--<el-button @click="updateRules(scope.row)"-->
+                     <!--v-show="isOwnUpdateRole"-->
+                     <!--type="primary" plain size="small">修改-->
+          <!--</el-button>-->
           <el-button @click="updateRules(scope.row)"
                      v-show="isOwnUpdateRole"
-                     type="primary" plain size="small">修改
+                     type="primary" plain size="small">查看
           </el-button>
         </template>
       </el-table-column>
@@ -120,7 +131,7 @@
     </el-col>
     <el-dialog :title="ruleDetail.title" center width="40%" :visible.sync="ruleDetail.visible"
                :close-on-click-modal="1===0">
-      <rule-detail :isAdd="ruleDetail.isAdd" :model="ruleDetail.model"
+      <rule-detail :istoBank="ruleDetail.istoBank" :model="ruleDetail.model"
                    @cancelEdit="cancelEdit"
       ></rule-detail>
     </el-dialog>
@@ -131,6 +142,7 @@
   import * as Api from 'api'
   import * as state from 'common/js/state-dic'
   import RuleDetail from './RuleDetail'
+  import * as filter from 'filters'
 
   export default {
     data() {
@@ -146,7 +158,8 @@
         ruleDetail: {
           title: '',
           visible: false,
-          isAdd: false
+      //    isAdd: false,
+          istoBank:false
         }
       }
     },
@@ -157,9 +170,9 @@
       businessRuleStateResource() {
         return state.funUserBusinessRuleState()
       },
-      isOwnCloseRole() {
-        return this.$store.getters.getBtnIsShowByName('btn_user_role_close')
-      },
+      // isOwnCloseRole() {
+      //   return this.$store.getters.getBtnIsShowByName('btn_user_role_close')
+      // },
       isOwnUpdateRole() {
         return this.$store.getters.getBtnIsShowByName('btn_user_role_update')
       }
@@ -179,19 +192,24 @@
           }
         })
       },
-      addRule() {
-        console.log('新增业务规则')
-        this.ruleDetail.title = '新增规则'
-        this.ruleDetail.isAdd = true
-        this.ruleDetail.model = {}
-        this.ruleDetail.visible = true
-      },
+      // addRule() {
+      //   console.log('新增业务规则')
+      //   this.ruleDetail.title = '新增规则'
+      //   this.ruleDetail.isAdd = true
+      //   this.ruleDetail.model = {}
+      //   this.ruleDetail.visible = true
+      // },
       updateRules(row) {
-        console.log(`修改业务规则 ${row}`)
+        console.log(`业务规则 ${row}`+(filter.filterUserBusinessRuleType(row.businessType)))
 
         this.ruleDetail.visible = true
-        this.ruleDetail.title = '修改业务规则'
-        this.ruleDetail.isAdd = false
+        this.ruleDetail.title = filter.filterUserBusinessRuleType(row.businessType)+'业务规则'
+     //   this.ruleDetail.c = false
+        console.log(row.businessType)
+        if(row.businessType === '1'){
+          this.ruleDetail.istoBank = true
+        }else this.ruleDetail.istoBank = false
+        console.log(this.ruleDetail.istoBank)
         this.ruleDetail.model = JSON.parse(JSON.stringify(row))
       },
       pageChange() {

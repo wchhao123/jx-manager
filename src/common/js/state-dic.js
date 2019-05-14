@@ -564,17 +564,17 @@ export function funUserTradeType () {
 
 // 用户订单类型
 export const typeUserOrderType = {
-  '01': '提现至银行卡（手动提现）',
+  '01': '提现到银行卡（手动提现）',
   '02': '转账 (出)',
   '03': '转账 (入)',
-  '08': '提现至银行卡（预约提现）',
-  '09': '提现至支付宝（手动提现）'
+  '08': '提现到银行卡（自动提现）',
+  '09': '提现到支付宝（手动提现）'
 }
 export function funUserOrderType () {
   return [
-    {'key': '01', 'value': '提现至银行卡（手动提现）'},
-    {'key': '09', 'value': '提现至支付宝（手动提现）'},
-    {'key': '08', 'value': '提现至银行卡（预约提现）'},
+    {'key': '01', 'value': '提现到银行卡（手动提现）'},
+    {'key': '09', 'value': '提现到支付宝（手动提现）'},
+    {'key': '08', 'value': '提现到银行卡（自动提现）'},
     {'key': '02', 'value': '转账 (出)'},
     {'key': '03', 'value': '转账 (入)'}
 
@@ -593,7 +593,7 @@ export const typeUserOrderState = {
 }
 export const typeWithdrawType = {
   '01': '手动提现',
-  '08': '预约提现',
+  '08': '自动提现',
   '09': '手动提现'
 }
 export function funUserOrderState () {
