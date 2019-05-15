@@ -1,6 +1,6 @@
 <template>
   <div class="customDialog">
-    <el-form :model="submitModel" :inline="true" ref="ruleForm" :rules="rules">
+    <el-form :model="submitModel" :inline="true" ref="ruleForm" :rules="rules"  :disabled="this.startEdit">
       <span class="item-title"></span>
       <el-row>
         <el-form-item label="业务类型" required  prop="businessType">
@@ -79,7 +79,7 @@
         <p  v-if="submitModel.costType=='1'" style="color: red">按【提现金额*费率】计算，最低收取【<span>{{submitModel.floatMinAmount}}</span>】元，最高收取【<span>{{submitModel.floatMaxAmount}}</span>】元</p>
         <p  v-if="submitModel.costType=='2'" style="color: red">金额区间内收取定额手续费，超过最大区间不收手续费</p>
         <el-row>
-          <el-form-item  required  prop="costType">
+          <el-form-item  required >
             <el-select size="small"
                        v-model="submitModel.costType"
                        @change="_selectChangeCost"
@@ -116,7 +116,7 @@
           <el-row>
             <el-col >
               <el-form-item label="金额区间:" prop="fixedMinAmount">
-                <el-input size="small" v-model="submitModel.amountMin" style="width: 120px" disabled="true"></el-input>
+                <el-input size="small" v-model="submitModel.amountMin" style="width: 120px" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col style="padding-right: 80px">
@@ -133,7 +133,12 @@
         </div>
       </div>
     </el-form>
-    <el-row style="padding-top: 50px">
+    <el-row style="padding-top: 50px" v-show="this.startEdit">
+      <el-col :span="12" :offset="2" style="padding-left: 120px;">
+        <el-button class="role_off" size="small" @click="edit" >编辑业务规则</el-button>
+      </el-col>
+    </el-row>
+    <el-row style="padding-top: 50px" v-show="!this.startEdit">
       <el-col :span="12" :offset="2">
         <el-button class="role_off" size="small" @click="cancelEdit">取消</el-button>
       </el-col>
@@ -158,6 +163,7 @@
     data () {
 
       var checkMinAmount = (rule, value, callback) => {
+
         if (!value) {
           return callback(new Error('最小金额不能为空!'))
         }
@@ -174,6 +180,7 @@
         }, 100)
       }
       var validatorMax = (rule, value, callback) => {
+
         if (this.submitModel.amountMin >= this.submitModel.amountMax) {
           return callback(new Error('单笔最大限额,必须大于最小限额'))
         }
@@ -182,27 +189,39 @@
         }, 100)
       }
       var validatorFixedMaxAmount = (rule, value, callback) => {
-        if (parseFloat(this.submitModel.fixedMaxAmount)<=parseFloat(this.submitModel.amountMin)) {
-          return callback(new Error('区间最大值输入必须大于区间最小值'))
+
+        if(this.submitModel.businessType === '1' && this.submitModel.costType === '2') {
+          if (parseFloat(this.submitModel.fixedMaxAmount) <= parseFloat(this.submitModel.amountMin)) {
+
+            return callback(new Error('区间最大值输入必须大于区间最小值'))
+          }
+          if (parseFloat(this.submitModel.fixedMaxAmount) > parseFloat(this.submitModel.amountMax)) {
+
+            return callback(new Error('区间最大值输入不可超过单笔最大金额'))
+          }
         }
-        if (parseFloat(this.submitModel.fixedMaxAmount)>parseFloat(this.submitModel.amountMax)) {
-          return callback(new Error('区间最大值输入不可超过单笔最大金额'))
-        }
-        setTimeout(() => {
-          callback()
-        }, 100)
+          setTimeout(() => {
+            callback()
+          }, 100)
+
       }
       var validatorFixedAmount = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('固定手续费不能为空!'))
-        }
-          let v = parseFloat(value)
-          if (v <= 0) {
-          return  callback(new Error('固定手续费必须大于0'))
+
+          if(this.submitModel.businessType === '1'&& this.submitModel.costType === '2') {
+            if (!value) {
+
+              return callback(new Error('固定手续费不能为空!'))
+            }
+            let v = parseFloat(value)
+            if (v <= 0) {
+
+              return callback(new Error('固定手续费必须大于0'))
+            }
+            if (Regex.regMoney.test(value) === false) {
+
+              return callback(new Error('输入金额不合法!'))
+            }
           }
-        if (Regex.regMoney.test(value) === false) {
-          return callback(new Error('输入金额不合法!'))
-        }
         setTimeout(() => {
           callback()
         }, 100)
@@ -210,20 +229,42 @@
 
 
       var validatorfloatMinAmount = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('最低收取金额不能为空!'))
-        }
-        if(this.submitModel.rate!= null && this.submitModel.rate!=0) {
-          if (this.submitModel.floatMinAmount <= 0) {
-            return callback(new Error('当浮动金额大于0时最低收取金额必须大于0'))
+
+          if(this.submitModel.businessType === '1' && this.submitModel.costType === '1') {
+            if (!value) {
+
+              return callback(new Error('最低收取金额不能为空!'))
+            }
+            if (this.submitModel.rate != null && this.submitModel.rate != 0) {
+              if (this.submitModel.floatMinAmount <= 0) {
+
+                return callback(new Error('当浮动金额大于0时最低收取金额必须大于0'))
+              }
+              if (parseFloat(this.submitModel.floatMaxAmount) <= parseFloat(this.submitModel.floatMinAmount)) {
+
+                return callback(new Error('最高收取金额必须大于最低收取金额'))
+              }
+            }
+            if (this.submitModel.rate == 0) {
+              if (this.submitModel.floatMinAmount != 0) {
+
+                return callback(new Error('当浮动费率等于0时最低收取金额默认为0'))
+              }
+            }
           }
-          if (parseFloat(this.submitModel.floatMaxAmount) <= parseFloat(this.submitModel.floatMinAmount)) {
-            return callback(new Error('最高收取金额必须大于最低收取金额'))
+        setTimeout(() => {
+          callback()
+        }, 100)
+      }
+
+      var validatorMonthMaxAmountByIdNumber = (rule, value, callback) => {
+        debugger
+        if(this.submitModel.businessType =='1'||this.submitModel.businessType =='4'){
+          if (!value) {
+            return callback(new Error('金额不能为空!'))
           }
-        }
-        if(this.submitModel.rate==0){
-          if (this.submitModel.floatMinAmount != 0) {
-            return callback(new Error('当浮动费率等于0时最低收取金额默认为0'))
+          if (Regex.regMoney.test(value) === false && value !== '∞') {
+            return callback(new Error('输入金额不合法!'))
           }
         }
         setTimeout(() => {
@@ -231,27 +272,32 @@
         }, 100)
       }
       var validatorfloatMaxAmount = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('最高收取金额不能为空!'))
-        }
-        if(this.submitModel.rate!= null && this.submitModel.rate!=0) {
-          if (this.submitModel.floatMaxAmount <= 0) {
-            return callback(new Error('当浮动金额大于0时最高收取金额必须大于0'))
-          }
-          if (parseFloat(this.submitModel.floatMaxAmount)<= parseFloat(this.submitModel.floatMinAmount)) {
-            return callback(new Error('最高收取金额必须大于最低收取金额'))
-          }
-          console.log(this.submitModel.amountMax + this.submitModel.rate * 0.01 + this.submitModel.amountMax * this.submitModel.rate * 0.01)
-          if (parseFloat(this.submitModel.floatMaxAmount) >= parseFloat(this.submitModel.amountMax * this.submitModel.rate * 0.01)) {
-            return callback(new Error('最高收取金额必须小于单笔最大金额乘以费率'))
-          }
-        }
-        if(this.submitModel.rate==0){
-          if (this.submitModel.floatMaxAmount != 0) {
-            return callback(new Error('当浮动费率等于0时最高收取金额默认为0'))
-          }
-        }
 
+          if(this.submitModel.businessType === '1' && this.submitModel.costType === '1') {
+            if (!value) {
+              return callback(new Error('最高收取金额不能为空!'))
+            }
+            if (this.submitModel.rate != null && this.submitModel.rate != 0) {
+              if (this.submitModel.floatMaxAmount <= 0) {
+
+                return callback(new Error('当浮动金额大于0时最高收取金额必须大于0'))
+              }
+              if (parseFloat(this.submitModel.floatMaxAmount) <= parseFloat(this.submitModel.floatMinAmount)) {
+
+                return callback(new Error('最高收取金额必须大于最低收取金额'))
+              }
+              console.log(this.submitModel.amountMax + this.submitModel.rate * 0.01 + this.submitModel.amountMax * this.submitModel.rate * 0.01)
+              if (parseFloat(this.submitModel.floatMaxAmount) >= parseFloat(this.submitModel.amountMax * this.submitModel.rate * 0.01)) {
+
+                return callback(new Error('最高收取金额必须小于单笔最大金额乘以费率'))
+              }
+            }
+            if (this.submitModel.rate == 0) {
+              if (this.submitModel.floatMaxAmount != 0) {
+                return callback(new Error('当浮动费率等于0时最高收取金额默认为0'))
+              }
+            }
+          }
         setTimeout(() => {
           callback()
         }, 100)
@@ -262,55 +308,57 @@
           {key:'1',value:"浮动手续费-外扣"},
           {key:'2',value:"固定手续费-外扣"},
         ],
+        startEdit: true,
         rules: {
           businessType:[],
-          amountMin: [
+           amountMin: [
             {required: true, message: '请输入单笔最小金额', trigger: 'blur'},
             {validator: checkMinAmount, trigger: 'blur'}
-          ],
-          amountMax: [
+           ],
+           amountMax: [
             {required: true, message: '请输入单笔最大金额', trigger: 'blur'},
             {validator: Validator.validatorMaxAmount, trigger: 'blur'},
             {validator: validatorMax, trigger: 'blur'}
-          ],
-          dayMaxCount: [
+           ],
+           dayMaxCount: [
             {required: true, message: '请输入当日最大笔数', trigger: 'blur'},
             {validator: Validator.validatorPositive, trigger: 'blur'}
           ],
-          dayMaxAmount: [
+           dayMaxAmount: [
             {required: true, message: '请输入当日最大限额', trigger: 'blur'},
             {validator: Validator.validatorMoney, trigger: 'blur'}
-          ],
-          monthMaxAmount: [
+           ],
+           monthMaxAmount: [
             {required: true, message: '请输入当月最大限额', trigger: 'blur'},
             {validator: Validator.validatorMoney, trigger: 'blur'}
-          ],
-          rate: [
+           ],
+           rate: [
             {required: true, message: '请输入手续费', trigger: 'blur'}
-          ],
-          floatMinAmount: [
+           ],
+           floatMinAmount: [
             {required: true, message: '请输入最低收取金额', trigger: 'blur'},
-            {validator: validatorfloatMinAmount, trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'},
-          ],
-          floatMaxAmount: [
+           {validator: validatorfloatMinAmount, trigger: 'blur'},
+           {validator: Validator.validatorMoney, trigger: 'blur'},
+               ],
+           floatMaxAmount: [
             {required: true, message: '请输入最高收取金额', trigger: 'blur'},
-            {validator: validatorfloatMaxAmount, trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'},
-          ],
-          monthMaxAmountByIdNumber : [
-            {required: true, message: '请输入当月按这证件限额', trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'}
-          ],
-          fixedAmount : [
+           {validator: validatorfloatMaxAmount, trigger: 'blur'},
+           {validator: Validator.validatorMoney, trigger: 'blur'},
+           ],
+           monthMaxAmountByIdNumber : [
+           //   {required: true, message: '请输入当月按这证件限额', trigger: 'change'},
+             {validator: validatorMonthMaxAmountByIdNumber, trigger: 'blur'}
+           ],
+           fixedAmount : [
             {required: true, message: '请输入定额手续费', trigger: 'blur'},
             {validator:validatorFixedAmount, trigger: 'blur'}
-          ],
-          fixedMaxAmount : [
+           ],
+           fixedMaxAmount : [
             {required: true, message: '请输入最大提现区间', trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'},
-            {validator:validatorFixedMaxAmount, trigger: 'blur'}
-          ]
+             {validator:validatorFixedMaxAmount, trigger: 'blur'},
+            {validator: Validator.validatorMoney, trigger: 'blur'}
+
+           ]
         }
       }
     },
@@ -349,7 +397,9 @@
     },
     methods: {
       _editSubmit () {
+        console.log('更新业务规则'+ JSON.stringify(this.submitModel))
         this.$refs['ruleForm'].validate((valid) => {
+          console.log('valid'+valid)
           if (valid) {
             // if (this.isAdd) {
             //   console.log(`新增业务规则 ${this.submitModel}`)
@@ -377,10 +427,14 @@
           }
         })
       },
+      edit (){
+          this.startEdit = false
+      },
       _setModel() {
         setTimeout(() => {
           this.$refs['ruleForm'].resetFields()
           this.submitModel = this.model
+          this.startEdit =true
           console.log(this.submitModel)
         }, 50)
       },

@@ -2,7 +2,6 @@ import * as Regex from './regex'
 
 // 正整数 校验
 export function validatorPositive (rule, value, callback) {
-  debugger
   if (!value) {
     return callback(new Error('数值不能为空!'))
   }
