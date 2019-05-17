@@ -126,7 +126,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-form-item label="定额手续费:" prop="fixedAmount">
+            <el-form-item label="定额手续费:" prop="fixedAmount" style="padding-top: 10px">
               <el-input size="small" v-model="submitModel.fixedAmount" placeholder="请输入固定手续费金额" style="width: 200px;"></el-input>元
             </el-form-item>
           </el-row>
@@ -232,7 +232,6 @@
 
           if(this.submitModel.businessType === '1' && this.submitModel.costType === '1') {
             if (!value) {
-
               return callback(new Error('最低收取金额不能为空!'))
             }
             if (this.submitModel.rate != null && this.submitModel.rate != 0) {
@@ -240,15 +239,24 @@
 
                 return callback(new Error('当浮动金额大于0时最低收取金额必须大于0'))
               }
+
               if (parseFloat(this.submitModel.floatMaxAmount) <= parseFloat(this.submitModel.floatMinAmount)) {
 
-                return callback(new Error('最高收取金额必须大于最低收取金额'))
+                return callback(new Error('最低收取金额必须小于最高收取金额'))
+              }
+              if (parseFloat(this.submitModel.floatMinAmount) <  parseFloat(this.submitModel.amountMin * this.submitModel.rate * 0.01)) {
+
+                return callback(new Error('最低收取金额不得小于单笔最小金额乘以费率'))
               }
             }
             if (this.submitModel.rate == 0) {
               if (this.submitModel.floatMinAmount != 0) {
 
                 return callback(new Error('当浮动费率等于0时最低收取金额默认为0'))
+              }
+            }else{
+              if (Regex.regMoney.test(value) === false && value !== '∞') {
+                return callback(new Error('输入金额不合法!'))
               }
             }
           }
@@ -286,8 +294,8 @@
 
                 return callback(new Error('最高收取金额必须大于最低收取金额'))
               }
-              console.log(this.submitModel.amountMax + this.submitModel.rate * 0.01 + this.submitModel.amountMax * this.submitModel.rate * 0.01)
-              if (parseFloat(this.submitModel.floatMaxAmount) >= parseFloat(this.submitModel.amountMax * this.submitModel.rate * 0.01)) {
+
+               if (parseFloat(this.submitModel.floatMaxAmount) >= parseFloat(this.submitModel.amountMax * this.submitModel.rate * 0.01)) {
 
                 return callback(new Error('最高收取金额必须小于单笔最大金额乘以费率'))
               }
@@ -296,8 +304,21 @@
               if (this.submitModel.floatMaxAmount != 0) {
                 return callback(new Error('当浮动费率等于0时最高收取金额默认为0'))
               }
+            }else{
+              if (Regex.regMoney.test(value) === false && value !== '∞') {
+                return callback(new Error('输入金额不合法!'))
+              }
             }
           }
+        setTimeout(() => {
+          callback()
+        }, 100)
+      }
+      var validatorRate = (rule, value, callback) => {
+        var pattern = /^\d+.?\d{0,2}$/;
+        if(!pattern.test(value)){
+          return callback(new Error('小数点后最多只能输入两位!'))
+        }
         setTimeout(() => {
           callback()
         }, 100)
@@ -312,52 +333,61 @@
         rules: {
           businessType:[],
            amountMin: [
-            {required: true, message: '请输入单笔最小金额', trigger: 'blur'},
-            {validator: checkMinAmount, trigger: 'blur'}
+            {required: true, message: '请输入单笔最小金额' ,trigger: 'blur'},
+             {max: 12, message:'长度不得大于12位', trigger: 'blur'},
+             {validator: checkMinAmount, trigger: 'blur'}
            ],
            amountMax: [
             {required: true, message: '请输入单笔最大金额', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
             {validator: Validator.validatorMaxAmount, trigger: 'blur'},
             {validator: validatorMax, trigger: 'blur'}
            ],
            dayMaxCount: [
             {required: true, message: '请输入当日最大笔数', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
             {validator: Validator.validatorPositive, trigger: 'blur'}
           ],
            dayMaxAmount: [
-            {required: true, message: '请输入当日最大限额', trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'}
+             {required: true, message: '请输入当日最大限额', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
+             {validator: Validator.validatorMoney, trigger: 'blur'}
            ],
            monthMaxAmount: [
-            {required: true, message: '请输入当月最大限额', trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'}
+             {required: true, message: '请输入当月最大限额', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
+             {validator: Validator.validatorMoney, trigger: 'blur'}
            ],
            rate: [
-            {required: true, message: '请输入手续费', trigger: 'blur'}
+             {required: true, message: '请输入手续费', trigger: 'blur'},
+             {max: 12,type:'number' ,message:'长度不得大于12位', trigger: 'blur'},
+             {validator: validatorRate, trigger: 'blur'},
            ],
            floatMinAmount: [
-            {required: true, message: '请输入最低收取金额', trigger: 'blur'},
-           {validator: validatorfloatMinAmount, trigger: 'blur'},
-           {validator: Validator.validatorMoney, trigger: 'blur'},
+             {required: true, message: '请输入最低收取金额', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
+             {validator: validatorfloatMinAmount, trigger: 'blur'},
                ],
            floatMaxAmount: [
-            {required: true, message: '请输入最高收取金额', trigger: 'blur'},
-           {validator: validatorfloatMaxAmount, trigger: 'blur'},
-           {validator: Validator.validatorMoney, trigger: 'blur'},
+             {required: true, message: '请输入最高收取金额', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
+             {validator: validatorfloatMaxAmount, trigger: 'blur'},
            ],
            monthMaxAmountByIdNumber : [
-           //   {required: true, message: '请输入当月按这证件限额', trigger: 'change'},
+          //  {required: true, message: '请输入当月按这证件限额',trigger:'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
              {validator: validatorMonthMaxAmountByIdNumber, trigger: 'blur'}
            ],
            fixedAmount : [
             {required: true, message: '请输入定额手续费', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
             {validator:validatorFixedAmount, trigger: 'blur'}
            ],
            fixedMaxAmount : [
             {required: true, message: '请输入最大提现区间', trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
              {validator:validatorFixedMaxAmount, trigger: 'blur'},
             {validator: Validator.validatorMoney, trigger: 'blur'}
-
            ]
         }
       }
@@ -380,6 +410,7 @@
         immediate: true,
         handler: function (val) {
           console.log('rate'+val)
+          console.log(typeof (this.submitModel.rate ))
           if(val== '0'&& this.submitModel.costType!= null && this.submitModel.costType == '1'){
             this.submitModel.floatMinAmount = '0'
             this.submitModel.floatMaxAmount = '0'
@@ -413,6 +444,7 @@
             //     }
             //   })
             // } else {
+              this.submitModel.fixedMinAmount = this.submitModel.amountMin
               console.log(`更新业务规则 ${this.submitModel}`)
               Api.updateBusinessRule(this.submitModel).then(response => {
                 this.$notify({
@@ -433,6 +465,7 @@
       _setModel() {
         setTimeout(() => {
           this.$refs['ruleForm'].resetFields()
+          console.log(this.model)
           this.submitModel = this.model
           this.startEdit =true
           console.log(this.submitModel)

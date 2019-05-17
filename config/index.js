@@ -17,7 +17,7 @@ module.exports = {
         // target: 'http://172.18.0.230:8092/jx-manage',   // jjn
         //target: 'http://localhost:8092/jx-manage',   //昌海同学
         // target: 'http://172.18.1.85:8092/jx-manage',   //江智豪
-         //target: 'http://192.168.120.83:8092/jx-manage',
+    //     target: 'http://192.168.120.83:8092/jx-manage',
         changeOrigin: true,
         pathRewrite: {
           '^/jx-manage': ''
