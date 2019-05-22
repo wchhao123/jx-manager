@@ -144,7 +144,8 @@ const typeEntTransfer = {
   12: '工资发放',
   13: '工资发放退款',
   14: '工资发放',
-  15: '众包结算'
+  15: '众包结算',
+  16: '众包结算撤回'
 }
 export {typeEntTransfer}
 export function funEntTransfer () {
@@ -154,7 +155,8 @@ export function funEntTransfer () {
     {'key': 7, 'value': '工资发放撤回'},
     {'key': 8, 'value': '企业垫资还款'},
     {'key': 13, 'value': '工资发放退款'},
-    {'key': 15, 'value': '众包结算'}
+    {'key': 15, 'value': '众包结算'},
+    {'key': 16, 'value': '众包结算撤回'}
   ]
 }
 
@@ -250,6 +252,16 @@ const typeSalaryType = {
   5: '工资发放至银行卡',
   6: '工资发放至银行卡'
 }
+
+const typeRefundSalaryType = {
+  1: '工资发放至客户端',
+  3: '工资发放至客户端',
+  5: '工资发放至银行卡',
+  6: '工资发放至银行卡',
+  7: '众包任务结算',
+  8:  '众包任务结算'
+}
+export {typeRefundSalaryType}
 export {typeSalaryType}
 
 // 前端查询时只传两种
@@ -258,6 +270,14 @@ export function funSalaryType () {
     {'key': 1, 'value': '工资发放至客户端'},
     {'key': 2, 'value': '发工资条'},
     {'key': 5, 'value': '工资发放至银行卡'}
+  ]
+}
+
+export function funRefundSalaryType () {
+  return [
+    {'key': 1, 'value': '工资发放至客户端'},
+    {'key': 5, 'value': '工资发放至银行卡'},
+    {'key': 7, 'value': '众包任务结算'},
   ]
 }
 

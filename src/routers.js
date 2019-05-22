@@ -10,6 +10,7 @@ import EntSignAudit from 'views/01Enterprise/_15EntSign/EntSignAudit.vue'
 import EntRechargeOrder from 'views/01Enterprise/_16EntOrder/EntRechargeOrder.vue'
 import EntSalaryList from 'views/01Enterprise/_17EntSalary/EntSalaryListQuery.vue'
 import EntSalaryDetail from 'views/01Enterprise/_17EntSalary/EntSalaryDetailQuery.vue'
+import EntSalaryRefund from 'views/01Enterprise/_17EntSalary/EntSalaryRefundQuery.vue'
 import JFTrade from 'views/01Enterprise/_18JFTrade/JFEntTrade'
 import ContractQuery from 'views/04Contract/ContractListQuery.vue'
 import ContractSign from 'views/04Contract/ContractSignQuery.vue'
@@ -80,6 +81,7 @@ export default new Router({
         {path: '/enterprise_recharge', component: EntRechargeOrder, name: '充值订单'},
         {path: '/enterprise_salary', component: EntSalaryList, name: '发放批次查询'},
         {path: '/enterprise_salary_detail', component: EntSalaryDetail, name: '发放明细查询'},
+        {path: '/enterprise_salary_refund', component: EntSalaryRefund, name: '撤回退款记录查询'},
         {path: '/enterprise_jf_trade', component: JFTrade, name: 'JF交易明细查询'},
         {path: '/contract_query', component: ContractQuery, name: '合同批次管理'},
         {path: '/contract_sign', component: ContractSign, name: '合同签约管理'},

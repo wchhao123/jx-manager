@@ -99,6 +99,12 @@ export function filterSalaryType (key) {
   return state.typeSalaryType[parseInt(key)]
 }
 
+export function filterRefundSalaryType (key) {
+  if (!key)
+    return ''
+  return state.typeRefundSalaryType[parseInt(key)]
+}
+
 // 工资批次发放状态
 export function filterSalaryState (key) {
   if (!key)

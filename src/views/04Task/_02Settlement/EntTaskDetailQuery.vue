@@ -160,9 +160,22 @@
       </el-table-column>
 
       <!--提交时间-->
-      <el-table-column width="170"  align="center" label="结算时间">
+      <el-table-column width="170"  align="center" label="订单创建时间">
         <template slot-scope="scope">
           <span size="small">{{scope.row.createTime | filterdateYMDHMS()}}</span>
+        </template>
+      </el-table-column>
+      <!--提交时间-->
+      <el-table-column width="150"  align="center" label="订单完成时间">
+        <template slot-scope="scope">
+          <span size="small" >{{scope.row.completeTime | filterdateYMDHMS()}}</span>
+        </template>
+      </el-table-column>
+      <!--提交时间-->
+      <el-table-column width="150"  align="center" label="订单退款/撤回时间">
+        <template slot-scope="scope">
+          <span size="small" v-show="scope.row.salaryState == '7'">{{scope.row.withdrawalTime | filterdateYMDHMS()}}</span>
+          <span size="small" v-show="scope.row.salaryState == '8'">{{scope.row.refundTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="120" align="center"  >

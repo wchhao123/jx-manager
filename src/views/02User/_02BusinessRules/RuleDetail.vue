@@ -143,7 +143,7 @@
         <el-button class="role_off" size="small" @click="cancelEdit">取消</el-button>
       </el-col>
       <el-col :span="2" :offset="4">
-        <el-button type="primary" size="small" @click.native="_editSubmit">确认修改</el-button>
+        <el-button type="primary" size="small" @click.native="_editSubmit" :disabled=" this.isEdit">确认修改</el-button>
       </el-col>
     </el-row>
   </div>
@@ -330,6 +330,7 @@
           {key:'2',value:"固定手续费-外扣"},
         ],
         startEdit: true,
+        isEdit:false,
         rules: {
           businessType:[],
            amountMin: [
@@ -428,6 +429,7 @@
     },
     methods: {
       _editSubmit () {
+        this.isEdit = true
         console.log('更新业务规则'+ JSON.stringify(this.submitModel))
         this.$refs['ruleForm'].validate((valid) => {
           console.log('valid'+valid)
@@ -444,6 +446,7 @@
             //     }
             //   })
             // } else {
+
               this.submitModel.fixedMinAmount = this.submitModel.amountMin
               console.log(`更新业务规则 ${this.submitModel}`)
               Api.updateBusinessRule(this.submitModel).then(response => {
@@ -456,6 +459,8 @@
                 }
               })
 
+          }else{
+            this.isEdit = false
           }
         })
       },
@@ -468,6 +473,7 @@
           console.log(this.model)
           this.submitModel = this.model
           this.startEdit =true
+          this.isEdit = false
           console.log(this.submitModel)
         }, 50)
       },

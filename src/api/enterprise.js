@@ -190,6 +190,14 @@ export function getSalaryDetailList (param) {
     params: param
   })
 }
+
+export function getSalaryRefundList (param) {
+  return fetch({
+    url: http.prefix + '/table/salary/salary/getRefundInfo',
+    method: http.post,
+    params: param
+  })
+}
 //撤回未激活工资
 export function rollBackSalary (param) {
   return fetch({
@@ -224,6 +232,16 @@ export function exportSalaryDetailList(param) {
     params: param,
    responseType: 'arraybuffer'
    // responseType: http.responseType.arraybuffer
+  })
+}
+
+export function exportSalaryRefundList(param) {
+  return fetch({
+    url: http.prefix + '/table/salary/salary/exportRefundInfo',
+    method: http.post,
+    params: param,
+    responseType: 'arraybuffer'
+    // responseType: http.responseType.arraybuffer
   })
 }
 

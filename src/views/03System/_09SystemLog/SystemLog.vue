@@ -172,6 +172,13 @@
     methods: {
       doQuery() {
         this.isLoading = true
+        if (this.selectDateRange !== null && this.selectDateRange.length > 1) {
+          this.queryModel.startDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[0])
+          this.queryModel.endDate = this.$filter.filterDateYYYYMMDD(this.selectDateRange[1])
+        } else {
+          this.queryModel.startDate = null
+          this.queryModel.endDate = null
+        }
         Api.getErrorLog(this.queryModel).then(response => {
           this.isLoading = false
           if (response.data.code === Api.ERR_OK) {
