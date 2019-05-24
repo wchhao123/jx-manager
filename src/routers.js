@@ -100,7 +100,7 @@ export default new Router({
         //{path: '/task_userinfo', component: UserResume, name: '个人履历'},
         {path: '/task_manage', component: TaskManageList, name: '任务管理'},
         {path: '/task_settlement', component: TaskSettlementList, name: '结算批次查询'},
-        {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算批次详情查询'},
+        {path: '/task_settlement_detail', component: TaskSettlementDetailList, name: '结算明细查询'},
         {path: '/task_and_contract', component: TaskAndContract, name: '合同任务列表'},
         {path: '/task_check', component: TaskCheckManage, name: '验收管理'},
         {path: '/task_delivery', component: TaskDeliveryQuery, name: '验收交付文件管理'}
@@ -110,7 +110,7 @@ export default new Router({
       path: '/',
       component: Home,
       name: '用户管理',
-      iconCls: 'el-icon-message',
+      iconCls: 'el-icon-user',
       children: [
         {path: '/user_info', component: UserInfo, name: '用户信息查询'},
         {path: '/user_business_rule', component: BusinessRule, name: '业务规则管理'},

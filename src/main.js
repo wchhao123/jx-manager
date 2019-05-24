@@ -19,6 +19,7 @@ import store from './store'
 import 'babel-polyfill'
 import 'common/stylus/index.styl'
 import * as filter from './filters'
+import 'common/iconfont/iconfont.css'
 
 Vue.prototype.$axios = axios
 Vue.prototype.$post = post

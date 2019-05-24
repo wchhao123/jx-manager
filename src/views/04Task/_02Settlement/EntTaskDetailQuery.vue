@@ -264,7 +264,7 @@
     },
     computed: {
       salaryDetailStateSource () {
-        return state.funTaskState()
+        return state.funTaskDetailState()
       },
       salaryDetailTypeSource () {
         return state.typeTaskState()

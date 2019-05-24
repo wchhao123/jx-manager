@@ -38,8 +38,8 @@
           <el-input size="small" v-model="queryModel.entName" placeholder="请输入运营主企业名称" clearable></el-input>
         </el-form-item>
 
-        <el-form-item label="发放类型">
-          <el-select size="small" v-model="queryModel.salaryType" filterable clearable placeholder="请选择发放类型">
+        <el-form-item label="订单类型">
+          <el-select size="small" v-model="queryModel.salaryType" filterable clearable placeholder="请选择订单类型">
             <el-option
               v-for="item in salaryDetailTypeSource"
               :key="item.key"
@@ -159,7 +159,7 @@
       </el-table-column>
 
       <!--发新状态-->
-      <el-table-column align="center" label="发放状态">
+      <el-table-column align="center" label="订单状态">
         <template slot-scope="scope">
           <span size="small">{{scope.row.salaryState |filterSalaryDetailState()}}</span>
         </template>

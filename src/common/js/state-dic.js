@@ -344,6 +344,16 @@ export const typeTaskState = {
   5: '发放中',
   7: '有撤回'
 }
+export function funTaskDetailState () {
+  return [
+    {'key': 1, 'value': '发放成功'},
+    {'key': 0, 'value': '发放失败'},
+    {'key': 3, 'value': '待付款'},
+    {'key': 4, 'value': '订单关闭'},
+    {'key': 5, 'value': '发放中'},
+    {'key': 7, 'value': '已撤回'}
+  ]
+}
 export function funTaskState () {
   return [
     {'key': 1, 'value': '发放成功'},

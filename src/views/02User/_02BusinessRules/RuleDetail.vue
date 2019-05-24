@@ -62,11 +62,12 @@
           <el-input size="small" v-model="submitModel.monthMaxAmount"></el-input>
         </el-form-item>
       </el-row>
-      <el-row v-show="submitModel.businessType =='1'||submitModel.businessType =='4'">
+      <el-row v-if="submitModel.businessType =='1'||submitModel.businessType =='4'">
         <el-form-item label="当月按证件限额(元):" prop="monthMaxAmountByIdNumber">
           <el-input size="small" v-model="submitModel.monthMaxAmountByIdNumber"    placeholder="请输入按证件限额"></el-input>
         </el-form-item>
       </el-row>
+
       <el-row>
         <el-form-item label="手续费:" prop="rate" v-show="submitModel.businessType !='1'">
           <el-input-number size="small" v-model="submitModel.rate"></el-input-number>
@@ -375,20 +376,23 @@
              {validator: validatorfloatMaxAmount, trigger: 'blur'},
            ],
            monthMaxAmountByIdNumber : [
-          //  {required: true, message: '请输入当月按这证件限额',trigger:'blur'},
+             {required: true, message: '请输入当月按这证件限额',trigger:'change'},
              {max: 12,message:'长度不得大于12位', trigger: 'blur'},
              {validator: validatorMonthMaxAmountByIdNumber, trigger: 'blur'}
            ],
            fixedAmount : [
-            {required: true, message: '请输入定额手续费', trigger: 'blur'},
+              {required: true, message: '请输入定额手续费', trigger: 'blur'},
              {max: 12,message:'长度不得大于12位', trigger: 'blur'},
             {validator:validatorFixedAmount, trigger: 'blur'}
            ],
+          fixedMinAmount:[
+            {required: true, message: '请输入最小提现区间', trigger: 'blur'},
+          ],
            fixedMaxAmount : [
-            {required: true, message: '请输入最大提现区间', trigger: 'blur'},
-             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
              {validator:validatorFixedMaxAmount, trigger: 'blur'},
-            {validator: Validator.validatorMoney, trigger: 'blur'}
+             {validator: Validator.validatorMoney, trigger: 'blur'},
+             {validator: Validator.validatorMoney, trigger: 'blur'},
+             {max: 12,message:'长度不得大于12位', trigger: 'blur'},
            ]
         }
       }
@@ -446,8 +450,8 @@
             //     }
             //   })
             // } else {
-
-              this.submitModel.fixedMinAmount = this.submitModel.amountMin
+               if(this.submitModel.businessType =='1' && this.submitModel.costType == '2')
+               this.submitModel.fixedMinAmount = this.submitModel.amountMin
               console.log(`更新业务规则 ${this.submitModel}`)
               Api.updateBusinessRule(this.submitModel).then(response => {
                 this.$notify({
