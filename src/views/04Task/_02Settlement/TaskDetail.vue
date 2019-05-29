@@ -11,13 +11,17 @@
         <el-col>
           <div>任务编号：{{model.taskId}}</div>
           <div>发布企业：{{model.entName}}</div>
-          <div>所属行业：{{model.industry}}</div>
+          <!--<div>所属行业：{{model.industry}}</div>-->
+          <div>任务类型：{{model.industryName+'>'+model.typeName}}</div>
+          <div v-if="model.city!=null && model.city!=''">工作地区：{{model.provice+'-'+model.city}}</div>
+          <div v-else="model.city==null || model.city ==''">工作地区：{{'不限'}}</div>
         </el-col>
         <el-col>
           <div>任务名称：{{model.taskName}}</div>
           <div>发布昵称：{{model.nickname}}</div>
-          <div>任务类型：{{model.type}}</div>
+          <!--<div>任务类型：{{model.type}}</div>-->
           <div>报名状态：{{model.signUpState |  filterTaskSignUpState()}}</div>
+          <div>是否在任务广场上显示：{{model.isShow | filterTaskIsShow() }}</div>
         </el-col>
       </el-row>
       <el-row><h1>任务内容</h1></el-row>
@@ -77,7 +81,11 @@
         model: {},
         isbigimg: false,
         innerVisible: false,
-        imageUrl: ''
+        imageUrl: '',
+        isShowArr: {
+          0: '否',
+          1: '是',
+        }
       }
     },
     watch: {

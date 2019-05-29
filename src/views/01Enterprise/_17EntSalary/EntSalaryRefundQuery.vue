@@ -261,9 +261,6 @@
       }
     },
     computed: {
-      salaryDetailStateSource () {
-        return state.funSalaryDetailState()
-      },
       salaryDetailTypeSource () {
         return state.funRefundSalaryType()
       }

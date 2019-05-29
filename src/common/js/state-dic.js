@@ -140,12 +140,12 @@ const typeEntTransfer = {
   2: '工资代发充值',
   3: '工资发放退款',
   7: '工资发放撤回',
-  8: '企业垫资还款',
   12: '工资发放',
   13: '工资发放退款',
   14: '工资发放',
   15: '众包结算',
-  16: '众包结算撤回'
+  16: '众包结算撤回',
+  17: '众包结算退款'
 }
 export {typeEntTransfer}
 export function funEntTransfer () {
@@ -153,10 +153,10 @@ export function funEntTransfer () {
     {'key': 1, 'value': '工资发放'},
     {'key': 2, 'value': '工资代发充值'},
     {'key': 7, 'value': '工资发放撤回'},
-    {'key': 8, 'value': '企业垫资还款'},
     {'key': 13, 'value': '工资发放退款'},
     {'key': 15, 'value': '众包结算'},
-    {'key': 16, 'value': '众包结算撤回'}
+    {'key': 16, 'value': '众包结算撤回'},
+    {'key': 17, 'value': '众包结算退款'}
   ]
 }
 
@@ -331,8 +331,6 @@ export function funSalaryDetailState () {
     {'key': 7, 'value': '已撤回'},
     {'key': 8, 'value': '已退款'},
     {'key': 9, 'value': '重发中'},
-    {'key': 10, 'value': '待发送'},
-    {'key': 11, 'value': '部分失败'}
   ]
 }
 
@@ -448,6 +446,11 @@ export const taskSignUpState = {
   1: '未开始',
   2: '报名中',
   3: '报名结束'
+}
+
+export const taskIsShowState = {
+  0: '否',
+  1: '是'
 }
 export function funSignInState () {
   return [
