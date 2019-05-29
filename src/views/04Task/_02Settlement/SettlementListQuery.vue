@@ -314,7 +314,7 @@
         console.log(row)
         this.$router.push({
           path: '/task_settlement_detail',
-          name: '结算批次详情查询',
+          name: '结算明细查询',
           params: {salaryId: row.salaryId}
         })
       },
