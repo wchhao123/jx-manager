@@ -149,14 +149,16 @@
       <!--撤回总额-->
       <el-table-column align="center" label="撤回总额(元)">
         <template slot-scope="scope">
-          <span size="small" >{{ scope.row.refundAmount }}</span>
+          <span size="small" v-if="scope.row.salaryType=='2'||scope.row.salaryType=='5'||scope.row.salaryType=='6'">{{'— —'}}</span>
+          <span size="small" v-else>{{ scope.row.refundAmount}}</span>
         </template>
       </el-table-column>
 
       <!--到银行卡退款总额-->
       <el-table-column align="center" label="退款总额(元)">
         <template slot-scope="scope">
-          <span size="small" >{{ scope.row.bankRefundAmount }}</span>
+          <span size="small" v-if="scope.row.salaryType=='2'">{{'— —'}}</span>
+          <span size="small" v-else>{{ scope.row.drawbackAmount }}</span>
         </template>
       </el-table-column>
 

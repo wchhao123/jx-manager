@@ -29,12 +29,12 @@
       <el-row>
         <el-col>
           <div>任务描述：<pre>{{model.taskDetails}}</pre></div>
-          <div v-show="model.taskFile">附件：</div>
-          <a v-show="model.taskFile" v-for="(item, index) of model.taskFile" :key="index" download="download"
+          <div v-show="model.taskFeils">附件：</div>
+          <a  v-for="(item, index) of model.taskFeils" :key="index" download="download"
              :href="item" target="_blank">
             <div class="download">
               <img src="../../../assets/file_img.png" style="width: 25px; height: 25px;float: left"/>
-              <span style="color: #99a9bf ;float: left">{{item | subStringUrl(index, model.originalFileNames)}}</span>
+              <span style="color: #99a9bf ;float: left">{{item | subStringUrl(index, model.originalFilesNames)}}</span>
               <span style="float: right;color: #99a9bf">下载</span>
             </div>
           </a>
@@ -42,14 +42,16 @@
           <el-col v-show="model.entTaskAdds" v-for="(item, index) of model.entTaskAdds" :key="index">
             <div>补充内容：<pre>{{item.taskAddtionDetail}}</pre></div>
             <div>任务附件：</div>
-            <a v-show="item.taskDownload" v-for="(item1, index) of item.taskDownload.taskAddtionFile" :key="index" download="download"
+            <ul v-if="item.taskDownload">
+            <a  v-for="(item1, index1) of item.taskDownload.taskAddtionFile" :key="index1" download="download"
                :href="item1" target="_blank">
               <div class="download">
                 <img src="../../../assets/file_img.png" style="width: 25px; height: 25px;float: left"/>
-                <span style="color: #99a9bf ;float: left">{{item1 | subStringUrl(index, item.taskDownload.originalFileNamesAdd)}}</span>
+                <span style="color: #99a9bf ;float: left">{{item1 | subStringUrl(index1, item.taskDownload.originalFileNamesAdd)}}</span>
                 <span style="float: right;color: #99a9bf">下载</span>
               </div>
             </a>
+            </ul>
           </el-col>
         </el-col>
       </el-row>
@@ -70,7 +72,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  import Vue from 'vue'
   export default {
     props: {
       detail: {}
@@ -78,43 +80,64 @@
     data() {
       return {
         taskDownload: [],
-        model: {},
+        model: {
+          taskFeils:{},
+          originalFilesNames:{}
+        },
         isbigimg: false,
         innerVisible: false,
         imageUrl: '',
         isShowArr: {
           0: '否',
           1: '是',
-        }
+        },
+
       }
     },
     watch: {
       detail: {
         immediate: true,
         handler: function () {
-          this.model = this.detail
-          console.log(this.model)
+
           this.taskDownload = []
-          if (this.detail && this.detail.taskFile) {
-            this.model.taskFile = this.detail.taskFile.split(',')
-            this.model.originalFileNames = this.detail.originalFileNames.split(',')
-          }
+
           if (this.detail.entTaskAdds) {
             this.detail.entTaskAdds.forEach((item, index, arr) => {
+
               if (item.taskAddtionFile && item.originalFileNamesAdd) {
-                let object = {}
+                let object = {};
+                if(item.taskAddtionFile !=null)
                 object.taskAddtionFile = item.taskAddtionFile.split(',')
+                if(item.originalFileNamesAdd !=null)
                 object.originalFileNamesAdd = item.originalFileNamesAdd.split(',')
                 item.taskDownload = object
+                Vue.set(this.detail.entTaskAdds, index, item)
+               // this.model.entTaskAdds.taskDownload = item.taskDownload
               }
+
             })
           }
+          console.log(this.detail)
+          this.model = this.detail
+          if (this.detail.originalFileNames && this.detail.taskFile) {
+
+            this.model.taskFeils = this.detail.taskFile.split(',')
+
+            this.model.originalFilesNames = this.detail.originalFileNames.split(',')
+          }
+
+          console.log(this.model)
+
         }
       }
     },
     filters: {
       subStringUrl: function (key, index, name) {
+        console.log(key+name)
         if (!key) {
+          return ''
+        }
+        if(name ==null){
           return ''
         }
         let array = key.split('.')

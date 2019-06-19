@@ -53,10 +53,18 @@
             :picker-options="pickerOptions2">
           </el-date-picker>
         </el-form-item>
+
+        <ent-select title="企业名称" place-holder="请输入企业名称"
+                    @input-select="salaryInputSelect">
+        </ent-select>
       </el-row>
 
-      <el-row type="flex" justify="left">
-        <el-col :span="2">
+      <el-row type="flex" >
+        <el-form-item label="证件号码">
+          <el-input size="small" placeholder="请输入证件号码" v-model="queryModel.idNumber"></el-input>
+        </el-form-item>
+
+        <el-col :span="2" style="margin-left: 120px">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
@@ -137,6 +145,12 @@
       <el-table-column   align="center" label="添加时间" >
         <template slot-scope="scope">
           <span   size="small"    >{{scope.row.createDate | filterdateYMDHMS()}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column   align="center" label="实名认证时间" >
+        <template slot-scope="scope">
+          <span   size="small"    >{{scope.row.verifyTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
 
@@ -263,6 +277,14 @@
             this.multipleSelection.push(item)
           }
         })
+      },
+      salaryInputSelect (entId) {
+        if (entId !== undefined) {
+          this.queryModel.entId = entId
+        } else {
+          this.queryModel.entId = null
+        }
+        console.log(this.queryModel.entId)
       },
       resetDoQuery() {
         this.queryModel.pageNum = 1

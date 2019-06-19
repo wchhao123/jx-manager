@@ -288,24 +288,22 @@ export const typeSalaryState = {
   3: '待付款',
   4: '订单关闭',
   5: '发放中',
-  7: '有撤回',
-  8: '有退款',
-  9: '单笔重发中',
+  7: '发放成功（有撤回）',
+  8: '部分退款',
   10: '待发送',
-  11: '部分失败'
+  12: '已退款'
 }
 export function funSalaryState () {
   return [
-    {'key': 1, 'value': '发放成功'},
-    {'key': 0, 'value': '发放失败'},
     {'key': 3, 'value': '待付款'},
-    {'key': 4, 'value': '订单关闭'},
-    {'key': 5, 'value': '发放中'},
-    {'key': 7, 'value': '有撤回'},
-    {'key': 8, 'value': '有退款'},
-    {'key': 9, 'value': '单笔重发中'},
     {'key': 10, 'value': '待发送'},
-    {'key': 11, 'value': '部分失败'}
+    {'key': 5, 'value': '发放中'},
+    {'key': 1, 'value': '发放成功'},
+    {'key': 7, 'value': '发放成功（有撤回）'},
+    {'key': 0, 'value': '发放失败'},
+    {'key': 12, 'value': '已退款'},
+    {'key': 8, 'value': '部分退款'},
+    {'key': 4, 'value': '订单关闭'},
   ]
 }
 // 工资发放详情状态
@@ -317,9 +315,7 @@ export const typeSalaryDetailState = {
   5: '发放中',
   7: '已撤回',
   8: '已退款',
-  9: '重发中',
   10: '待发送',
-  11: '部分失败'
 }
 export function funSalaryDetailState () {
   return [
@@ -330,7 +326,6 @@ export function funSalaryDetailState () {
     {'key': 5, 'value': '发放中'},
     {'key': 7, 'value': '已撤回'},
     {'key': 8, 'value': '已退款'},
-    {'key': 9, 'value': '重发中'},
   ]
 }
 
@@ -340,26 +335,31 @@ export const typeTaskState = {
   3: '待付款',
   4: '订单关闭',
   5: '发放中',
-  7: '有撤回'
+  7: '发放成功（有撤回）',
+  8: '部分退款',
+  12:'已退款'
 }
 export function funTaskDetailState () {
   return [
+    {'key': 3, 'value': '待付款'},
+    {'key': 5, 'value': '发放中'},
     {'key': 1, 'value': '发放成功'},
     {'key': 0, 'value': '发放失败'},
-    {'key': 3, 'value': '待付款'},
+    {'key': 8, 'value': '已退款'},
+    {'key': 7, 'value': '已撤回'},
     {'key': 4, 'value': '订单关闭'},
-    {'key': 5, 'value': '发放中'},
-    {'key': 7, 'value': '已撤回'}
   ]
 }
 export function funTaskState () {
   return [
-    {'key': 1, 'value': '发放成功'},
-    {'key': 0, 'value': '发放失败'},
     {'key': 3, 'value': '待付款'},
-    {'key': 4, 'value': '订单关闭'},
     {'key': 5, 'value': '发放中'},
-    {'key': 7, 'value': '有撤回'}
+    {'key': 1, 'value': '发放成功'},
+    {'key': 7, 'value': '发放成功（有撤回）'},
+    {'key': 0, 'value': '发放失败'},
+    {'key': 12, 'value': '已退款'},
+    {'key': 8, 'value': '部分退款'},
+    {'key': 4, 'value': '订单关闭'}
   ]
 }
 export const contractType = {
@@ -541,14 +541,12 @@ export function funUserVerifyState () {
 export const typeUserBusinessRule = {
   1: '提现到银行卡',
   2: '工资发放到银行卡',
-  3: '小额提现',
   4: '提现到支付宝'
 }
 export function funUserBusinessRuleType () {
   return [
     {'key': '1', 'value': '提现到银行卡'},
     {'key': '2', 'value': '工资发放到银行卡'},
-    {'key': '3', 'value': '小额提现'},
     {'key': '4', 'value': '提现到支付宝'}
   ]
 }
@@ -577,7 +575,8 @@ export const typeUserTrade = {
   8: '余额提现',
   10: '充值',
   11: '充值退款',
-  14: '个体经营所得'
+  14: '个体经营所得',
+  15:'个体经营所得撤回 '
 }
 export function funUserTradeType () {
   return [
@@ -591,7 +590,8 @@ export function funUserTradeType () {
     {'key': 8, 'value': '余额提现'},
     {'key': 10, 'value': '充值'},
     {'key': 11, 'value': '充值退款'},
-    {'key': 14, 'value': '个体经营所得'}
+    {'key': 14, 'value': '个体经营所得'},
+    {'key': 15, 'value': '个体经营所得撤回'}
   ]
 }
 

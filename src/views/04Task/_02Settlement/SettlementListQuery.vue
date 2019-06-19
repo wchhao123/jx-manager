@@ -142,7 +142,14 @@
       </el-table-column>
       <el-table-column align="center" label="撤回总额">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.refundAmount}}</span>
+          <span size="small" v-if="scope.row.payType=='1'">{{'— —'}}</span>
+          <span size="small" v-else>{{scope.row.refundAmount }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="退款总额">
+        <template slot-scope="scope">
+          <span size="small" v-if="scope.row.payType=='1'">{{'— —'}}</span>
+          <span size="small" v-else>{{scope.row.drawbackAmount}}</span>
         </template>
       </el-table-column>
 
