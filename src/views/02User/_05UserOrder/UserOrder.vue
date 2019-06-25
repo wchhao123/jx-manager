@@ -1,20 +1,27 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
       <el-row type="flex">
 
         <!-- 订单号-->
+        <el-col :span="6">
         <el-form-item label="订单号">
           <el-input size="small" v-model="queryModel.orderId" placeholder="请输入订单号"></el-input>
         </el-form-item>
+        </el-col>
         <!-- 账号-->
+        <el-col :span="6">
         <el-form-item label="用户姓名">
           <el-input size="small" v-model="queryModel.userName" placeholder="请输入用户名称"></el-input>
         </el-form-item>
+        </el-col>
         <!-- 账号-->
+        <el-col :span="6">
         <el-form-item label="账号">
           <el-input size="small" v-model="queryModel.mobile" placeholder="请输入用户手机号"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="订单类型">
           <el-select size="small" v-model="queryModel.orderType" filterable clearable placeholder="请选择订单类型">
             <el-option
@@ -25,9 +32,11 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
       </el-row>
 
       <el-row type="flex">
+        <el-col :span="6">
           <el-form-item label="订单状态">
             <el-select size="small" v-model="queryModel.orderState" filterable clearable placeholder="请选择订单状态">
               <el-option
@@ -38,6 +47,13 @@
               </el-option>
             </el-select>
           </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="第三方订单号">
+            <el-input size="small" v-model="queryModel.extOrderId" placeholder="请输入第三方订单号"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
           <el-form-item label="提交时间">
             <el-date-picker
               v-model="selectDateRange"
@@ -50,21 +66,21 @@
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
-        <el-form-item label="第三方订单号">
-          <el-input size="small" v-model="queryModel.extOrderId" placeholder="请输入第三方订单号"></el-input>
-        </el-form-item>
+        </el-col>
+
       </el-row>
       <el-row type="flex" justify="left">
-        <el-col :span="3">
-          <el-button size="small" type="primary" :disabled="isLoading" icon="el-icon-search" style="margin-bottom: 10px" @click="resetDoQuery">查询
-          </el-button>
-        </el-col>
         <el-col :span="3">
           <el-button size="small" type="danger" icon="el-icon-check"
                      @click="_exportUserOrder"
                      style="margin-bottom: 10px" >导出
           </el-button>
         </el-col>
+        <el-col :span="3">
+          <el-button size="small" type="primary" :disabled="isLoading" icon="el-icon-search" style="margin-bottom: 10px" @click="resetDoQuery">查询
+          </el-button>
+        </el-col>
+
       </el-row>
     </el-form>
 

@@ -1,19 +1,19 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
-      <el-row>
-        <el-col>
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
           <ent-select title="企业名称" place-holder="请输入企业名称"
                       @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
           </ent-select>
         </el-col>
-        <el-col>
-          <el-form-item :span="6" label="短信签名">
+        <el-col :span="6">
+          <el-form-item  label="短信签名">
             <el-input size="small" v-model="queryModel.smsSign" placeholder="请输入短信签名" clearable></el-input>
           </el-form-item>
         </el-col>
-        <el-col>
-          <el-form-item :span="6" label="公众号名称">
+        <el-col :span="6">
+          <el-form-item label="公众号名称">
             <el-input size="small" v-model="queryModel.wppName" placeholder="请输入公众号名称" clearable></el-input>
           </el-form-item>
         </el-col>
@@ -23,8 +23,8 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="15">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="10">
           <el-form-item label="添加时间">
             <el-date-picker
               v-model="selectDate"
@@ -44,11 +44,11 @@
           <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="addEntAgent">添加
           </el-button>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="removeEntAgent">删除
           </el-button>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="doQuery">查询
           </el-button>
         </el-col>

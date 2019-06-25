@@ -1,44 +1,58 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px" >
+      <el-row typeof="flex" justify="space-between">
 
         <!-- 批次号-->
-        <el-form-item :span="6" label="批次号" >
+        <el-col :span="6" >
+        <el-form-item  label="批次号" >
           <el-input size="small" v-model="queryModel.salaryId" placeholder="请输入批次号"></el-input>
         </el-form-item>
+        </el-col>
 
         <!-- 明细编号-->
-        <el-form-item :span="6" label="明细编号">
+
+        <el-col :span="6">
+        <el-form-item label="明细编号"   >
           <el-input size="small" v-model="queryModel.salaryDetailId" placeholder="请输入明细编号"></el-input>
         </el-form-item>
+        </el-col>
 
         <!-- 姓名-->
-        <el-form-item :span="6" label="姓名">
+        <el-col :span="6">
+        <el-form-item  label="姓名"  >
           <el-input size="small" v-model="queryModel.userName" placeholder="请输入姓名"></el-input>
         </el-form-item>
+        </el-col>
 
         <!-- 手机号-->
-        <el-form-item :span="6" label="手机号">
+        <el-col :span="6" >
+        <el-form-item  label="手机号" >
           <el-input size="small" v-model="queryModel.mobile" placeholder="请输入用户手机号"></el-input>
         </el-form-item>
+        </el-col>
       </el-row>
 
-      <el-row  type="flex">
-        <el-form-item :span="6" label="证件号码">
+
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
+        <el-form-item  label="证件号码" >
           <el-input size="small" v-model="queryModel.idNumber" placeholder="请输入证件号码"  clearable></el-input>
         </el-form-item>
-
+        </el-col>
+        <el-col :span="6">
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
+       </el-col>
         <!--工资月份-->
-
-        <el-form-item :span="6" label="运营主企业">
+        <el-col :span="6"  >
+        <el-form-item label="运营主企业"   >
           <el-input size="small" v-model="queryModel.entName" placeholder="请输入运营主企业名称" clearable></el-input>
         </el-form-item>
-
-        <el-form-item label="订单类型">
+        </el-col>
+        <el-col :span="6" >
+        <el-form-item label="订单类型" >
           <el-select size="small" v-model="queryModel.salaryType" filterable clearable placeholder="请选择订单类型">
             <el-option
               v-for="item in salaryDetailTypeSource"
@@ -48,10 +62,17 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
       </el-row>
 
-      <el-row  type="flex">
-        <el-form-item label="退款/撤回时间">
+      <el-row  typeof="flex" justify="space-between">
+        <el-col  :span="6">
+        <el-form-item  label="支付宝账号" >
+          <el-input size="small" v-model="queryModel.alipayId" placeholder="请输入支付宝账号" clearable></el-input>
+        </el-form-item>
+        </el-col>
+        <el-col  :span="6" >
+        <el-form-item label="退款/撤回时间" :label-position="right"  >
           <el-date-picker
             v-model="selectDateRange"
             type="daterange"
@@ -63,15 +84,18 @@
             :picker-options="pickerOptions">
           </el-date-picker>
         </el-form-item>
-
-        <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
-          </el-button>
         </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="3">
           <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryDetailList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_detail_export')">导出
           </el-button>
         </el-col>
+        <el-col :span="3">
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+          </el-button>
+        </el-col>
+
       </el-row>
     </el-form>
 
@@ -99,21 +123,31 @@
       <!--手机号-->
       <el-table-column  align="center" label="手机号">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.mobile}}</span>
+          <span size="small" v-if="scope.row.salaryType!=''&&scope.row.salaryType!=null&&scope.row.salaryType=='9'">{{'— —'}}</span>
+          <span size="small" v-else>{{scope.row.mobile}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column  align="center" label="支付宝账号">
+        <template slot-scope="scope">
+          <span size="small" v-if="scope.row.salaryType!=''&&scope.row.salaryType!=null&&scope.row.salaryType =='9'">{{scope.row.alipayId}}</span>
+          <span size="small" v-else>{{'— —'}}</span>
         </template>
       </el-table-column>
 
       <!--证件类型-->
       <el-table-column align="center" label="证件类型">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.idType | filterUserIdNumType}}</span>
+          <span size="small" v-if="scope.row.salaryType!=''&&scope.row.salaryType!=null&&scope.row.salaryType=='9'">{{'— —'}}</span>
+          <span size="small" v-else>{{scope.row.idType | filterUserIdNumType}}</span>
         </template>
       </el-table-column>
 
       <!--证件号-->
       <el-table-column align="center" label="证件号">
         <template slot-scope="scope">
-          <span size="small">{{scope.row.idNumber}}</span>
+          <span size="small" v-if="scope.row.salaryType!=''&&scope.row.salaryType!=null&&scope.row.salaryType=='9'">{{'— —'}}</span>
+          <span size="small" v-else>{{scope.row.idNumber}}</span>
         </template>
       </el-table-column>
 
@@ -382,5 +416,10 @@
 
   #recharge_manage_new .el-date-editor {
     width: 100%;
+  }
+  .el-input--small .el-input__inner {
+    height: 32px;
+    line-height: 32px;
+    width: 200px;
   }
 </style>

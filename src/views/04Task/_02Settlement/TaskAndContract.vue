@@ -1,24 +1,31 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
-        <el-form-item :span="6" label="合同编号">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
+        <el-form-item label="合同编号">
           <el-input size="small" clearable v-model="queryModel.signId" placeholder="请输入合同编号"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="姓名">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="姓名">
           <el-input size="small" clearable v-model="queryModel.userName" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="手机号">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="手机号">
         <el-input size="small" clearable v-model="queryModel.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item :span="1">
-        </el-form-item>
-      </el-row>
-
-      <el-row type="flex">
+        </el-col>
+        <el-col :span="6">
         <el-form-item :span="6" label="合同名称">
           <el-input size="small" clearable v-model="queryModel.contractName" placeholder="请输入合同名称"></el-input>
         </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="全部">
             <el-option
@@ -29,8 +36,12 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <ent-select  title="发布企业" place-holder="请输入企业名称" @input-select="salaryInputSelect">
         </ent-select>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="合同状态">
           <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择合同状态">
             <el-option
@@ -41,24 +52,33 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="签约状态">
+            <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
+              <el-option
+                v-for="(item, index) in this.$state.contractSignState"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
-      <el-row type="flex">
-        <el-form-item label="签约状态">
-          <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
-            <el-option
-              v-for="(item, index) in this.$state.contractSignState"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item :span="6" label="任务编号">
+      <el-row typeof="flex" justify="space-between">
+
+        <el-col :span="6">
+        <el-form-item label="任务编号">
           <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="任务名称">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="任务名称">
          <el-input size="small" clearable v-model="queryModel.taskName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="签约发起时间">
           <el-date-picker
             v-model="selectDate"
@@ -71,6 +91,7 @@
             :picker-options="this.$state.pickerOptions2">
           </el-date-picker>
         </el-form-item>
+        </el-col>
       </el-row>
 
       <el-row type="flex" justify="left">

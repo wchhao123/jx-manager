@@ -49,9 +49,7 @@
             placeholder="结束时间">
           </el-date-picker>
         </el-form-item>
-      </el-row>
-      <el-row type="flex" justify="left">
-        <el-col :span="3">
+        <el-col  style="position: absolute;right: 100px">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>

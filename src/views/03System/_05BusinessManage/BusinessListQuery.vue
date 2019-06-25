@@ -1,10 +1,13 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline" label-width="100px">
        <el-row>
+         <el-col :span="7">
          <el-form-item label="业务名称">
             <el-input size="small" v-model="queryModel.businessName" placeholder="请输入业务名称"></el-input>
          </el-form-item>
+         </el-col>
+         <el-col :span="7">
          <el-form-item label="默认状态">
            <el-select size="small" v-model="queryModel.defaultState" filterable clearable  placeholder="请选择默认状态">
              <el-option
@@ -15,13 +18,14 @@
              </el-option>
            </el-select>
          </el-form-item>
+         </el-col>
        </el-row>
       <el-row>
-        <el-col :span="2">
-          <el-button size="small" type="write" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="doQuery">查询
+        <el-col :span="3">
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="doQuery">查询
           </el-button>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="doEdit">编辑
           </el-button>
         </el-col>

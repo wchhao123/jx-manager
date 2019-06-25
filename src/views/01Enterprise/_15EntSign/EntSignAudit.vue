@@ -1,15 +1,18 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
       <el-row type="flex" >
+        <el-col :span="7">
         <ent-select  title="企业名称" place-holder="企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
-        <el-form-item>
-        </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item  label="申请人账号">
           <el-input size="small" v-model="queryModel.mobile" placeholder="请输入申请人账号"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <el-form-item  label="审批状态">
             <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择审批状态">
               <el-option
@@ -20,30 +23,37 @@
               </el-option>
             </el-select>
           </el-form-item>
-        <el-form-item label="销售代表">
-          <el-autocomplete
-            popper-class="my-autocomplete"
-            v-model="queryModel.saleName"
-            :fetch-suggestions="querySearch"
-            placeholder="请选择销售代表"
-            @select="setEntSale"
-          >
-            <i class="el-icon-edit el-input__icon"
-               slot="suffix">
-            </i>
-            <template slot-scope="{ item }">
-              <div class="name">{{ item.value }}</div>
-              <span class="addr">{{ item.saleId }}</span>
-            </template>
-          </el-autocomplete>
-        </el-form-item>
+        </el-col>
+
       </el-row>
 
       <el-row type="flex">
+        <el-col :span="7">
+          <el-form-item label="销售代表">
+            <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="queryModel.saleName"
+              :fetch-suggestions="querySearch"
+              placeholder="请选择销售代表"
+              @select="setEntSale"
+            >
+              <i class="el-icon-edit el-input__icon"
+                 slot="suffix">
+              </i>
+              <template slot-scope="{ item }">
+                <div class="name">{{ item.value }}</div>
+                <span class="addr">{{ item.saleId }}</span>
+              </template>
+            </el-autocomplete>
+          </el-form-item>
+        </el-col>
         <!--// 审批人-->
+        <el-col :span="7">
         <el-form-item  label="审批人">
           <el-input size="small" placeholder="请输入审批人" v-model="queryModel.verifyPerson"></el-input>
         </el-form-item>
+        </el-col>
+
           <el-form-item label="提交时间">
             <el-date-picker
               class="startDate"
@@ -54,6 +64,7 @@
               placeholder="开始时间">
             </el-date-picker>
           </el-form-item>
+
           <el-form-item >
             <el-date-picker
               class="endDate"
@@ -64,6 +75,7 @@
               placeholder="结束时间">
             </el-date-picker>
           </el-form-item>
+
       </el-row>
       <el-row type="flex" justify="left">
         <el-col :span="3">

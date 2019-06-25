@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-form class="toolbar demo-form-inline" :inline="true" :model="queryModel" label-position="right">
+    <el-form class="toolbar demo-form-inline" :inline="true" :model="queryModel" label-position="right" label-width="100px" >
       <el-row>
+        <el-col :span="7">
         <el-form-item label="业务类型">
           <el-select size="small" v-model="queryModel.businessType" filterable clearable placeholder="请选择业务类型">
             <el-option
@@ -12,6 +13,8 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="规则状态">
           <el-select size="small" v-model="queryModel.ruleState" filterable clearable placeholder="">
             <el-option
@@ -22,14 +25,15 @@
             </el-option>
           </el-select>
         </el-form-item>
-      </el-row>
-      <el-row type="flex" justify="left">
+        </el-col>
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search"
                      style="margin-bottom: 10px; margin-left: 50px" :disabled="isLoading"
                      @click="resetDoQuery">查询
           </el-button>
         </el-col>
+      </el-row>
+
         <!--<el-col :span="3">-->
           <!--<el-button size="small" type="danger" icon="el-icon-check"-->
                      <!--v-show="this.$store.getters.getBtnIsShowByName('btn_user_role_add')"-->

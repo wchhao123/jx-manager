@@ -1,14 +1,17 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
 
         <!-- 批次号-->
-        <el-form-item :span="6" label="批次号">
+        <el-col :span="7">
+        <el-form-item  label="批次号" >
           <el-input size="small" v-model="queryModel.salaryId" placeholder="请输入批次号"></el-input>
         </el-form-item>
+        </el-col>
         <!--工资月份-->
-          <el-form-item label="工资月份">
+        <el-col :span="7" >
+          <el-form-item label="工资月份" >
             <el-date-picker
               size="small"
               :editable=false
@@ -17,15 +20,18 @@
               placeholder="请选择工资月份">
             </el-date-picker>
           </el-form-item>
-
+        </el-col>
+        <el-col :span="7" >
         <ent-select title="发薪企业" place-holder="发薪企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
+        </el-col>
       </el-row>
 
-      <el-row type="flex">
-          <el-form-item label="批次状态">
-            <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择批次状态">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="7" >
+          <el-form-item label="批次状态" >
+            <el-select size="small" v-model="queryModel.salaryState"   filterable clearable placeholder="请选择批次状态">
               <el-option
                 v-for="item in salaryStateSource"
                 :key="item.key"
@@ -34,7 +40,22 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="创建时间">
+        </el-col>
+
+        <el-col :span="7">
+          <el-form-item label="发放类型" >
+            <el-select size="small" v-model="queryModel.salaryType"   filterable clearable placeholder="请选择发放类型">
+              <el-option
+                v-for="item in salaryTypeSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10" >
+          <el-form-item label="创建时间" >
             <el-date-picker
               v-model="selectDate"
               type="daterange"
@@ -46,24 +67,16 @@
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="发放类型">
-            <el-select size="small" v-model="queryModel.salaryType" filterable clearable placeholder="请选择发放类型">
-              <el-option
-                v-for="item in salaryTypeSource"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key">
-              </el-option>
-            </el-select>
-          </el-form-item>
+        </el-col>
+
       </el-row>
-      <el-row type="flex" justify="left">
-        <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
+      <el-row typeof="flex" justify="space-between">
+        <el-col  :span="3" >
+          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_export')">导出
           </el-button>
         </el-col>
-        <el-col :span="3">
-          <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportSalaryList" v-show="this.$store.getters.getBtnIsShowByName('btn_ent_salary_export')">导出
+        <el-col  :span="3" >
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
       </el-row>

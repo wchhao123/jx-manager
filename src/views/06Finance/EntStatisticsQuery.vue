@@ -2,12 +2,17 @@
   <div>
     <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline"   ref="entStatisticsForm">
       <el-row type="flex">
+        <el-col :span="7">
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
+        </el-col>
+        <el-col :span="7">
         <el-form-item :span="6" label="运营主企业">
           <el-input size="small" clearable v-model="queryModel.mainEntName" placeholder="请输入运营主企业名称"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="10">
         <el-form-item label="统计时间"  prop="selectDate">
           <el-date-picker
             v-model="selectDate"
@@ -20,6 +25,7 @@
             :picker-options="pickerOptions2">
           </el-date-picker>
         </el-form-item>
+        </el-col>
       </el-row>
       <el-row type="flex" justify="left">
         <el-col :span="3">

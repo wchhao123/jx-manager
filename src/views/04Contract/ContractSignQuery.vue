@@ -1,22 +1,32 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row>
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
         <!-- 批次号-->
-        <el-form-item :span="6" label="批次号">
+        <el-col :span="7">
+        <el-form-item  label="批次号">
           <el-input size="small" clearable v-model="queryModel.batchId" placeholder="请输入批次号"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="合同编号">
+        </el-col>
+        <el-col :span="7">
+        <el-form-item label="合同编号">
           <el-input size="small" clearable v-model="queryModel.signId" placeholder="请输入合同编号"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="用户姓名">
+        </el-col>
+        <el-col :span="7">
+        <el-form-item  label="用户姓名">
           <el-input size="small" clearable v-model="queryModel.userName" placeholder="请输入用户姓名"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="用户手机号">
-          <el-input size="small" clearable v-model="queryModel.mobile" placeholder="请输入用户手机号"></el-input>
-        </el-form-item>
+        </el-col>
+
       </el-row>
-      <el-row>
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="7">
+          <el-form-item  label="用户手机号">
+            <el-input size="small" clearable v-model="queryModel.mobile" placeholder="请输入用户手机号"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="签约状态">
           <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
             <el-option
@@ -27,36 +37,28 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
         </ent-select>
-          <el-form-item label="签约发起时间">
-            <el-date-picker
-              v-model="selectDate"
-              type="daterange"
-              align="right"
-              unlink-panels
-              range-separator="至"
-              start-placeholder="请输入开始时间"
-              end-placeholder="请输入结束时间"
-              :picker-options="this.$state.pickerOptions2">
-            </el-date-picker>
-          </el-form-item>
-      </el-row>
-      <el-row justify="left">
-        <el-col :span="12">
-        <el-form-item label="合同类型">
-          <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
-            <el-option
-              v-for="(item, index) in this.$state.contractType"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
         </el-col>
-        <el-col >
+
+      </el-row>
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="7">
+          <el-form-item label="合同类型">
+            <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
+              <el-option
+                v-for="(item, index) in this.$state.contractType"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <el-form-item label="签约主体">
             <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
               <el-option
@@ -67,6 +69,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+        </el-col>
+        <el-col :span="7">
+        <el-form-item label="签约发起时间">
+          <el-date-picker
+            v-model="selectDate"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="请输入开始时间"
+            end-placeholder="请输入结束时间"
+            :picker-options="this.$state.pickerOptions2">
+          </el-date-picker>
+        </el-form-item>
         </el-col>
       </el-row>
       <el-row type="flex" justify="left">

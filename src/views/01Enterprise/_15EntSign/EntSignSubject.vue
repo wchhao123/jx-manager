@@ -1,13 +1,18 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
       <el-row>
+        <el-col :span="7">
         <el-form-item label="企业名称">
           <el-input size="small" clearable v-model="queryModel.cooperateEntName" placeholder="请输入企业名称"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="法人代表姓名">
           <el-input size="small" clearable v-model="queryModel.legalPerson" placeholder="请输入法人代表姓名"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="业务类型">
           <el-select size="small" v-model="queryModel.businessType" clearable placeholder="请选择业务类型">
             <el-option
@@ -18,8 +23,10 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
       </el-row>
         <el-row>
+          <el-col :span="10">
           <el-form-item label="创建时间">
             <el-date-picker
               v-model="selectDate"
@@ -32,13 +39,14 @@
               :picker-options="this.$state.pickerOptions2">
             </el-date-picker>
           </el-form-item>
+          </el-col>
         </el-row>
       <el-row>
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="addSignEnt">添加签约主企业
           </el-button>
         </el-col>

@@ -1,10 +1,13 @@
 <template>
     <div>
-      <el-form :inline="true" class="toolbar demo-form-inline">
-        <el-row>
+      <el-form :inline="true" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+        <el-row typeof="flex" justify="space-between">
+          <el-col :span="8">
           <el-form-item label="错误Id">
             <el-input size="small" v-model="queryModel.errorId"></el-input>
           </el-form-item>
+          </el-col>
+          <el-col :span="8">
           <el-form-item label="错误类型">
             <el-select size="small" v-model="queryModel.errorType" filterable clearable placeholder="请选择错误类型">
               <el-option
@@ -15,7 +18,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+          </el-col>
+          <el-col :span="8">
           <el-form-item label="job执行状态">
             <el-select size="small" v-model="queryModel.jobState" filterable clearable placeholder="请选择job执行状态">
               <el-option
@@ -26,6 +30,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
             <el-form-item label="创建时间">
@@ -40,14 +45,12 @@
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-form-item>
-        </el-row>
-
-        <el-row type="flex" justify="left">
-          <el-col :span="3">
+          <el-col style="position: absolute;right: 100px;">
             <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
             </el-button>
           </el-col>
         </el-row>
+
       </el-form>
       <el-table :data="dataList" style="width: 100%" border v-loading="isLoading">
         <el-table-column align="center" label="错误编号" width="140">

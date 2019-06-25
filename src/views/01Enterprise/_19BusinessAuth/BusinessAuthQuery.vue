@@ -1,18 +1,18 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
-      <el-row>
-        <el-col>
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="8">
           <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
           </ent-select>
         </el-col>
-        <el-col>
+        <el-col :span="8">
           <el-form-item label="运营主企业">
             <el-input size="small" clearable v-model="queryModel.entName" placeholder="请输入运营主企业名称"></el-input>
           </el-form-item>
         </el-col>
-        <el-col>
+        <el-col :span="8">
         <el-form-item label="业务类型">
           <el-select size="small" v-model="queryModel.businessType" filterable clearable placeholder="请选择业务类型">
             <el-option
@@ -37,7 +37,7 @@
           <!--</el-form-item>-->
         <!--</el-col>-->
       </el-row>
-        <el-row>
+        <el-row typeof="flex" justify="space-between">
           <el-col :span="15">
           <el-form-item label="开通时间">
             <el-date-picker
@@ -53,12 +53,12 @@
           </el-form-item>
           </el-col>
         </el-row>
-      <el-row>
+      <el-row typeof="flex" justify="space-between">
         <el-col :span="2">
           <el-button size="small" type="write" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="openDiaLog">开通权限
           </el-button>
         </el-col>
@@ -66,7 +66,7 @@
           <!--<el-button size="small" type="danger"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('1')">重新启用-->
           <!--</el-button>-->
         <!--</el-col>-->
-        <el-col :span="2">
+        <el-col :span="3">
           <el-button size="small" type="primary"  style="margin-bottom: 10px" :disabled="isLoading" @click="doSubmit('0')">删除权限
           </el-button>
         </el-col>

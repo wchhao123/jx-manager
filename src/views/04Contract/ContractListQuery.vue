@@ -1,14 +1,19 @@
 <template>
   <div>
-    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar form-inline">
-      <el-row>
+    <el-form :inline=true :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
         <!-- 批次号-->
+        <el-col :span="6">
         <el-form-item label="批次号">
           <el-input size="small" clearable v-model="queryModel.batchId" placeholder="请输入批次号"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="合同名称">
           <el-input size="small" clearable v-model="queryModel.contractName" placeholder="请输入合同名称"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="合同类型">
           <el-select size="small" v-model="queryModel.contractType" filterable clearable placeholder="请选择合同类型">
             <el-option
@@ -19,6 +24,8 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
         <el-form-item label="合同状态">
           <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择合同状态">
             <el-option
@@ -29,14 +36,27 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
       </el-row>
-        <el-row>
-          <el-col :span="6">
+        <el-row typeof="flex" justify="space-between">
+          <el-col :span="6" >
             <ent-select title="企业名称" place-holder="请输入企业名称"
                         @input-select="(index) => {index !== undefined ?  this.queryModel.entId = index: this.queryModel.entId = null}">
             </ent-select>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="6" >
+            <el-form-item label="签约主体">
+              <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
+                <el-option
+                  v-for="(item, index) of this.$store.getters.cooperateEntName"
+                  :key="index"
+                  :label="item"
+                  :value="item">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6" >
             <el-form-item label="签约发起时间">
               <el-date-picker
                 v-model="selectDate"
@@ -50,23 +70,11 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-            <el-col :span="8">
-              <el-form-item label="签约主体">
-                <el-select size="small" v-model="queryModel.cooperateEntName" filterable clearable placeholder="请输入签约主体名称">
-                  <el-option
-                    v-for="(item, index) of this.$store.getters.cooperateEntName"
-                    :key="index"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="3">
+            <el-col  style="position: absolute;left: 0px">
               <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
               </el-button>
             </el-col>
-        </el-row>
+          </el-row>
     </el-form>
 
     <el-table ref="ContractListTable" :data="dataList" style="width: 100%" border v-loading="isLoading">

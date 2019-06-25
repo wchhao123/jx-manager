@@ -1,14 +1,14 @@
 <template>
   <section id="recharge_manage_new">
-    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
-      <el-row type="flex">
-        <el-col>
+    <el-form :inline="true" :model="queryModel" label-position="right"  class="toolbar demo-form-inline" label-width="100px">
+      <el-row  typeof="flex" justify="space-between">
+        <el-col :span="7">
             <ent-select title="企业名称"
                         place-holder="请输入企业编号或名称"
                         @input-select="salaryInputSelect"
             ></ent-select>
         </el-col>
-        <el-col>
+        <el-col :span="7">
           <el-form-item label="交易类型">
             <el-select size="small" v-model="queryModel.transType" filterable clearable placeholder="请选择交易类型">
               <el-option
@@ -20,30 +20,32 @@
             </el-select>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row type="flex">
-        <el-form-item label="交易时间" :span=8>
-          <el-date-picker
-            v-model="selectDate"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions2">
-          </el-date-picker>
-        </el-form-item>
-      </el-row>
-      <el-row type="flex" justify="left">
-        <el-col :span="3">
-          <el-button size="small" type="primary" icon="el-icon-search" @click="resetDoQuery" :disabled="isLoading">查询
-          </el-button>
+        <el-col :span="10">
+          <el-form-item label="交易时间" :span=8>
+            <el-date-picker
+              v-model="selectDate"
+              type="daterange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2">
+            </el-date-picker>
+          </el-form-item>
         </el-col>
+      </el-row>
+
+      <el-row type="flex" justify="left">
         <el-col :span="3">
           <el-button size="small" type="danger" icon="el-icon-check" style="margin-bottom: 10px" @click="doExportList" >导出
           </el-button>
         </el-col>
+        <el-col :span="3">
+          <el-button size="small" type="primary" icon="el-icon-search" @click="resetDoQuery" :disabled="isLoading">查询
+          </el-button>
+        </el-col>
+
       </el-row>
     </el-form>
 

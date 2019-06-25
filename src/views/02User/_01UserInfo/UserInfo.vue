@@ -1,14 +1,20 @@
 <template>
   <div>
 
-    <el-form :inline="true" class="toolbar demo-form-inline" :model="queryModel" v-if="queryModel">
+    <el-form :inline="true" class="toolbar demo-form-inline" :model="queryModel" v-if="queryModel" label-width="100px"
+             label-position="right">
       <el-row type="flex">
+        <el-col :span="7">
         <el-form-item label="姓名">
           <el-input size="small" placeholder="请输入用户名" v-model="queryModel.userName"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="手机号">
           <el-input size="small" placeholder="请输入手机号" v-model="queryModel.mobile"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="激活状态">
           <el-select size="small" v-model="queryModel.isActive" filterable clearable placeholder="请选择激活状态">
             <el-option
@@ -19,19 +25,24 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="证件照片">
-          <el-select size="small" v-model="queryModel.isUpload" filterable clearable placeholder="请选择上传状态">
-            <el-option
-              v-for="(item, index) of this.$state.uploadState"
-              :key="index"
-              :label="item"
-              :value="index">
-            </el-option>
-          </el-select>
-        </el-form-item>
+        </el-col>
+
       </el-row>
       <el-row>
-        <el-form-item label="实名认证状态">
+        <el-col :span="7">
+          <el-form-item label="证件照片">
+            <el-select size="small" v-model="queryModel.isUpload" filterable clearable placeholder="请选择上传状态">
+              <el-option
+                v-for="(item, index) of this.$state.uploadState"
+                :key="index"
+                :label="item"
+                :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
+        <el-form-item label="认证状态">
           <el-select size="small" v-model="queryModel.isVerify" filterable clearable placeholder="请选择实名认证状态">
             <el-option
               v-for="item in typeVerifyStateResource"
@@ -41,43 +52,52 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="添加时间">
-          <el-date-picker
-            v-model="selectDate"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions2">
-          </el-date-picker>
-        </el-form-item>
+        </el-col>
+        <el-col :span="7">
+         <el-form-item label="证件号码">
+           <el-input size="small" placeholder="请输入证件号码" v-model="queryModel.idNumber"></el-input>
+         </el-form-item>
+       </el-col>
 
-        <ent-select title="企业名称" place-holder="请输入企业名称"
-                    @input-select="salaryInputSelect">
-        </ent-select>
       </el-row>
 
       <el-row type="flex" >
-        <el-form-item label="证件号码">
-          <el-input size="small" placeholder="请输入证件号码" v-model="queryModel.idNumber"></el-input>
-        </el-form-item>
-
-        <el-col :span="2" style="margin-left: 120px">
-          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
-          </el-button>
+        <el-col :span="7">
+          <ent-select title="企业名称" place-holder="请输入企业名称"
+                      @input-select="salaryInputSelect">
+          </ent-select>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="10">
+          <el-form-item label="添加时间">
+            <el-date-picker
+              v-model="selectDate"
+              type="daterange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+
+        <el-col :span="4">
           <el-button size="small" :disabled="isLoading" type="danger" icon="el-icon-check" style="margin-bottom: 10px"
                      @click="_exportUserInfo"
                      v-show="this.$store.getters.getBtnIsShowByName('btn_user_export')">导出用户信息
           </el-button>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-button size="small" :disabled="isLoading" type="danger" icon="el-icon-check" style="margin-bottom: 10px"
                      @click="doExportImageList"
                      v-show="this.$store.getters.getBtnIsShowByName('btn_user_export')">导出证件照片
+          </el-button>
+        </el-col>
+        <el-col :span="4" >
+          <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>
         </el-col>
       </el-row>

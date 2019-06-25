@@ -1,20 +1,27 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="7">
         <ent-select title="结算企业" place-holder="请选择结算企业"
                     @input-select="salaryInputSelect">
         </ent-select>
-        <el-form-item :span="1">
-        </el-form-item>
-        <el-form-item :span="6" label="任务名称">
+        </el-col>
+        <!--<el-form-item :span="1">-->
+        <!--</el-form-item>-->
+        <el-col :span="7">
+        <el-form-item  label="任务名称">
           <el-input size="small" clearable v-model="queryModel.taskName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="任务编号">
+        </el-col>
+        <el-col :span="7">
+        <el-form-item  label="任务编号">
           <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
+        </el-col>
       </el-row>
-      <el-row type="flex">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="7">
           <el-form-item label="任务状态">
             <el-select size="small" v-model="queryModel.state" filterable clearable placeholder="请选择任务状态">
               <el-option
@@ -25,7 +32,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+        </el-col>
+        <el-col :span="10">
           <el-form-item label="创建时间">
             <el-date-picker
               v-model="selectDate"
@@ -38,6 +46,7 @@
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
+        </el-col>
       </el-row>
       <el-row type="flex" justify="left">
         <el-col :span="3">

@@ -36,7 +36,8 @@ const entVerifyStateMap = {
 
 export const taskSettlementType = {
   1: '线下结算',
-  2: '线上结算'
+  2: '结算到客户端',
+  3: '结算到支付宝'
 }
 
 const accountAssignStateMap = {
@@ -143,9 +144,11 @@ const typeEntTransfer = {
   12: '工资发放',
   13: '工资发放退款',
   14: '工资发放',
-  15: '众包结算',
-  16: '众包结算撤回',
-  17: '众包结算退款'
+  15: '众包结算到客户端',
+  16: '众包结算到客户端撤回',
+  17: '众包结算到客户端退款',
+  18: '众包结算到支付宝',
+  19: '众包结算到支付宝退款'
 }
 export {typeEntTransfer}
 export function funEntTransfer () {
@@ -154,9 +157,11 @@ export function funEntTransfer () {
     {'key': 2, 'value': '工资代发充值'},
     {'key': 7, 'value': '工资发放撤回'},
     {'key': 13, 'value': '工资发放退款'},
-    {'key': 15, 'value': '众包结算'},
-    {'key': 16, 'value': '众包结算撤回'},
-    {'key': 17, 'value': '众包结算退款'}
+    {'key': 15, 'value': '众包结算到客户端'},
+    {'key': 16, 'value': '众包结算到客户端撤回'},
+    {'key': 17, 'value': '众包结算到客户端退款'},
+    {'key': 18,  'value':'众包结算到支付宝'},
+    {'key': 19,  'value':'众包结算到支付宝退款'}
   ]
 }
 
@@ -258,8 +263,9 @@ const typeRefundSalaryType = {
   3: '工资发放至客户端',
   5: '工资发放至银行卡',
   6: '工资发放至银行卡',
-  7: '众包任务结算',
-  8:  '众包任务结算'
+  7: '众包结算到客户端',
+  8: '众包结算到客户端',
+  9: '众包结算到支付宝'
 }
 export {typeRefundSalaryType}
 export {typeSalaryType}
@@ -277,7 +283,8 @@ export function funRefundSalaryType () {
   return [
     {'key': 1, 'value': '工资发放至客户端'},
     {'key': 5, 'value': '工资发放至银行卡'},
-    {'key': 7, 'value': '众包任务结算'},
+    {'key': 7, 'value': '众包结算到客户端'},
+    {'key': 9, 'value': '众包结算到支付宝'}
   ]
 }
 
@@ -541,13 +548,15 @@ export function funUserVerifyState () {
 export const typeUserBusinessRule = {
   1: '提现到银行卡',
   2: '工资发放到银行卡',
-  4: '提现到支付宝'
+  4: '提现到支付宝',
+  5: '众包结算到支付宝'
 }
 export function funUserBusinessRuleType () {
   return [
     {'key': '1', 'value': '提现到银行卡'},
     {'key': '2', 'value': '工资发放到银行卡'},
-    {'key': '4', 'value': '提现到支付宝'}
+    {'key': '4', 'value': '提现到支付宝'},
+    {'key': '5', 'value': '众包结算到支付宝'}
   ]
 }
 
@@ -689,7 +698,10 @@ export const typeSystemErrorType = {
   '14': '小批次福利分配异常',
   '15':"更新福利分配多批次状态异常",
   '16': '福利分配MQ开户失败',
-  '17':"工资发放到银行卡异常"
+  '17':"工资发放到银行卡异常",
+  '18': "任务结算到支付宝分配异常",
+  '19': '任务结算到支付宝发放异常',
+  '20':'任务结算到支付宝退款异常'
 }
 
 export function funSystemErrorType () {
@@ -707,7 +719,10 @@ export function funSystemErrorType () {
     {'key': '14', 'value': '小批次福利分配异常'},
     {'key': '15', 'value': '更新福利分配多批次状态异常'},
     {'key': '16', 'value': '福利分配MQ开户失败'},
-    {'key': '17', 'value': '工资发放到银行卡异常'}
+    {'key': '17', 'value': '工资发放到银行卡异常'},
+    {'key': '18', 'value': '任务结算到支付宝分配异常'},
+    {'key': '19', 'value': '任务结算到支付宝发放异常'},
+    {'key': '20', 'value': '任务结算到支付宝退款异常'}
   ]
 }
 

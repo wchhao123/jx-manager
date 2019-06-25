@@ -40,6 +40,7 @@ export default {
       margin-bottom: 0;
     }
   }
+
   .el-col {
     border-radius: 4px;
   }
@@ -124,6 +125,7 @@ export default {
     /*display: inline-block;*/
     white-space: nowrap;
     margin-bottom: -2px;
+
   }
   .login-container{
     .el-form-item__error{
@@ -131,6 +133,7 @@ export default {
       padding-top: 3px!important;
     }
   }
+
   .el-form-item__error{
     padding-top: 0px!important;
     margin-top: 1px!important;
@@ -148,10 +151,22 @@ export default {
       font-size: 14px;
       margin-bottom: 0px;
       display: flex;
+    //  width: 25%;
       span{
         font-size: 12px;
+
       }
     }
+    .el-input{
+      display: inline-block;
+      border-radius: 4px!important;
+      width:180px;
+    }
+    .el-col{
+      text-align: right;
+    }
+
+
   }
   .globalPointer{
     cursor:pointer;

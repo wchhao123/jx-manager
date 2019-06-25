@@ -1,33 +1,44 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="80px">
+      <el-row typeof="flex" justify="space-between">
 
         <!-- 批次号-->
-        <el-form-item :span="6" label="结算批次号">
+       <el-col :span="6">
+        <el-form-item  label="结算批次号"   >
           <el-input size="small" clearable v-model="queryModel.salaryId" placeholder="请输入结算批次号"></el-input>
         </el-form-item>
-
+       </el-col>
+        <el-col :span="6">
         <ent-select title="企业名称" place-holder="请输入企业名称"
                     @input-select="salaryInputSelect">
         </ent-select>
-        <el-form-item :span="6" label="任务名称">
+        </el-col>
+
+        <el-col :span="6">
+        <el-form-item  label="任务名称">
           <el-input size="small" clearable v-model="queryModel.salaryName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="结算方式">
+        </el-col>
+
+        <el-col :span="6">
+        <el-form-item  label="结算方式" >
           <el-select size="small"  v-model="queryModel.payType" filterable clearable  placeholder="全部">
-          <el-option
+           <el-option
             v-for="(item, index) of this.$state.taskSettlementType"
             :key="index"
             :label="item"
             :value="index">
-          </el-option>
+           </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
+
       </el-row>
 
-      <el-row type="flex">
-          <el-form-item label="批次状态">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
+          <el-form-item label="批次状态" >
             <el-select size="small" v-model="queryModel.salaryState" filterable clearable placeholder="请选择批次状态">
               <el-option
                 v-for="item in taskStateSource"
@@ -37,10 +48,14 @@
               </el-option>
             </el-select>
           </el-form-item>
-        <el-form-item :span="6" label="任务编号">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="任务编号" >
           <el-input size="small" clearable v-model="queryModel.businessId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
-          <el-form-item label="结算时间">
+        </el-col>
+        <el-col :span="10">
+          <el-form-item label="结算时间" >
             <el-date-picker
               v-model="selectDate"
               type="daterange"
@@ -52,8 +67,9 @@
               :picker-options="pickerOptions2">
             </el-date-picker>
           </el-form-item>
+        </el-col>
       </el-row>
-      <el-row type="flex" justify="left">
+      <el-row typeof="flex" justify="space-between">
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>

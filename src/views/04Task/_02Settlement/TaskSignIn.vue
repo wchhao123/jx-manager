@@ -1,24 +1,34 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
-      <el-row type="flex">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="6">
         <ent-select  title="发布企业" place-holder="请输入发布企业"
                     @input-select="salaryInputSelect">
         </ent-select>
-        <el-form-item :span="1">
-        </el-form-item>
-        <el-form-item :span="6" label="手机号码">
+        </el-col>
+        <!--<el-form-item :span="1">-->
+        <!--</el-form-item>-->
+        <el-col :span="6">
+        <el-form-item  label="手机号码">
           <el-input size="small" clearable v-model="queryModel.mobile" placeholder="请输入手机号码"></el-input>
         </el-form-item>
-        <el-form-item :span="6" label="任务名称">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="任务名称">
           <el-input size="small" clearable v-model="queryModel.taskName" placeholder="请输入任务名称"></el-input>
         </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item  label="姓名">
+            <el-input size="small" clearable v-model="queryModel.name" placeholder="请输入用户姓名"></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
 
-      <el-row type="flex">
-        <el-form-item :span="6" label="姓名">
-          <el-input size="small" clearable v-model="queryModel.name" placeholder="请输入用户姓名"></el-input>
-        </el-form-item>
+      <el-row typeof="flex" justify="space-between">
+
+        <el-col :span="6">
           <el-form-item label="报名状态">
             <el-select size="small" v-model="queryModel.signUpState" filterable clearable placeholder="请选择报名状态">
               <el-option
@@ -29,12 +39,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-        <el-form-item :span="6" label="任务编号">
+        </el-col>
+        <el-col :span="6">
+        <el-form-item  label="任务编号">
           <el-input size="small" clearable v-model="queryModel.taskId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
-      </el-row>
-      <el-row type="flex" justify="left">
-        <el-col>
+        </el-col>
+        <el-col :span="10">
           <el-form-item label="报名时间">
             <el-date-picker
               v-model="selectDate"
@@ -48,6 +59,9 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row type="flex" justify="left">
+
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>

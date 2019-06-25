@@ -1,22 +1,28 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
       <el-row type="flex">
 
         <!-- 订单号-->
-        <el-form-item :span="6" label="订单号">
+        <el-col :span="7" >
+        <el-form-item label="订单号">
           <el-input size="small" v-model="queryModel.orderId" placeholder="请输入订单号"></el-input>
         </el-form-item>
+        </el-col>
 
-        <el-form-item :span="6" label="第三方订单号">
+        <el-col :span="7" >
+        <el-form-item  label="第三方订单号">
           <el-input size="small" v-model="queryModel.extOrderId" placeholder="请输入第三方订单号"></el-input>
         </el-form-item>
+        </el-col>
 
+        <el-col :span="7" >
         <el-form-item>
           <ent-select title="发薪企业" place-holder="发薪企业查询"
                       @input-select="salaryInputSelect">
           </ent-select>
         </el-form-item>
+        </el-col>
         <!--<el-form-item label="审批状态">-->
           <!--<el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择审批状态">-->
             <!--<el-option-->
@@ -29,7 +35,7 @@
         <!--</el-form-item>-->
       </el-row>
       <el-row type="flex">
-
+        <el-col :span="7" >
           <el-form-item label="订单状态">
             <el-select size="small" v-model="queryModel.orderState" filterable clearable placeholder="请选择订单状态">
               <el-option
@@ -40,6 +46,21 @@
               </el-option>
             </el-select>
           </el-form-item>
+        </el-col>
+
+        <el-col :span="7" >
+          <el-form-item label="充值方式">
+            <el-select size="small" v-model="queryModel.orderType" filterable clearable placeholder="全部">
+              <el-option
+                v-for="item in entOrderRechargeTypeSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10" >
         <el-form-item label="提交时间">
           <el-date-picker
             size="small"
@@ -53,17 +74,7 @@
             :picker-options="pickerOptions2">
           </el-date-picker>
         </el-form-item>
-
-        <el-form-item label="充值方式">
-        <el-select size="small" v-model="queryModel.orderType" filterable clearable placeholder="全部">
-        <el-option
-        v-for="item in entOrderRechargeTypeSource"
-        :key="item.key"
-        :label="item.value"
-        :value="item.key">
-        </el-option>
-        </el-select>
-        </el-form-item>
+        </el-col>
 
       </el-row>
       <el-row type="flex" justify="left">

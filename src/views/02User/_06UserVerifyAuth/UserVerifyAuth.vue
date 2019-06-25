@@ -1,15 +1,18 @@
 <template>
     <div>
-      <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline">
+      <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
         <el-row type="flex">
+          <el-col :span="6">
           <el-form-item label="姓名:">
             <el-input size="small" placeholder="请输入姓名" v-model="queryModel.userName"></el-input>
           </el-form-item>
-
+          </el-col>
+          <el-col :span="6">
           <el-form-item label="手机号:">
             <el-input size="small" placeholder="请输入手机号" v-model="queryModel.mobile"></el-input>
           </el-form-item>
-
+          </el-col>
+          <el-col :span="6">
           <el-form-item label="审批状态:">
             <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择审批状态">
               <el-option
@@ -20,12 +23,17 @@
               </el-option>
             </el-select>
           </el-form-item>
+          </el-col>
 
+          <el-col :span="6">
           <el-form-item label="审批人:">
             <el-input size="small" placeholder="请输入审批人" v-model="queryModel.verifyPerson"></el-input>
           </el-form-item>
+          </el-col>
         </el-row>
+
         <el-row type="flex">
+          <el-col :span="10">
           <el-form-item label="提交时间:">
             <el-date-picker  size="small"
               v-model="selectDateRange"
@@ -38,13 +46,16 @@
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
+          </el-col>
+          <el-col  :span="6">
           <el-form-item>
-            <el-button size="mini" type="danger" icon="el-icon-check"
+            <el-button size="mini" type="primary" icon="el-icon-check"
                        :disabled="isLoading"
                        @click="_doQuery"
                        style="margin-bottom: 10px" >查询
             </el-button>
           </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <el-table  :data="dataList" border style="width: 100%"

@@ -3,7 +3,8 @@
 <!--
       <label class="title">{{}}</label>
 -->
-      <el-form-item :label="title">
+
+      <el-form-item :label="title"  >
       <el-select size="small" :loading="loading"
                  v-model="model" filterable
                  clearable
@@ -15,6 +16,7 @@
                  :no-data-text="noDataTip"
                  icon="search"
                  @clear="clear"
+
       >
         <el-option
           v-for="(item, index) in _salaryEnts" v-if="_salaryEnts.length"
@@ -26,6 +28,7 @@
         </el-option>
       </el-select>
       </el-form-item>
+
     </div>
 </template>
 
@@ -123,6 +126,9 @@
     line-height: 40px
     padding: 0 12px 0 0
     font-size: 14px!important
+
+
+
 /*  .el-select
     width 70%*/
 </style>

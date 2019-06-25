@@ -1,21 +1,19 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
-      <el-row type="flex">
-        <el-col>
+    <el-form :inline="true" :model="queryModel" label-position="right" class="toolbar demo-form-inline" label-width="100px">
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="10">
           <ent-select title="发薪企业名称" place-holder="发薪企业名称"
                       :model="queryModel.e_eid"
                       @input-select="salaryInputSelect">
           </ent-select>
         </el-col>
-        <el-col>
+        <el-col :span="10">
           <el-form-item label="员工编号">
             <el-input size="small" v-model="queryModel.e_uid" placeholder="若查询员工 企业名称失效"></el-input>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="20">
+        <el-col :span="10">
           <el-form-item label="交易时间" required>
             <el-date-picker
               v-model="selectDateRange"
@@ -30,7 +28,8 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
+      <el-row typeof="flex" justify="space-between">
+
         <el-col :span="3">
           <el-button size="small" type="primary" icon="el-icon-search" style="margin-bottom: 10px" :disabled="isLoading" @click="resetDoQuery">查询
           </el-button>

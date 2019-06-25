@@ -108,9 +108,9 @@
           'userName': [
             {required: true, message: '请输入姓名', trigger: 'blur'},
             {validator: Validator.validateName, trigger: 'blur'}],
-          'mobile': [
-            {required: true, message: '请输入手机号', trigger: 'blur'},
-            {required: true, validator: Validator.validatorMobile, trigger: 'blur'}],
+          // 'mobile': [
+          //   {required: true, message: '请输入手机号', trigger: 'blur'},
+          //   {required: true, validator: Validator.validatorMobile, trigger: 'blur'}],
           'idType': {required: true, message: '请选择证件类型', trigger: 'blur'},
           'idNumber': [
             {required: true, message: '请输入证件号', trigger: 'blur'},

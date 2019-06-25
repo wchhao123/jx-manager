@@ -1,10 +1,13 @@
 <template>
    <div>
-      <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline" label-position="right">
-        <el-row type="flex">
+      <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline" label-position="right" label-width="100px">
+        <el-row typeof="flex" justify="space-between">
+          <el-col :span="6">
             <ent-select title="发薪企业" place-holder="请选择发薪企业"
                         @input-select="salaryInputSelect">
             </ent-select>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="认证状态">
               <el-select size="small" v-model="queryModel.verifyState" filterable clearable placeholder="请选择认证状态">
                 <el-option
@@ -15,6 +18,8 @@
                 </el-option>
               </el-select>
             </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="签约状态">
               <el-select size="small" v-model="queryModel.signState" filterable clearable placeholder="请选择签约状态">
                 <el-option
@@ -25,6 +30,8 @@
                 </el-option>
               </el-select>
             </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="销售代表">
               <el-autocomplete
                 popper-class="my-autocomplete"
@@ -42,10 +49,11 @@
                 </template>
               </el-autocomplete>
             </el-form-item>
+          </el-col>
         </el-row>
 
-        <el-row>
-          <el-col :span="8">
+        <el-row typeof="flex" justify="space-between">
+          <el-col :span="6">
             <el-form-item label="创建时间开始">
               <el-date-picker
                 class="startDate"
@@ -57,7 +65,7 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-form-item label="创建时间结束">
               <el-date-picker
                 class="endDate"
@@ -69,17 +77,16 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col>
+          <el-col :span="6">
             <el-form-item label="运营主企业">
               <el-input size="small" clearable v-model="queryModel.operationEntName" placeholder="请输入运营主企业名称"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row type="flex" justify="left">
           <el-col :span="3">
             <el-button  size="small" type="primary" icon="el-icon-search" :disabled="isLoading" @click="resetDoQuery">查询</el-button>
           </el-col>
         </el-row>
+
       </el-form>
 
      <el-table

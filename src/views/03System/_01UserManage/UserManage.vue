@@ -2,14 +2,17 @@
   <div>
     <el-form :inline="true" class="toolbar demo-form-inline" :model="queryModel">
       <el-row>
+        <el-col :span="7">
         <el-form-item label="手机号:">
           <el-input size="small" v-model="queryModel.mobile"></el-input>
         </el-form-item>
-
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="姓名:">
           <el-input size="small" v-model="queryModel.adminName"></el-input>
         </el-form-item>
-
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="角色名:">
           <el-select size="small" v-model="queryModel.roleId" filterable v-show="roleSelectList.length > 0" clearable
                      placeholder="请选择角色">
@@ -21,6 +24,7 @@
             </el-option>
           </el-select>
         </el-form-item>
+        </el-col>
       </el-row>
 
       <el-row type="flex" justify="left">
@@ -38,11 +42,11 @@
           </el-button>
         </el-col>
 
-        <el-col :span="3">
+        <el-col :span="4">
           <el-button size="small" @click="_refreshCache" type="danger">刷新企业端菜单缓存</el-button>
         </el-col>
 
-        <el-col :span="3" style="margin-left: 20px">
+        <el-col :span="4" style="margin-left: 20px">
           <el-button size="small" @click="_refreshMsCache" type="danger">刷新微服务配置信息</el-button>
         </el-col>
       </el-row>

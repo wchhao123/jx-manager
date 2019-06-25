@@ -1,11 +1,13 @@
 <template>
   <div>
-    <el-form class="toolbar demo-form-inline" :inline="true" :model="queryModel" label-position="right">
+    <el-form class="toolbar demo-form-inline" :inline="true" :model="queryModel" label-position="right" label-width="100px">
       <el-row>
+        <el-col :span="7">
         <el-form-item label="用户账号">
           <el-input size="small" placeholder="请输入用户手机号" v-model="queryModel.mobile"></el-input>
         </el-form-item>
-
+        </el-col>
+        <el-col :span="7">
         <el-form-item label="交易类型">
           <el-select size="small" v-model="queryModel.transType" filterable clearable placeholder="请选择交易类型">
             <el-option
@@ -16,20 +18,21 @@
             </el-option>
           </el-select>
         </el-form-item>
-      </el-row>
-      <el-row>
-        <el-form-item label="交易时间">
-          <el-date-picker
-            v-model="selectDate"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions2">
-          </el-date-picker>
-        </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item label="交易时间">
+            <el-date-picker
+              v-model="selectDate"
+              type="daterange"
+              align="right"
+              unlink-panels
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions2">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row type="flex" justify="left">
         <el-col :span="3">

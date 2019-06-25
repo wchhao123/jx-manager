@@ -2,10 +2,12 @@
     <div>
       <el-form :inline="true" class="toolbar demo-form-inline" :model="queryModel">
         <el-row>
+          <el-col :span="7">
           <el-form-item label="角色名:">
             <el-input size="small" v-model="queryModel.roleName"></el-input>
           </el-form-item>
-
+          </el-col>
+          <el-col :span="7">
           <el-form-item label="状态:">
             <el-select size="small" v-model="queryModel.dataState" filterable clearable placeholder="请选择状态">
               <el-option
@@ -16,6 +18,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+          </el-col>
         </el-row>
 
         <el-row type="flex" justify="left">

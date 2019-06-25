@@ -69,7 +69,7 @@
       </el-row>
 
       <el-row>
-        <el-form-item label="手续费:" prop="rate" v-show="submitModel.businessType !='1'">
+        <el-form-item label="手续费:" prop="rate" v-show="submitModel.businessType !='1'&& submitModel.businessType !='5'">
           <el-input-number size="small" v-model="submitModel.rate"></el-input-number>
           % 按订单金额百分比计算
         </el-form-item>
