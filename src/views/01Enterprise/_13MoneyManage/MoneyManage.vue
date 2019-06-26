@@ -1,6 +1,6 @@
 <template>
   <section id="recharge_manage_new">
-    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline">
+    <el-form :inline="true" :model="queryModel" class="toolbar demo-form-inline" label-position="right" label-width="100px">
       <el-row type="flex">
         <el-col :span="6">
             <ent-select title="企业名称"
@@ -20,14 +20,15 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="7">
+        <el-col :span="6">
           <el-form-item label="运营主企业">
             <el-input size="small" clearable v-model="queryModel.operationEntName" placeholder="请输入运营主企业名称"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row type="flex">
-        <el-form-item label="申请时间" :span=8>
+        <el-col :span="10">
+        <el-form-item label="申请时间" >
           <el-date-picker
             v-model="selectDate"
             type="daterange"
@@ -39,13 +40,14 @@
             :picker-options="pickerOptions2">
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
-          <el-col :span="3">
-            <el-button size="small" type="primary" icon="el-icon-search" @click="resetDoQuery" :disabled="isLoading">查询
-            </el-button>
-          </el-col>
-        </el-form-item>
+        </el-col>
+
+        <el-col  :span="8">
+          <el-button size="small" type="primary" icon="el-icon-search" @click="resetDoQuery" :disabled="isLoading">查询
+          </el-button>
+        </el-col>
       </el-row>
+
     </el-form>
 
     <el-table

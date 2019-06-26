@@ -232,7 +232,7 @@
       <el-table-column width="100"  align="center" label="操作">
         <template slot-scope="scope">
           <el-button @click.native.prevent="rollBack(scope.row)"
- v-if="((scope.row.salaryType == '1'||scope.row.salaryType == '3')&&scope.row.salaryState=='1'&&scope.row.isActive=='0')
+ v-if="((scope.row.salaryType == '1'||scope.row.salaryType == '3')&&scope.row.salaryState=='1'&&scope.row.isVerify!='1')
        ||(scope.row.salaryType == '2'&&scope.row.state =='0'&&scope.row.salaryState == '1')"
           type="primary" plain size="small">撤回
           </el-button>
