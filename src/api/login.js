@@ -1,10 +1,12 @@
 import fetch from '../utils/fetch'
 import { http } from './enterprise'
 
-export function loginByMobile (mobile, password) {
+export function loginByMobile (mobile, password,mobileCode) {
+  debugger
   const data = {
     mobile,
-    password
+    password,
+    mobileCode
   }
   return fetch({
     url: http.prefix + '/jx/action/login',
@@ -17,6 +19,22 @@ export function changeAdminPassword (param) {
   return fetch({
     url: http.prefix + '/jx/action/changepassword',
     method: 'post',
+    params: param
+  })
+}
+
+export function getMobileCode (param) {
+  return fetch({
+    url: http.prefix + '/jx/action/login/check',
+    method: 'get',
+    params: param
+  })
+}
+
+export function getAudioCode(param) {
+  return fetch({
+    url: http.prefix + '/jx/action/login/audio/check',
+    method: 'get',
     params: param
   })
 }

@@ -1,7 +1,7 @@
 <template>
   <section id="login">
     <el-form :inline="true"
-             style="-webkit-animation-name: shineBlue;-webkit-animation-duration: 3s;-webkit-animation-iteration-count: infinite; border-radius:5px;border: 1px solid #b1b1b1;background: rgba(255,255,255,.5);width:260px;padding: 5px 15px;position: absolute;right: 80px;top:120px"
+             style="-webkit-animation-name: shineBlue;-webkit-animation-duration: 3s;-webkit-animation-iteration-count: infinite; border-radius:5px;border: 1px solid #b1b1b1;background: rgba(255,255,255,.5);width:330px;padding: 5px 15px;position: absolute;right: 80px;top:120px"
              autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm">
       <el-row style="text-align: center;padding: 12px 0">
         <span style=" font-size: 26px;font-weight: 600;color: white">欢迎登录</span>
@@ -27,23 +27,31 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <!--<el-row :gutter="8" style="margin-top: 3px">-->
-        <!--<el-col :span="7" style="font-size: 12px">-->
-          <!--<el-input size="small" placeholder="验证码" v-model="codeNumber.code"-->
-                    <!--@keyup.enter.native="LoginMenu('loginForm')" tabindex="3"></el-input>-->
-        <!--</el-col>-->
-        <!--<el-col :span="8">-->
-          <!--<img style="border-radius: 5px;height: 28px;width: 100%;border: 1px solid #b1b1b1 " :src="captchaCodeImg"-->
-               <!--v-show="captchaCodeImg">-->
-        <!--</el-col>-->
-        <!--<el-col :span="9" style="font-size: 10px">-->
-          <!--<span-->
-            <!--style="display:inline-block;font-size:12px;cursor:pointer;color: #1c2438;width:100%;height:100%;line-height: 2.5"-->
-            <!--@click="getCaptchaCodes">-->
-            <!--看不清，<span class="change_page">换一张</span>-->
-          <!--</span>-->
-        <!--</el-col>-->
+      <!--<el-row :gutter="8" style="margin-top: 3px;margin-bottom: 0px">-->
+        <!--<el-col :span="24" >-->
+          <!--<el-form-item style="border-radius: 5px" prop="mobileCode">-->
+            <!--<div>-->
+          <!--<el-input autofocus autoComplete="on" placeholder="验证码" v-model="loginForm.mobileCode"-->
+           <!--@keyup.enter.native="LoginMenu('loginForm')" tabindex="3" style="width: 63%"  maxlength="6">-->
+            <!--<template slot="prepend"><i class="el-icon-edit "/></template>-->
+          <!--</el-input>-->
+            <!--<el-button size="large" style=" border:1px solid blue;padding-left: 5px;padding-right: 5px"  @click="getMobileCode">-->
+              <!--  <template v-if="isShow" ><span style="color: blue"> 获取验证码</span></template>-->
+              <!--  <template v-else><span style="color: blue">{{second}}s后重新获取</span> </template>        -->
+            <!--</el-button>-->
+            <!--</div>-->
+          <!--</el-form-item>-->
+      <!--</el-col>-->
+
+        <!--&lt;!&ndash;<el-col :span="9" style="font-size: 10px">&ndash;&gt;-->
+          <!--&lt;!&ndash;<span&ndash;&gt;-->
+            <!--&lt;!&ndash;style="display:inline-block;font-size:12px;cursor:pointer;color: #1c2438;width:100%;height:100%;line-height: 2.5"&ndash;&gt;-->
+            <!--&lt;!&ndash;@click="getCaptchaCodes">&ndash;&gt;-->
+            <!--&lt;!&ndash;看不清，<span class="change_page">换一张</span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</span>&ndash;&gt;-->
+        <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
       <!--</el-row>-->
+      <!--<div style="font-size:12px;margin-top: 5px">没有收到验证码，请尝试获取<el-button style="background-color:transparent;color: red;padding: 0px; border: 0px ;" @click="getAudioCode">语音验证码</el-button></div>-->
       <el-row style="margin-top: 10px">
         <el-col :span="24" style="font-size: 12px">
           <el-form-item>
@@ -59,7 +67,7 @@
 </template>
 
 <script>
-import { getCheckCode, getCaptchaCode } from '../api/login'
+import { getCheckCode, getCaptchaCode,getMobileCode,getAudioCode } from '../api/login'
 import md5 from 'js-md5'
 export default {
   data () {
@@ -68,9 +76,13 @@ export default {
       codeNumber: {code: ''}, // 验证码
       logining: false,
       isOk: 'ok',
+      disabled: false,
+      second: 60,
+      isShow:true,
       loginForm: {
         mobile: '',
         password: '',
+        mobileCode:'',
         thiss: this
       },
       loginRules: {
@@ -79,6 +91,9 @@ export default {
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+        mobileCode :[
+          {required: true, message: '请输入验证码', trigger: 'blur'},
 
         ]
       }
@@ -95,12 +110,57 @@ export default {
         this.captchaCodeImg = 'data:image/jpeg;base64,' + response.data.data.base64
       })
     },
+    getAudioCode () {
+      if(this.loginForm.mobile==''){
+        this.$notify({
+          message: ' 请先输入手机号！',
+          type: 'warning'
+        })
+        return;
+      }
+      getAudioCode ({mobile:this.loginForm.mobile}).then(response => {
+
+      })
+    },
+    getMobileCode (){
+      debugger
+      if( !this.isShow )
+        return;
+      if(this.loginForm.mobile==''){
+        this.$notify({
+          message: ' 请先输入手机号！',
+          type: 'warning'
+        })
+        return;
+      }
+      getMobileCode({mobile:this.loginForm.mobile}).then(response => {
+        if(response.code='0000') {
+          console.log('ddd')
+          this.isShow = false;
+          this.disabled = true;
+          this.timeDown();
+        }
+        })
+    },
+    timeDown() {
+      let result = setInterval( ()=>{
+        this.second--;
+        if(this.second < 0)
+        {
+          clearInterval(result);
+          this.isShow  = true;
+          this.disabled = false;
+          this.second = 60;
+        }
+      }, 1000);},
+
 
     LoginMenu (formName) {
       // this.$router.push('/')
       this.$refs[formName].validate((valid) => {
 
         if (valid) {
+
           getCheckCode(this.codeNumber).then(response => {
             // alert(JSON.stringify(this.codeNumber))
             if (this.isOk === response.data.data.isOk) {
@@ -108,6 +168,7 @@ export default {
               this.$store.dispatch('login', {
                 mobile: this.loginForm.mobile,
                 password: md5(this.loginForm.password),
+                mobileCode:this.loginForm.mobileCode,
                 thiss: this
               }).then((res) => {
                 this.loading = false

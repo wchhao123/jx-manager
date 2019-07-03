@@ -106,7 +106,7 @@
       <!--第三方订单号-->
       <el-table-column prop="enterpriseId" align="center" label="第三方订单号" fixed>
         <template slot-scope="scope">
-          <span class="globalPointer" size="small"
+          <span  size="small"
                 >{{scope.row.extOrderId}}</span>
         </template>
       </el-table-column>

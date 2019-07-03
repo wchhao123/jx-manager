@@ -212,7 +212,7 @@
       <el-table-column label="操作" width="120" align="center"  >
         <template slot-scope="scope" >
           <el-button  @click="refundSettle(scope.row.salaryDetailId)"
-                      v-if="scope.row.payType=='2' && scope.row.isVerify!='1' && scope.row.salaryState=='1'  "
+                      v-if="scope.row.payType=='2' && scope.row.isVerify!= null &&scope.row.isVerify!='1' && scope.row.salaryState=='1'  "
                       type="primary" plain size="small">撤回
           </el-button>
         </template>

@@ -11,8 +11,8 @@ const state = {
 }
 
 const actions = {
-  login ({commit}, {mobile, password, thiss}) {
-    Api.loginByMobile(mobile, password).then(response => {
+  login ({commit}, {mobile, password, mobileCode,thiss}) {
+    Api.loginByMobile(mobile, password,mobileCode).then(response => {
       console.log(response)
       if (response.data.code === '0000') {
         sessionStorage.access_token = response.data.token.access_token
