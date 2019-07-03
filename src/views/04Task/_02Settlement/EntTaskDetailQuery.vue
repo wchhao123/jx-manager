@@ -409,9 +409,12 @@
           this.queryModel.salaryDetailId = val
           this.isLoading = true
         Api.taskSettleWithdraw(this.queryModel).then(response => {
+
           this.isLoading = false
           if (response.code === ERR_OK) {
             this.$message.success("撤回成功！")
+          }else{
+            this.$message.error(response.data.msg)
           }
           this.queryModel.salaryDetailId = ''
           this.doQuery()
