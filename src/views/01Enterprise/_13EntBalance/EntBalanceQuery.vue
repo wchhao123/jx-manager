@@ -7,11 +7,9 @@
                       @input-select="salaryInputSelect">
           </ent-select>
         </el-form-item>
-      </el-row>
-      <el-row style="margin: 15px 0 10px">
-        <el-col :span="3" :offset="1">
+        <el-form-item prop="entId">
           <el-button type="primary" size="small" icon="el-icon-search" @click="doQuery">查询</el-button>
-        </el-col>
+        </el-form-item>
       </el-row>
     </el-form>
     <div class="toolbar" v-loading="isLoading">
