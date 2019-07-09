@@ -845,3 +845,25 @@ export function dataAdminStatus () {
     {'key': '1', 'value': '开通'}
   ]
 }
+
+export function dataUserSource () {
+  return [
+    {'key': '0', 'value': '企业平台'},
+    {'key': '2', 'value': '开发平台'},
+    {'key': '1', 'value': '自主注册'}
+  ]
+}
+
+
+export const dataUserSourceView = {
+  0: '企业平台',
+  1: '自主注册',
+  2: '开发平台'
+}
+
+export function dataOrderSource () {
+  return [
+    {'key': '0', 'value': '企业平台'},
+    {'key': '2', 'value': '开发平台'}
+  ]
+}
