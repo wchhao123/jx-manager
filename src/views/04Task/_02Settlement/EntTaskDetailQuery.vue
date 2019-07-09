@@ -75,12 +75,26 @@
           </el-select>
         </el-form-item>
         </el-col>
-      <el-col :span="6"  >
+        <el-col :span="6"  >
         <el-form-item  label="支付宝账号" >
           <el-input size="small" v-model="queryModel.alipayId" placeholder="请输入支付宝账号"  clearable></el-input>
         </el-form-item>
-         </el-col>
-      <el-col :span="10" >
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="订单来源" >
+            <el-select size="small" v-model="queryModel.source"   filterable clearable placeholder="请选择订单来源">
+              <el-option
+                v-for="item in orderSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row typeof="flex" justify="space-between">
+        <el-col :span="10" >
           <el-form-item label="结算时间" >
             <el-date-picker
               v-model="selectDateRange"
@@ -209,6 +223,13 @@
           <span size="small" v-show="scope.row.salaryState == '8'">{{scope.row.refundTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
+
+      <!--订单来源-->
+      <el-table-column align="center" label="订单来源">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.source | dataUserSource}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="120" align="center"  >
         <template slot-scope="scope" >
           <el-button  @click="refundSettle(scope.row.salaryDetailId)"
@@ -299,6 +320,9 @@
       },
       salaryDetailTypeSource () {
         return state.typeTaskState()
+      },
+      orderSource () {
+        return state.dataOrderSource()
       }
     },
     watch: {

@@ -63,6 +63,18 @@
 
       <el-row type="flex" >
         <el-col :span="7">
+          <el-form-item label="用户来源">
+            <el-select size="small" v-model="queryModel.source" filterable clearable placeholder="请选择用户来源">
+              <el-option
+                v-for="item in userSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <ent-select title="企业名称" place-holder="请输入企业名称"
                       @input-select="salaryInputSelect">
           </ent-select>
@@ -158,6 +170,13 @@
       <el-table-column  align="center" label="实名认证状态" >
         <template slot-scope="scope">
           <span   size="small"    >{{scope.row.isVerify | filterUserVerifyState}}</span>
+        </template>
+      </el-table-column>
+
+      <!--用户来源-->
+      <el-table-column  align="center" label="用户来源" >
+        <template slot-scope="scope">
+          <span   size="small"    >{{scope.row.source | dataUserSource}}</span>
         </template>
       </el-table-column>
 
@@ -287,6 +306,9 @@
       },
       isOwnSms() {
         return this.$store.getters.getBtnIsShowByName('btn_user_sms')
+      },
+      userSource() {
+        return state.dataUserSource()
       }
     },
     methods: {

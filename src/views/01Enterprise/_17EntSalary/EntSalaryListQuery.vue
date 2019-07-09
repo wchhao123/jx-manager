@@ -54,6 +54,20 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :span="7">
+          <el-form-item label="订单来源" >
+            <el-select size="small" v-model="queryModel.source"   filterable clearable placeholder="请选择订单来源">
+              <el-option
+                v-for="item in orderSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row typeof="flex" justify="space-between">
         <el-col :span="10" >
           <el-form-item label="创建时间" >
             <el-date-picker
@@ -182,6 +196,13 @@
         </template>
       </el-table-column>
 
+      <!--订单来源-->
+      <el-table-column align="center" label="订单来源">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.source | dataUserSource}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column  label="操作" width="120" align="center">
       <template slot-scope="scope">
         <el-button  @click="toSalaryDetail(scope.row)"
@@ -284,6 +305,9 @@
       },
       salaryTypeSource () {
         return state.funSalaryType()
+      },
+      orderSource () {
+        return state.dataOrderSource()
       }
     },
     methods: {
