@@ -206,8 +206,8 @@ export function funRechargeOrderVerifyType () {
 
 // 企业充值订单 充值方式
 export const typeEntRechargeOrderRechargeType = {
-  4: '线下打款充值',
-  5: '线下打款充值(旧)',
+  4: '线上网银充值',
+  5: '线下打款充值',
   6: '线上网银充值',
   7: '线上网银充值'
 }
@@ -215,8 +215,8 @@ export const typeEntRechargeOrderRechargeType = {
 // 企业充值订单 充值方式
 export function funEntRechargeOrderRechargeType() {
   return [
-    {'key': '04', 'value': '线下打款充值'},
-    {'key': '05', 'value': '线下打款充值(旧)'},
+    // {'key': '04', 'value': '线下打款充值'},
+    {'key': '05', 'value': '线下打款充值'},
     {'key': '06', 'value': '线上网银充值'}
   ]
 }
