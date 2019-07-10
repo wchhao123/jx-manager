@@ -9,18 +9,22 @@
           <span>{{detail.orderId}}</span>
         </el-form-item>
 
+        <el-form-item label="第三方订单号:" :span="10">
+          <span>{{detail.extOrderId}}</span>
+        </el-form-item>
+
+
+      </el-row>
+      <el-row type="flex">
         <el-form-item label="订单时间:">
           <span>{{detail.createDate | filterdateYMDHMS}}</span>
         </el-form-item>
-      </el-row>
-      <el-row type="flex">
+
         <el-form-item label="订单类型:">
           <span>{{detail.orderType | filterUserOrderType}}</span>
         </el-form-item>
 
-        <el-form-item label="订单状态:">
-          <span>{{detail.orderState | filterUserOrderState}}</span>
-        </el-form-item>
+
       </el-row>
       <el-row v-show="detail.errorMsg" style="width: 820px">
         <el-form-item label="退款原因:">
@@ -40,6 +44,10 @@
       </el-row>
 
       <el-row v-show="detail.orderType=='08'||detail.orderType=='01'||detail.orderType=='09'">
+        <el-form-item label="订单状态:">
+          <span>{{detail.orderState | filterUserOrderState}}</span>
+        </el-form-item>
+
         <el-form-item label="提现方式:">
           <span>{{detail.orderType|filterWithdrawType}}</span>
         </el-form-item>
