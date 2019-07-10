@@ -346,6 +346,13 @@ export function filterEmpty (val) {
 
 }
 
+// 用户来源
+export function dataUserSource (key) {
+  if (!key)
+    return ''
+  return state.dataUserSourceView[parseInt(key)]
+}
+
 const Y_M = 'YYYY-MM'
 const Y_M_D = 'YYYY-MM-DD'
 const Y_M_D_H_M_S = 'YYYY-MM-DD-HH-MM-SS'

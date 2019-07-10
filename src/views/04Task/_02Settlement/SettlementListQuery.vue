@@ -54,6 +54,20 @@
           <el-input size="small" clearable v-model="queryModel.businessId" placeholder="请输入任务编号"></el-input>
         </el-form-item>
         </el-col>
+        <el-col :span="6">
+          <el-form-item label="订单来源" >
+            <el-select size="small" v-model="queryModel.source"   filterable clearable placeholder="请选择订单来源">
+              <el-option
+                v-for="item in orderSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row typeof="flex" justify="space-between">
         <el-col :span="10">
           <el-form-item label="结算时间" >
             <el-date-picker
@@ -84,7 +98,7 @@
     <el-table ref="entSignAuditTable" :data="entSalaryList" style="width: 100%" border v-loading="isLoading">
 
       <!--批次号-->
-      <el-table-column align="center" label="结算批次号" fixed>
+      <el-table-column align="center" label="批次号" fixed>
         <template slot-scope="scope">
           <span size="small">{{scope.row.salaryId}}</span>
         </template>
@@ -177,6 +191,13 @@
         </template>
       </el-table-column>
 
+      <!--订单来源-->
+      <el-table-column align="center" label="订单来源">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.source | dataUserSource}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column  label="操作" width="120" align="center">
         <template slot-scope="scope">
           <el-button  @click="toSalaryDetail(scope.row)"
@@ -258,6 +279,9 @@
       },
       taskTypeSource () {
         return state.typeTaskState()
+      },
+      orderSource () {
+        return state.dataOrderSource()
       }
     },
     methods: {

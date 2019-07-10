@@ -71,6 +71,18 @@
           <el-input size="small" v-model="queryModel.alipayId" placeholder="请输入支付宝账号" clearable></el-input>
         </el-form-item>
         </el-col>
+        <el-col :span="6">
+          <el-form-item label="订单来源" >
+            <el-select size="small" v-model="queryModel.source"   filterable clearable placeholder="请选择订单来源">
+              <el-option
+                v-for="item in orderSource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col  :span="6" >
         <el-form-item label="退款/撤回时间" :label-position="right"  >
           <el-date-picker
@@ -222,6 +234,12 @@
           <span size="small" v-show="scope.row.salaryState == '8'">{{scope.row.refundTime | filterdateYMDHMS()}}</span>
         </template>
       </el-table-column>
+      <!--订单来源-->
+      <el-table-column align="center" label="订单来源">
+        <template slot-scope="scope">
+          <span size="small">{{scope.row.source | dataUserSource}}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar">
       <div class="block">
@@ -297,6 +315,9 @@
     computed: {
       salaryDetailTypeSource () {
         return state.funRefundSalaryType()
+      },
+      orderSource () {
+        return state.dataOrderSource()
       }
     },
     methods: {
