@@ -4,39 +4,39 @@
       <el-row type="flex">
 
         <!-- 订单号-->
-        <el-col :span="6">
+        <el-col :span="7">
         <el-form-item label="订单号">
           <el-input size="small" v-model="queryModel.orderId" placeholder="请输入订单号"></el-input>
         </el-form-item>
         </el-col>
         <!-- 账号-->
-        <el-col :span="6">
+        <el-col :span="7">
         <el-form-item label="用户姓名">
           <el-input size="small" v-model="queryModel.userName" placeholder="请输入用户名称"></el-input>
         </el-form-item>
         </el-col>
         <!-- 账号-->
-        <el-col :span="6">
+        <el-col :span="7">
         <el-form-item label="账号">
           <el-input size="small" v-model="queryModel.mobile" placeholder="请输入用户手机号"></el-input>
-        </el-form-item>
-        </el-col>
-        <el-col :span="6">
-        <el-form-item label="订单类型">
-          <el-select size="small" v-model="queryModel.orderType" filterable clearable placeholder="请选择订单类型">
-            <el-option
-              v-for="item in userOrderTypeResource"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key">
-            </el-option>
-          </el-select>
         </el-form-item>
         </el-col>
       </el-row>
 
       <el-row type="flex">
-        <el-col :span="6">
+        <el-col :span="7">
+          <el-form-item label="订单类型">
+            <el-select size="small" v-model="queryModel.orderType" filterable clearable placeholder="请选择订单类型">
+              <el-option
+                v-for="item in userOrderTypeResource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <el-form-item label="订单状态">
             <el-select size="small" v-model="queryModel.orderState" filterable clearable placeholder="请选择订单状态">
               <el-option
@@ -48,9 +48,23 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="7">
           <el-form-item label="第三方订单号">
             <el-input size="small" v-model="queryModel.extOrderId" placeholder="请输入第三方订单号"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="7">
+          <el-form-item label="支付方式">
+            <el-select size="small" v-model="queryModel.payType" filterable clearable placeholder="请选择支付方式">
+              <el-option
+                v-for="item in userOrderPayTypeResource"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="10">
@@ -140,8 +154,14 @@
 
       <!--支付金额-->
       <el-table-column  align="center" width="100" label="支付金额(元)">
+      <template slot-scope="scope">
+        <span size="small" v-text="scope.row.payAmount"></span>
+      </template>
+    </el-table-column>
+
+      <el-table-column  align="center" width="100" label="支付方式">
         <template slot-scope="scope">
-          <span size="small" v-text="scope.row.payAmount"></span>
+          <span size="small">{{scope.row.payType | filterUserOrderPayType}}</span>
         </template>
       </el-table-column>
 
@@ -230,6 +250,9 @@
     computed: {
       userOrderTypeResource () {
         return state.funUserOrderType()
+      },
+      userOrderPayTypeResource () {
+        return state.funUserOrderPayType()
       },
       userOrderStateResource () {
         return state.funUserOrderState()

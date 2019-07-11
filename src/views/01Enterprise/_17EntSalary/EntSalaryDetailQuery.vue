@@ -339,6 +339,9 @@
       },
       salaryDetailTypeSource () {
         return state.funSalaryType()
+      },
+      orderSource () {
+        return state.dataOrderSource()
       }
     },
     watch: {

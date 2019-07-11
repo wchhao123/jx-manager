@@ -257,6 +257,13 @@ export function filterUserOrderType (key) {
   return state.typeUserOrderType[key.toString()]
 }
 
+export function filterUserOrderPayType (key) {
+  if (!key)
+    return ''
+  return state.typeUserOrderPayType[key.toString()]
+}
+
+
 export function filterWithdrawType (key) {
   if (!key)
     return ''

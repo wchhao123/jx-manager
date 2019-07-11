@@ -43,12 +43,12 @@
         </el-form-item>
       </el-row>
 
-      <el-row v-show="detail.orderType=='08'||detail.orderType=='01'||detail.orderType=='09'">
-        <el-form-item label="订单状态:">
+      <el-row >
+        <el-form-item label="订单状态:" v-show="detail.orderType=='08'||detail.orderType=='01'||detail.orderType=='09'||detail.orderType.length==4">
           <span>{{detail.orderState | filterUserOrderState}}</span>
         </el-form-item>
 
-        <el-form-item label="提现方式:">
+        <el-form-item label="提现方式:" v-show="detail.orderType=='08'||detail.orderType=='01'||detail.orderType=='09'">
           <span>{{detail.orderType|filterWithdrawType}}</span>
         </el-form-item>
       </el-row>
@@ -84,8 +84,8 @@
           <span>{{detail.orderAmount}}</span>
         </el-form-item>
 
-        <el-form-item label="手续费(元):">
-          <span>{{detail.rateAmount}}</span>
+        <el-form-item label="支付方式">
+          <span>{{detail.payType| filterUserOrderPayType}}</span>
         </el-form-item>
       </el-row>
 
@@ -93,6 +93,12 @@
         <el-form-item label="支付金额(元):">
           <span>{{detail.payAmount}}</span>
         </el-form-item>
+        <el-form-item label="手续费(元):">
+          <span>{{detail.rateAmount}}</span>
+        </el-form-item>
+
+      </el-row>
+      <el-row>
         <el-form-item label="优惠(元):">
           <span>{{detail.freeAmount}}</span>
         </el-form-item>

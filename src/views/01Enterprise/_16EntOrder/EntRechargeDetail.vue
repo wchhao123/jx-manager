@@ -77,7 +77,7 @@
         </el-form-item>
       </el-row>
 
-      <section v-show="detail.orderType === '04' || detail.orderType === '05'">
+      <section v-show=" detail.orderType === '05'">
       <span class="item-title">收款信息</span>
       <el-row type="flex">
         <el-form-item label="收款方:">
