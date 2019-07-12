@@ -619,7 +619,7 @@ export const typeUserOrderType = {
  '0052': '火车票订单',
  '0008': '话费充值',
  '0007': '加油卡充值',
- '0063': '水电煤缴费',
+ '0062': '生活缴费',
  '0081': '银联线下付款',
 }
 
@@ -651,7 +651,7 @@ export function funUserOrderType () {
     {'key': '0052', 'value': '火车票订单'},
     {'key': '0008', 'value': '话费充值'},
     {'key': '0007', 'value': '加油卡充值'},
-    {'key': '0063', 'value': '水电煤缴费'},
+    {'key': '0062', 'value': '生活缴费'},
     {'key': '0081', 'value': '银联线下付款'},
   ]
 }
@@ -878,7 +878,7 @@ export function dataAdminStatus () {
 export function dataUserSource () {
   return [
     {'key': '0', 'value': '企业平台'},
-    {'key': '2', 'value': '开发平台'},
+    {'key': '2', 'value': '开放平台'},
     {'key': '1', 'value': '自主注册'}
   ]
 }
@@ -887,12 +887,12 @@ export function dataUserSource () {
 export const dataUserSourceView = {
   0: '企业平台',
   1: '自主注册',
-  2: '开发平台'
+  2: '开放平台'
 }
 
 export function dataOrderSource () {
   return [
     {'key': '0', 'value': '企业平台'},
-    {'key': '2', 'value': '开发平台'}
+    {'key': '2', 'value': '开放平台'}
   ]
 }
