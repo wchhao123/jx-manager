@@ -22,6 +22,7 @@
           <!--<div>任务类型：{{model.type}}</div>-->
           <div>报名状态：{{model.signUpState |  filterTaskSignUpState()}}</div>
           <div>是否在任务广场上显示：{{model.isShow | filterTaskIsShow() }}</div>
+          <div>是否自动发送合同：{{model.isSendContract | filterTaskIsSendContract() }}</div>
         </el-col>
       </el-row>
       <el-row><h1>任务内容</h1></el-row>
