@@ -206,6 +206,11 @@ export function filterTaskIsShow(key) {
     return ''
   return state.taskIsShowState[parseInt(key)]
 }
+export function filterTaskIsSendContract(key) {
+  if (!key)
+    return ''
+  return state.taskIsSendContract[parseInt(key)]
+}
 // 工资批次发放状态
 export function filterSalaryDetailState (key) {
   if (!key)

@@ -457,6 +457,10 @@ export const taskIsShowState = {
   0: '否',
   1: '是'
 }
+export const taskIsSendContract = {
+  1: '发送',
+  2: '不发送'
+}
 export function funSignInState () {
   return [
     {'key': 1, 'value': '待处理'},
