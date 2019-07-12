@@ -616,7 +616,29 @@ export const typeUserOrderType = {
   '08': '提现到银行卡（自动提现）',
   '09': '提现到支付宝（手动提现）',
   '10':  '转账-转出(余额归集)',
-  '11':  '转账-转入(余额归集)'
+  '11':  '转账-转入(余额归集)',
+ '0039':  '美团订单',
+ '0046': '惠购商城订单',
+ '0041': '滴滴出行订单',
+ '0052': '火车票订单',
+ '0008': '话费充值',
+ '0007': '加油卡充值',
+ '0062': '生活缴费',
+ '0081': '银联线下付款',
+}
+
+export const  typeUserOrderPayType = {
+  '1': '收入余额',
+  '2': '微信支付',
+  '3': '工资预支'
+}
+
+export function funUserOrderPayType () {
+  return [
+    {'key': '1', 'value': '收入余额'},
+    {'key': '2', 'value': '微信支付'},
+    {'key': '3', 'value': '工资预支'},
+  ]
 }
 export function funUserOrderType () {
   return [
@@ -626,8 +648,15 @@ export function funUserOrderType () {
     {'key': '02', 'value': '转账-转出'},
     {'key': '03', 'value': '转账-转入'},
     {'key': '10', 'value': '转账-转出(余额归集)'},
-    {'key': '11', 'value': '转账-转入(余额归集)'}
-
+    {'key': '11', 'value': '转账-转入(余额归集)'},
+    {'key': '0039', 'value': '美团订单'},
+    {'key': '0046', 'value': '惠购商城订单'},
+    {'key': '0041', 'value': '滴滴出行订单'},
+    {'key': '0052', 'value': '火车票订单'},
+    {'key': '0008', 'value': '话费充值'},
+    {'key': '0007', 'value': '加油卡充值'},
+    {'key': '0062', 'value': '生活缴费'},
+    {'key': '0081', 'value': '银联线下付款'},
   ]
 }
 
@@ -853,7 +882,7 @@ export function dataAdminStatus () {
 export function dataUserSource () {
   return [
     {'key': '0', 'value': '企业平台'},
-    {'key': '2', 'value': '开发平台'},
+    {'key': '2', 'value': '开放平台'},
     {'key': '1', 'value': '自主注册'}
   ]
 }
@@ -862,12 +891,12 @@ export function dataUserSource () {
 export const dataUserSourceView = {
   0: '企业平台',
   1: '自主注册',
-  2: '开发平台'
+  2: '开放平台'
 }
 
 export function dataOrderSource () {
   return [
     {'key': '0', 'value': '企业平台'},
-    {'key': '2', 'value': '开发平台'}
+    {'key': '2', 'value': '开放平台'}
   ]
 }
